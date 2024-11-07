@@ -1,0 +1,41 @@
+@import "../../node_modules/bootstrap/scss/functions";
+@import "../../node_modules/bootstrap/scss/variables";
+@import "../../node_modules/bootstrap/scss/bootstrap";
+
+$brand-light: #F1F6F9;
+$brand-secondary-light: #9BA4B5;
+$brand-muted: #394867;
+$brand-dark: #212A3E;
+
+$primary: $brand-muted;
+$secondary: $brand-secondary-light;
+$dark: $brand-dark;
+$light: $brand-light;
+
+
+$body-bg: $brand-light;
+$body-color: $brand-dark;
+
+$text-primary: $brand-dark;
+
+html, body {
+  height: 100%;
+  font-family: "Outfit", sans-serif;
+
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  max-height: 100vh;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+}
+
+
+@import "base/_base";
+@import "pages/_albums";
+@import "components/_header";

@@ -1,0 +1,26 @@
+<?php include 'includes/header.php'; ?>
+
+    <main class="albums-container">
+        <div class="container-fluid">
+            <div class="row px-5 gy-5">
+                <?php if (isset($albums) && is_array($albums)): ?>
+                    <?php foreach ($albums as $album): ?>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                            <div class="card shadow album-card" style="width: 100%;">
+                                <img src="<?= htmlspecialchars($album->albumArt) ?>" class="card-img-top"
+                                     alt="<?= $album->albumName ?>">
+                                <div class="card-body">
+                                    <h4 class="card-title album-title"><?= $album->albumName ?></h4>
+                                    <p class="card-text album-artist"><?= $album->artistName ?></p>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <p>No albums available.</p>
+                <?php endif; ?>
+            </div>
+        </div>
+    </main>
+
+<?php include 'includes/footer.php'; ?>

@@ -1,0 +1,32 @@
+.albums-container {
+  padding-top: 7vh;
+  height: 100%;
+  width: 100%;
+  padding-bottom: 7vh;
+  justify-content: center;
+}
+
+.album-card {
+  transition: transform 0.3s ease-in-out;
+}
+
+.album-card:hover {
+  transform: scale(1.05);
+}
+
+.album-title {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.album-artist {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+// Limit the width of the container to 2000px so on ultra wide screens the content doesn't stretch too far
+.container-fluid {
+  max-width: 2000px;
+}
