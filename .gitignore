@@ -9,7 +9,7 @@ vendor/
 
 
 # SCSS cache
-assets/sccs/.sass-cache/
+/assets/scss/.sass-cache/
 
 # Log files
 *.log
