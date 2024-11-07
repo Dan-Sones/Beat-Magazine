@@ -1,0 +1,22 @@
+# Node modules
+node_modules/
+
+# Composer vendor directory
+vendor/
+
+# PHPStorm project files
+.idea/
+
+# Log files
+*.log
+
+# Temporary files
+tmp/
+temp/
+
+
+# Environment variables
+.env
+
+# MacOS system files
+.DS_Store# Node modules
