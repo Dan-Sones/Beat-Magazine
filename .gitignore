@@ -8,6 +8,9 @@ vendor/
 .idea/
 
 
+# compiled css
+/src/public/css/
+
 # SCSS cache
 /assets/scss/.sass-cache/
 
