@@ -1,5 +1,6 @@
 <?php
 
+use S246109\BeatMagazine\Controllers\AlbumController;
 use S246109\BeatMagazine\Controllers\AlbumsController;
 
 $request = $_SERVER['REQUEST_URI'];
@@ -13,6 +14,11 @@ switch ($request) {
     case '/albums' :
         require_once __DIR__ . '/../app/Controllers/AlbumsController.php';
         $controller = new AlbumsController();
+        $controller->index();
+        break;
+    case '/album' :
+        require_once __DIR__ . '/../app/Controllers/AlbumController.php';
+        $controller = new AlbumController();
         $controller->index();
         break;
     default:

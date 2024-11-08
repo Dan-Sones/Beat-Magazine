@@ -12,7 +12,6 @@ $secondary: $brand-secondary-light;
 $dark: $brand-dark;
 $light: $brand-light;
 
-
 $body-bg: $brand-light;
 $body-color: $brand-dark;
 
@@ -39,3 +38,4 @@ main {
 @import "base/_base";
 @import "pages/_albums";
 @import "components/_header";
+@import "pages/_album";
