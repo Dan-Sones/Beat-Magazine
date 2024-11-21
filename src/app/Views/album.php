@@ -50,25 +50,31 @@
                                     <button id="reviewButton" class="btn btn-secondary">Reviews</button>
                                 </div>
                                 <!-- Content to Toggle -->
-                                <ul id="tracklist" class="mt-3" style="display: none;">
-                                    <div class="recent-tracks-section">
-                                        <ul class="list-group">
-                                            <?php foreach ($album->getSongs() as $song): ?>
-                                                <!-- Repeat for each track -->
-                                                <li class="list-group-item d-flex align-items-center justify-content-between">
-                                                    <div class="track-info d-flex align-items-center">
-                                                        <button class="btn btn-sm play-button me-3">
-                                                            <i class="bi bi-play-circle"></i>
-                                                        </button>
-                                                        <div>
-                                                            <p class="mb-0"><?= $song->getName() ?></p></div>
-                                                    </div>
-                                                    <span class="text-muted"><?= $song->getLength() ?></span>
-                                                </li>
-                                            <?php endforeach; ?>
-                                        </ul>
-                                    </div>
-                                </ul>
+                                <div id="tracklist" class="mt-3" style="display: none;">
+                                    <ul class="list-group">
+
+
+                                        <?php if (sizeof($album->getSongs()) < 1): ?>
+                                            <p>No albums available.</p>
+                                        <?php else: ?>
+                                        
+                                        <?php foreach ($album->getSongs() as $song): ?>
+                                            <!-- Repeat for each track -->
+                                            <li class="list-group-item d-flex align-items-center justify-content-between">
+                                                <div class="track-info d-flex align-items-center">
+                                                    <button class="btn btn-sm play-button me-3">
+                                                        <i class="bi bi-play-circle"></i>
+                                                    </button>
+                                                    <div>
+                                                        <p class="mb-0"><?= $song->getName() ?></p></div>
+                                                </div>
+                                                <span class="text-muted"><?= $song->getLength() ?></span>
+                                            </li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                </div>
+                                <?php endif; ?>
+
 
                                 <p id="review" class="mt-3" style="display: none;">
                                     This is a review displayed when the second button is clicked.
