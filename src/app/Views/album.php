@@ -24,16 +24,17 @@
                                         </div>
                                     </div>
                                     <div class="row info d-flex align-items-center">
-                                        <p><strong>Release Date:</strong> 2021</p>
-                                        <p><strong>Genre</strong>: Pop</p>
-                                        <p><strong>Label:</strong> Atlantic Records</p>
+                                        <p><strong>Release Date:</strong> <?= $album->releaseDate ?></p>
+                                        <p><strong>Genre</strong>: <?= $album->genre ?></p>
+                                        <p><strong>Label:</strong> <?= $album->label ?></p>
                                     </div>
                                     <div class="row d-flex align-items-center">
                                         <div class="col-6 d-flex align-content-center-center">
-                                            <p><strong>User Score:</strong> 5/5</p>
+                                            <p><strong>Average User Rating:</strong> <?= $album->averageUserRating ?>
+                                            </p>
                                         </div>
                                         <div class="col-6 d-flex align-content-center">
-                                            <p><strong>Journalist Score:</strong> 100/100</p>
+                                            <p><strong>Journalist Rating:</strong> <?= $album->journalistRating ?></p>
                                         </div>
                                     </div>
                                 </div>

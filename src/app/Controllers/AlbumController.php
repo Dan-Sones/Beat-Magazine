@@ -16,7 +16,7 @@ class AlbumController
 
     public static function getAlbum()
     {
-        return new Album("/images/baitones.jpg", "Leak 04-13 (Bait Ones)", "Jai Paul");
+        return new Album("/images/baitones.jpg", "Leak 04-13 (Bait Ones)", "Jai Paul", "Electronic", "XL Recordings", 4.5, 4.8, "2019-04-13");
     }
 
 }
