@@ -12,7 +12,6 @@ $secondary: $brand-secondary-light;
 $dark: $brand-dark;
 $light: $brand-light;
 
-
 $body-bg: $brand-light;
 $body-color: $brand-dark;
 
@@ -21,14 +20,14 @@ $text-primary: $brand-dark;
 html, body {
   height: 100%;
   font-family: "Outfit", sans-serif;
+}
 
+footer {
+  flex-shrink: 0;
 }
 
 .wrapper {
-  display: flex;
-  flex-direction: column;
-  max-height: 100vh;
-  min-height: 100vh;
+  flex: 1 0 auto;
 }
 
 main {
@@ -39,3 +38,4 @@ main {
 @import "base/_base";
 @import "pages/_albums";
 @import "components/_header";
+@import "pages/_album";

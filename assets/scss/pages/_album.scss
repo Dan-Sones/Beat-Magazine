@@ -1,0 +1,68 @@
+.album-wrapper {
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+}
+
+.album-content {
+
+  justify-content: center;
+  justify-items: center;
+
+}
+
+.album-info {
+  //padding-top: 2%;
+  //padding-bottom: 2%;
+  //padding-top: 1rem;
+  //padding-bottom: 1rem;
+}
+
+.album-container {
+  margin-top: 4vh;
+  padding: 2vh 2rem 2rem;
+}
+
+.journalist-review-pane {
+}
+
+.info-stats {
+  display: flex;
+  align-items: center;
+}
+
+.title-artist-section {
+  padding-top: 2rem;
+  padding-bottom: 1rem;
+}
+
+.journalist-pfp {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  justify-content: center;
+  align-content: center;
+}
+
+/* Additional spacing for mobile devices */
+@media (max-width: 768px) {
+  .album-container {
+    padding: 2rem 1rem;
+  }
+  .album-content {
+    margin-bottom: 1.5rem;
+  }
+}
+
+
+.debug-border-red {
+  border: 1px solid red;
+}
+
+.debug-border-green {
+  border: 1px solid green;
+}
+
+.debug-border-blue {
+  border: 1px solid blue;
+}
