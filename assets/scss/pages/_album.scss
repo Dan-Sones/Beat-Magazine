@@ -19,9 +19,11 @@
 }
 
 .album-container {
-  padding: 3rem;
-  margin-top: 7vh;
-  padding-top: 2vh;
+  margin-top: 4vh;
+  padding: 2vh 2rem 2rem;
+}
+
+.journalist-review-pane {
 }
 
 .info-stats {
@@ -34,6 +36,14 @@
   padding-bottom: 1rem;
 }
 
+.journalist-pfp {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  justify-content: center;
+  align-content: center;
+}
+
 /* Additional spacing for mobile devices */
 @media (max-width: 768px) {
   .album-container {
@@ -43,6 +53,7 @@
     margin-bottom: 1.5rem;
   }
 }
+
 
 .debug-border-red {
   border: 1px solid red;
