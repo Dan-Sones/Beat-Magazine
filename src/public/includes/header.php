@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
 
 </head>
-<body class="bg-light text-dark d-flex flex-column min-vh-100">
+<body class="bg-light text-dark d-flex flex-column">
 <div class="wrapper">
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">

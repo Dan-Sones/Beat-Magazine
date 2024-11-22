@@ -20,13 +20,14 @@ $text-primary: $brand-dark;
 html, body {
   height: 100%;
   font-family: "Outfit", sans-serif;
+}
 
+footer {
+  flex-shrink: 0;
 }
 
 .wrapper {
-  display: flex;
-  flex-direction: column;
-
+  flex: 1 0 auto;
 }
 
 main {
