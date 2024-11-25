@@ -158,7 +158,7 @@
                     </script>
 
                     <?php else: ?>
-                        <p>No albums available.</p>
+                        <p>No album available.</p>
                     <?php endif; ?>
 
                 </div>

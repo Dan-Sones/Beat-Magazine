@@ -3,26 +3,23 @@
 use S246109\BeatMagazine\Controllers\AlbumController;
 use S246109\BeatMagazine\Controllers\AlbumsController;
 
-$request = $_SERVER['REQUEST_URI'];
-
-switch ($request) {
-    case '/' :
+return function ($app) {
+    $app->get('/', function ($request, $response) {
         require_once __DIR__ . '/../app/Controllers/HomeController.php';
         $controller = new HomeController();
-        $controller->index();
-        break;
-    case '/albums' :
+        return $controller->index($request, $response);
+    });
+
+    $app->get('/albums', function ($request, $response) {
         require_once __DIR__ . '/../app/Controllers/AlbumsController.php';
         $controller = new AlbumsController();
-        $controller->index();
-        break;
-    case '/album' :
+        return $controller->index($request, $response);
+    });
+
+    $app->get('/album/{artistName}/{albumName}', function ($request, $response, $args) use ($app) {
         require_once __DIR__ . '/../app/Controllers/AlbumController.php';
-        $controller = new AlbumController();
-        $controller->index();
-        break;
-    default:
-        http_response_code(404);
-        echo 'Page not found';
-        break;
-}
+        $albumFactory = $app->getContainer()->get(\S246109\BeatMagazine\Factories\AlbumFactory::class);
+        $controller = new AlbumController($albumFactory);
+        return $controller->show($request, $response, $args);
+    });
+};
