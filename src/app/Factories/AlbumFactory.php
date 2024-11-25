@@ -30,6 +30,10 @@ class AlbumFactory
 
         $albumData = $statement->fetch(PDO::FETCH_ASSOC);
 
+        if ($albumData === false) {
+            return null;
+        }
+
         return new Album(
             $albumData['album_art'],
             $albumData['name'],
@@ -41,6 +45,37 @@ class AlbumFactory
             $albumData['release_date'],
             [new Song("1", "Example", '2:11')] // Pass an empty array for songs since they are ignored
         );
+    }
+
+    public function getAllAlbums(): ?array
+    {
+        $query = '
+        SELECT album_art, name, artist_name, genre, record_label, 
+               average_user_rating, journalist_rating, release_date
+        FROM albums ';
+
+        $statement = $this->db->prepare($query);
+        $statement->execute();
+
+        if ($statement->rowCount() === 0) {
+            return null;
+        }
+
+        while ($albumData = $statement->fetch(PDO::FETCH_ASSOC)) {
+            $albums[] = new Album(
+                $albumData['album_art'],
+                $albumData['name'],
+                $albumData['artist_name'],
+                $albumData['genre'],
+                $albumData['record_label'],
+                $albumData['average_user_rating'],
+                $albumData['journalist_rating'],
+                $albumData['release_date'],
+                [new Song("1", "Example", '2:11')] // Pass an empty array for songs since they are ignored
+            );
+        }
+
+        return $albums;
     }
 
 

@@ -25,11 +25,9 @@ class AlbumController
         ob_start();
         include __DIR__ . '/../Views/album.php';
         $output = ob_get_clean();
-
         $response->getBody()->write($output);
+
         return $response;
-
-
     }
 
 }

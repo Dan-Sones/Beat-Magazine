@@ -158,7 +158,8 @@
                     </script>
 
                     <?php else: ?>
-                        <p>No album available.</p>
+                        <!--                        TOOD: ask journalist to create here-->
+                        <p>404: Album not Found</p>
                     <?php endif; ?>
 
                 </div>

@@ -10,9 +10,10 @@ return function ($app) {
         return $controller->index($request, $response);
     });
 
-    $app->get('/albums', function ($request, $response) {
+    $app->get('/albums', function ($request, $response) use ($app) {
         require_once __DIR__ . '/../app/Controllers/AlbumsController.php';
-        $controller = new AlbumsController();
+        $albumFactory = $app->getContainer()->get(\S246109\BeatMagazine\Factories\AlbumFactory::class);
+        $controller = new AlbumsController($albumFactory);
         return $controller->index($request, $response);
     });
 
