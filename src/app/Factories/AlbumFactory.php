@@ -18,7 +18,7 @@ class AlbumFactory
     public function getAlbumByName(string $name, string $artistName): ?Album
     {
         $query = '
-        SELECT album_art, name, artist_name, genre, record_label, 
+        SELECT id, album_art, name, artist_name, genre, record_label, 
                average_user_rating, journalist_rating, release_date
         FROM albums
         WHERE name = :album_name AND artist_name = :artist_name
@@ -34,6 +34,20 @@ class AlbumFactory
             return null;
         }
 
+        $songQuery = '
+        SELECT id, name, length FROM songs WHERE album_id = :album_id
+    ';
+
+        $songStatement = $this->db->prepare($songQuery);
+        $songStatement->bindValue(':album_id', $albumData['id'], PDO::PARAM_INT);
+        $songStatement->execute();
+
+        $songs = [];
+
+        while ($songData = $songStatement->fetch(PDO::FETCH_ASSOC)) {
+            $songs[] = new Song($songData['id'], $songData['name'], $songData['length']);
+        }
+
         return new Album(
             $albumData['album_art'],
             $albumData['name'],
@@ -43,7 +57,7 @@ class AlbumFactory
             $albumData['average_user_rating'],
             $albumData['journalist_rating'],
             $albumData['release_date'],
-            [new Song("1", "Example", '2:11')] // Pass an empty array for songs since they are ignored
+            $songs
         );
     }
 

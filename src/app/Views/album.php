@@ -49,7 +49,7 @@
                             <div class="row align-items-center">
                                 <!-- Profile Picture and Journalist Info -->
                                 <div class="col-md-3 d-flex flex-column align-items-center">
-                                    <img src="images/journalist4.jpg" class="img-fluid rounded-circle p-2"
+                                    <img src="/images/journalist4.jpg" class="img-fluid rounded-circle p-2"
                                          style="width: 130px; height: 130px; object-fit: cover">
                                     <h5 class="mt-2">Amy Jordan</h5>
                                     <p class="text-muted text-center">
@@ -93,8 +93,6 @@
                         <!-- Content to Toggle -->
                         <div id="tracklist" class="mt-3" style="display: none;">
                             <ul class="list-group">
-
-
                                 <?php if (sizeof($album->getSongs()) < 1): ?>
                                     <p>No tracks found.</p>
                                 <?php else: ?>
