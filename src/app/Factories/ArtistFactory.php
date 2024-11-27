@@ -19,30 +19,29 @@ class ArtistFactory
 
     public function getArtistByName(string $name): ?Artist
     {
+        $query = '
+       SELECT 
+           artists.name AS artist_name,
+           artists.bio AS artist_bio,
+           artists.genre AS artist_genre
+         FROM artists
+       WHERE artists.name = :name LIMIT 1
+    ';
+
+        $statement = $this->db->prepare($query);
+        $statement->bindParam(':name', $name, PDO::PARAM_STR);
+        $statement->execute();
+
+        $artistData = $statement->fetch(PDO::FETCH_ASSOC);
+
+        if (empty($artistData)) {
+            return null;
+        }
+
         return new Artist(
-            "Jai Paul",
-            "Electronic",
-            [
-                new Album(
-                    1,
-                    "/images/baitones.jpg",
-                    "Leak 04-13 (Bait Ones)",
-                    "Jai Paul",
-                    "Electronic",
-                    "XL Recordings",
-                    4.5,
-                    4.8,
-                    "2019-06-01",
-                    [
-                        new Song(1, "One of the Bredrins", "0:10"),
-                        new Song(2, "Str8 Outta Mumbai", "2:42"),
-                        // Additional songs here...
-                    ]
-                )
-            ],
-            [
-                "Jai Paul's music is a mesmerizing blend of electronic innovation and pop melodies, often heralded as groundbreaking."
-            ]
+            $artistData['artist_name'],
+            $artistData['artist_genre'],
+            $artistData['artist_bio']
         );
 
     }

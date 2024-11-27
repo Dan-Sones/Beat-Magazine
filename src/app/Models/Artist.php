@@ -6,21 +6,18 @@ class Artist
 {
     private string $name;
     private string $genre;
-    private array $albums;
-    private array $reviews;
+    private string $bio;
 
     /**
      * @param string $name
      * @param string $genre
-     * @param array $albums
-     * @param array $reviews
+     * @param string $bio
      */
-    public function __construct(string $name, string $genre, array $albums, array $reviews)
+    public function __construct(string $name, string $genre, string $bio)
     {
         $this->name = $name;
         $this->genre = $genre;
-        $this->albums = $albums;
-        $this->reviews = $reviews;
+        $this->bio = $bio;
     }
 
     public function getName(): string
@@ -33,14 +30,9 @@ class Artist
         return $this->genre;
     }
 
-    public function getAlbums(): array
+    public function getBio(): string
     {
-        return $this->albums;
-    }
-
-    public function getReviews(): array
-    {
-        return $this->reviews;
+        return $this->bio;
     }
 
 
