@@ -2,6 +2,7 @@
 
 use S246109\BeatMagazine\Controllers\AlbumController;
 use S246109\BeatMagazine\Controllers\AlbumsController;
+use S246109\BeatMagazine\Controllers\ArtistController;
 use S246109\BeatMagazine\Factories\AlbumFactory;
 use S246109\BeatMagazine\Factories\ArtistFactory;
 use S246109\BeatMagazine\Factories\JournalistReviewFactory;
@@ -23,7 +24,7 @@ return function ($app) {
     $app->get('/artist/{artistName}', function ($request, $response, $args) use ($app) {
         require_once __DIR__ . '/../app/Controllers/AlbumController.php';
         $artistFactory = $app->getContainer()->get(ArtistFactory::class);
-        $controller = new \S246109\BeatMagazine\Controllers\ArtistController($artistFactory);
+        $controller = new ArtistController($artistFactory);
         return $controller->show($request, $response, $args);
     });
 

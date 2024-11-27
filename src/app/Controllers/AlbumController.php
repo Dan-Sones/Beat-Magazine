@@ -27,9 +27,7 @@ class AlbumController
         $album = $this->albumFactory->getAlbumByName($albumName, $artistName);
 
         $journalistReview = $this->journalistReviewFactory->getJournalistReviewForAlbum($album->getAlbumID());
-
-        var_dump($journalistReview);
-
+        
         ob_start();
         include __DIR__ . '/../Views/album.php';
         $output = ob_get_clean();

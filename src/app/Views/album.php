@@ -3,7 +3,7 @@
     <main class="album-wrapper">
         <div class="container-fluid">
             <div class="row justify-content-center">
-                <div class="col-lg-8 col-md-10 col-sm-12">
+                <div class="col-xl-8 col-lg-10 col-md-10 col-sm-12">
                     <div class="album-container shadow-sm bg-body-secondary">
 
                         <?php if (isset($album) && $album): ?>
