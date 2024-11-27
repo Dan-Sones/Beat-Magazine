@@ -18,11 +18,20 @@ class AlbumFactory
     public function getAlbumByName(string $name, string $artistName): ?Album
     {
         $query = '
-        SELECT id, album_art, name, artist_name, genre, record_label, 
-               average_user_rating, journalist_rating, release_date
-        FROM albums
-        WHERE name = :album_name AND artist_name = :artist_name
-    ';
+    SELECT 
+        albums.id, 
+        albums.album_art, 
+        albums.name AS album_name, 
+        artists.name AS artist_name, 
+        albums.genre, 
+        albums.record_label, 
+        albums.average_user_rating, 
+        albums.journalist_rating, 
+        albums.release_date
+    FROM albums
+    INNER JOIN artists ON albums.artist_id = artists.id
+    WHERE albums.name = :album_name AND artists.name = :artist_name
+';
         $statement = $this->db->prepare($query);
         $statement->bindValue(':album_name', $name, PDO::PARAM_STR);
         $statement->bindValue(':artist_name', $artistName, PDO::PARAM_STR);
@@ -49,8 +58,9 @@ class AlbumFactory
         }
 
         return new Album(
+            $albumData['id'],
             $albumData['album_art'],
-            $albumData['name'],
+            $albumData['album_name'],
             $albumData['artist_name'],
             $albumData['genre'],
             $albumData['record_label'],
@@ -64,9 +74,19 @@ class AlbumFactory
     public function getAllAlbums(): ?array
     {
         $query = '
-        SELECT album_art, name, artist_name, genre, record_label, 
-               average_user_rating, journalist_rating, release_date
-        FROM albums ';
+    SELECT 
+        albums.id,
+        albums.album_art, 
+        albums.name AS album_name, 
+        artists.name AS artist_name, 
+        albums.genre, 
+        albums.record_label, 
+        albums.average_user_rating, 
+        albums.journalist_rating, 
+        albums.release_date
+    FROM albums
+    INNER JOIN artists ON albums.artist_id = artists.id
+';
 
         $statement = $this->db->prepare($query);
         $statement->execute();
@@ -77,8 +97,9 @@ class AlbumFactory
 
         while ($albumData = $statement->fetch(PDO::FETCH_ASSOC)) {
             $albums[] = new Album(
+                $albumData['id'],
                 $albumData['album_art'],
-                $albumData['name'],
+                $albumData['album_name'],
                 $albumData['artist_name'],
                 $albumData['genre'],
                 $albumData['record_label'],

@@ -1,9 +1,10 @@
 <?php
 
 use DI\ContainerBuilder;
-use Dotenv\Dotenv;
 use Psr\Container\ContainerInterface;
 use S246109\BeatMagazine\Factories\AlbumFactory;
+use S246109\BeatMagazine\Factories\ArtistFactory;
+use S246109\BeatMagazine\Factories\JournalistReviewFactory;
 
 return function (ContainerBuilder $containerBuilder) {
     $containerBuilder->addDefinitions([
@@ -26,6 +27,12 @@ return function (ContainerBuilder $containerBuilder) {
         },
         AlbumFactory::class => function (ContainerInterface $c) {
             return new AlbumFactory($c->get(PDO::class));
+        },
+        ArtistFactory::class => function (ContainerInterface $c) {
+            return new ArtistFactory($c->get(PDO::class));
+        },
+        JournalistReviewFactory::class => function (ContainerInterface $c) {
+            return new JournalistReviewFactory($c->get(PDO::class));
         },
     ]);
 };

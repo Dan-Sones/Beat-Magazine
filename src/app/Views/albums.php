@@ -33,7 +33,7 @@
                         const title = card.querySelector('.album-title').textContent;
                         const encodedArtist = encodeURIComponent(artist).replace(/%20/g, '+');
                         const encodedTitle = encodeURIComponent(title).replace(/%20/g, '+');
-                        window.location.href = `/album/${encodedArtist}/${encodedTitle}`;
+                        window.location.href = `/artist/${encodedArtist}/${encodedTitle}`;
                     }
                 });
             });

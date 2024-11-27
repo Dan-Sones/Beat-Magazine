@@ -46,40 +46,36 @@
 
                     <div class="container mt-3 pt-2">
                         <div class="card p-4 shadow-sm">
-                            <div class="row align-items-center">
-                                <!-- Profile Picture and Journalist Info -->
-                                <div class="col-md-3 d-flex flex-column align-items-center">
-                                    <img src="/images/journalist4.jpg" class="img-fluid rounded-circle p-2"
-                                         style="width: 130px; height: 130px; object-fit: cover">
-                                    <h5 class="mt-2">Amy Jordan</h5>
-                                    <p class="text-muted text-center">
-                                        Senior music journalist at <strong>BeatMagazine</strong> with
-                                        over a decade of experience covering electronic and experimental
-                                        music.
-                                    </p>
-                                </div>
+                            <?php if (isset($journalistReview) && $journalistReview): ?>
 
-                                <!-- Beat Magazine Score -->
-                                <div class="col-md-3 text-center">
-                                    <h2>Rating:</h2>
-                                    <h2>8/10</h2>
-                                </div>
+                                <div class="row align-items-center">
+                                    <!-- Profile Picture and Journalist Info -->
+                                    <div class="col-md-3 d-flex flex-column align-items-center">
+                                        <img src="<?= $journalistReview->getJournalist()->getProfilePicture() ?>"
+                                             class="img-fluid rounded-circle p-2"
+                                             style="width: 130px; height: 130px; object-fit: cover">
+                                        <h5 class="mt-2"><?= $journalistReview->getJournalist()->getName() ?></h5>
+                                        <p class="text-muted text-center">
+                                            <?= $journalistReview->getJournalist()->getBio() ?>
+                                        </p>
+                                    </div>
 
-                                <!-- Review Text -->
-                                <div class="col-md-6">
-                                    <p>
-                                        Jai Paul’s Bait Ones stands as a cultural phenomenon—an album born from
-                                        an unauthorized leak yet celebrated as a genre-defying masterpiece.
-                                        Blending R&B, funk, electronica, and experimental pop, Paul’s music
-                                        invites listeners into a world that’s both raw and meticulously crafted.
-                                        Tracks like “BTSTU” and “Jasmine” showcase his signature fusion of
-                                        vulnerability and swagger, offering poignant lyrics over lush,
-                                        unpredictable arrangements. With shimmering Bollywood strings, glitchy
-                                        beats, and fractured song structures, Bait Ones feels like a sonic
-                                        diary—intimate, chaotic, and breathtakingly innovative.
-                                    </p>
+                                    <!-- Beat Magazine Score -->
+                                    <div class="col-md-3 text-center">
+                                        <h2>Rating:</h2>
+                                        <h2><?= $journalistReview->getRating() ?>/10</h2>
+                                    </div>
+
+                                    <!-- Review Text -->
+                                    <div class="col-md-6">
+                                        <p>
+                                            <?= $journalistReview->getReview() ?>
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
+                            <?php else: ?>
+                                <p>There is currently not a review present for this album</p>
+                            <?php endif; ?>
                         </div>
                     </div>
 
