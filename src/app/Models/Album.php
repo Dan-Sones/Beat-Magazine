@@ -4,27 +4,32 @@ namespace S246109\BeatMagazine\Models;
 
 class Album
 {
-    private $albumArt;
-    private $albumName;
-    private $artistName;
-    private $genre;
-    private $label;
-    private $averageUserRating;
-    private $journalistRating;
-    private $releaseDate;
-    private $songs;
+    private int $albumID;
+    private string $albumArt;
+    private string $albumName;
+    private string $artistName;
+    private string $genre;
+    private string $label;
+    private string $averageUserRating;
+    private string $journalistRating;
+    private string $releaseDate;
+    private array $songs;
 
     /**
-     * @param $albumArt
-     * @param $albumName
-     * @param $artistName
-     * @param $genre
-     * @param $label
-     * @param $averageUserRating
-     * @param $journalistRating
+     * @param int $albumID
+     * @param string $albumArt
+     * @param string $albumName
+     * @param string $artistName
+     * @param string $genre
+     * @param string $label
+     * @param string $averageUserRating
+     * @param string $journalistRating
+     * @param string $releaseDate
+     * @param array $songs
      */
-    public function __construct($albumArt, $albumName, $artistName, $genre, $label, $averageUserRating, $journalistRating, $releaseDate, $songs)
+    public function __construct(int $albumID, string $albumArt, string $albumName, string $artistName, string $genre, string $label, string $averageUserRating, string $journalistRating, string $releaseDate, array $songs)
     {
+        $this->albumID = $albumID;
         $this->albumArt = $albumArt;
         $this->albumName = $albumName;
         $this->artistName = $artistName;
@@ -36,76 +41,55 @@ class Album
         $this->songs = $songs;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getSongs()
+
+    public function getAlbumID(): int
     {
-        return $this->songs;
+        return $this->albumID;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getAlbumArt()
+    public function getAlbumArt(): string
     {
         return $this->albumArt;
     }
 
-    /**
-     * @return string
-     */
-    public function getAlbumName()
+    public function getAlbumName(): string
     {
         return $this->albumName;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getArtistName()
+    public function getArtistName(): string
     {
         return $this->artistName;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getGenre()
+    public function getGenre(): string
     {
         return $this->genre;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getLabel()
+    public function getLabel(): string
     {
         return $this->label;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getAverageUserRating()
+    public function getAverageUserRating(): string
     {
         return $this->averageUserRating;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getJournalistRating()
+    public function getJournalistRating(): string
     {
         return $this->journalistRating;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getReleaseDate()
+    public function getReleaseDate(): string
     {
         return $this->releaseDate;
+    }
+
+    public function getSongs(): array
+    {
+        return $this->songs;
     }
 
 

@@ -21,6 +21,23 @@
                 <?php endif; ?>
             </div>
         </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const container = document.querySelector('.albums-container .container-fluid');
+
+                container.addEventListener('click', (event) => {
+                    const card = event.target.closest('.album-card');
+                    if (card) {
+                        const artist = card.querySelector('.album-artist').textContent;
+                        const title = card.querySelector('.album-title').textContent;
+                        const encodedArtist = encodeURIComponent(artist).replace(/%20/g, '+');
+                        const encodedTitle = encodeURIComponent(title).replace(/%20/g, '+');
+                        window.location.href = `/artist/${encodedArtist}/${encodedTitle}`;
+                    }
+                });
+            });
+        </script>
     </main>
 
 <?php include 'includes/footer.php'; ?>

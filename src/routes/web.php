@@ -2,27 +2,15 @@
 
 use S246109\BeatMagazine\Controllers\AlbumController;
 use S246109\BeatMagazine\Controllers\AlbumsController;
+use S246109\BeatMagazine\Controllers\ArtistController;
+use Slim\App;
 
-$request = $_SERVER['REQUEST_URI'];
+return function (App $app) {
+    $app->get('/', HomeController::class . ':index');
 
-switch ($request) {
-    case '/' :
-        require_once __DIR__ . '/../app/Controllers/HomeController.php';
-        $controller = new HomeController();
-        $controller->index();
-        break;
-    case '/albums' :
-        require_once __DIR__ . '/../app/Controllers/AlbumsController.php';
-        $controller = new AlbumsController();
-        $controller->index();
-        break;
-    case '/album' :
-        require_once __DIR__ . '/../app/Controllers/AlbumController.php';
-        $controller = new AlbumController();
-        $controller->index();
-        break;
-    default:
-        http_response_code(404);
-        echo 'Page not found';
-        break;
-}
+    $app->get('/albums', AlbumsController::class . ':index');
+
+    $app->get('/artist/{artistName}', ArtistController::class . ':show');
+
+    $app->get('/artist/{artistName}/{albumName:.+}', AlbumController::class . ':show');
+};
