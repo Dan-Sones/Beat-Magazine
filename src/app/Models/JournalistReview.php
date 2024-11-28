@@ -6,17 +6,22 @@ class JournalistReview
 {
 
     private int $rating;
+    private string $abstract;
+
     private string $review;
+
     private Journalist $journalist;
 
     /**
      * @param int $rating
+     * @param string $abstract
      * @param string $review
      * @param Journalist $journalist
      */
-    public function __construct(int $rating, string $review, Journalist $journalist)
+    public function __construct(int $rating, string $abstract, string $review, Journalist $journalist)
     {
         $this->rating = $rating;
+        $this->abstract = $abstract;
         $this->review = $review;
         $this->journalist = $journalist;
     }
@@ -24,6 +29,11 @@ class JournalistReview
     public function getRating(): int
     {
         return $this->rating;
+    }
+
+    public function getAbstract(): string
+    {
+        return $this->abstract;
     }
 
     public function getReview(): string

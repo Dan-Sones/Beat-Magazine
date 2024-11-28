@@ -24,7 +24,8 @@ class JournalistReviewFactory
     SELECT 
         journalist_reviews.id AS review_id,
         journalist_reviews.rating AS review_rating,
-        journalist_reviews.review AS review_text,
+        journalist_reviews.abstract AS review_abstract,
+        journalist_reviews.full_review AS review_text,
         CONCAT(journalists.first_name, " ", journalists.last_name) AS journalist_full_name,
         journalists.profile_picture AS journalist_profile_picture,
         journalists.bio AS journalist_bio
@@ -37,19 +38,20 @@ class JournalistReviewFactory
         $statement->bindParam(':album_id', $albumId, PDO::PARAM_INT);
         $statement->execute();
 
-        $journalistReviewData = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $journalistReviewData = $statement->fetch(PDO::FETCH_ASSOC);
 
 
         $journalist = new Journalist(
-            $journalistReviewData[0]['journalist_full_name'],
-            $journalistReviewData[0]['journalist_profile_picture'],
-            $journalistReviewData[0]['journalist_bio']
+            $journalistReviewData['journalist_full_name'],
+            $journalistReviewData['journalist_profile_picture'],
+            $journalistReviewData['journalist_bio']
         );
 
 
         return new JournalistReview(
-            $journalistReviewData[0]['review_rating'],
-            $journalistReviewData[0]['review_text'],
+            $journalistReviewData['review_rating'],
+            $journalistReviewData['review_abstract'],
+            $journalistReviewData['review_text'],
             $journalist
         );
     }

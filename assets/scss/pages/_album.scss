@@ -54,6 +54,25 @@
   }
 }
 
+.review-card {
+  transition: all 0.4s ease-in-out;
+}
+
+.review-full-container {
+  overflow: hidden;
+  transition: height 0.8s ease-in-out;
+}
+
+.read-more-btn {
+  color: #007bff;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.read-more-btn:hover {
+  text-decoration: none;
+}
+
 
 .debug-border-red {
   border: 1px solid red;

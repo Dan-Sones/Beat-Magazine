@@ -17,6 +17,11 @@ $body-color: $brand-dark;
 
 $text-primary: $brand-dark;
 
+
+:root {
+  interpolate-size: allow-keywords; /* 👈 */
+}
+
 html, body {
   height: 100%;
   font-family: "Outfit", sans-serif;
