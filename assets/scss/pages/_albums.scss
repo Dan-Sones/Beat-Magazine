@@ -1,9 +1,11 @@
 .albums-container {
-  padding-top: 7vh;
-  height: 100%;
   width: 100%;
-  padding-bottom: 7vh;
   justify-content: center;
+}
+
+.grid-container {
+  padding-top: 7vh;
+  padding-bottom: 7vh;
 }
 
 .album-card {

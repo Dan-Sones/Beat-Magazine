@@ -129,7 +129,7 @@
                 </script>
 
 
-                <div class="container mt-3">
+                <div class="container mt-3 mb-5">
                     <div class="text-center mb-3">
                         <button id="tracklistButton" class="btn btn-primary">Tracklist</button>
                         <button id="reviewButton" class="btn btn-secondary">Reviews</button>
