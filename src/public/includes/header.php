@@ -13,7 +13,6 @@
 </head>
 <body class="bg-light text-dark d-flex flex-column">
 <div class="wrapper">
-    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="#">Beat Magazine</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -26,7 +25,7 @@
                     <a class="nav-link text-light">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-light">Albums</a>
+                    <a href="/albums" class="nav-link text-light">Albums</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-light">Artists</a>
