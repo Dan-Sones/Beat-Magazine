@@ -3,7 +3,7 @@
     <main class="register-wrapper d-flex justify-content-center align-items-center">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-12 col-md-8 col-lg-6">
+                <div class="col-xl-4 col-xs-10">
                     <div id="registrationCarousel" class="carousel slide" data-bs-interval="false">
                         <div class="carousel-inner">
                             <div class="carousel-item active">

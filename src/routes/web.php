@@ -15,5 +15,6 @@ return function (App $app) {
 
     $app->get('/artist/{artistName}', ArtistController::class . ':show');
 
-    $app->get('/artist/{artistName}/{albumName:.+}', AlbumController::class . ':show');
+
+    $app->get('/artist/{artistName}/{albumName}', AlbumController::class . ':show');
 };

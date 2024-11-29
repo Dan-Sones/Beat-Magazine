@@ -85,7 +85,7 @@ class AlbumFactory
         albums.journalist_rating, 
         albums.release_date
     FROM albums
-    INNER JOIN artists ON albums.arti qst_id = artists.id
+    INNER JOIN artists ON albums.artist_id = artists.id
 ';
 
         $statement = $this->db->prepare($query);
@@ -106,7 +106,7 @@ class AlbumFactory
                 $albumData['average_user_rating'],
                 $albumData['journalist_rating'],
                 $albumData['release_date'],
-                [] //We don't need the songs but the constructor requires it
+                [new Song("1", "Example", '2:11')] //We don't need the songs but the constructor requires i
             );
         }
 
