@@ -2,6 +2,10 @@
 @import "../../node_modules/bootstrap/scss/variables";
 @import "../../node_modules/bootstrap/scss/bootstrap";
 
+//TODO change this back to the original local path
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css");
+
+
 $brand-light: #F1F6F9;
 $brand-secondary-light: #9BA4B5;
 $brand-muted: #394867;
@@ -17,6 +21,16 @@ $body-color: $brand-dark;
 
 $text-primary: $brand-dark;
 
+$error: #dc3545;
+$success: #28a745;
+
+.icon-success {
+  color: $success;
+}
+
+.icon-error {
+  color: $error;
+}
 
 :root {
   interpolate-size: allow-keywords; /* 👈 */

@@ -1,6 +1,10 @@
 <?php
 
-class UserModel
+namespace S246109\BeatMagazine\Models;
+
+use PDO;
+
+class User
 {
     private $db;
 

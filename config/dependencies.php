@@ -5,6 +5,7 @@ use Psr\Container\ContainerInterface;
 use S246109\BeatMagazine\Factories\AlbumFactory;
 use S246109\BeatMagazine\Factories\ArtistFactory;
 use S246109\BeatMagazine\Factories\JournalistReviewFactory;
+use S246109\BeatMagazine\services\UserService;
 
 return function (ContainerBuilder $containerBuilder) {
     $containerBuilder->addDefinitions([
@@ -33,6 +34,9 @@ return function (ContainerBuilder $containerBuilder) {
         },
         JournalistReviewFactory::class => function (ContainerInterface $c) {
             return new JournalistReviewFactory($c->get(PDO::class));
+        },
+        UserService::class => function (ContainerInterface $c) {
+            return new UserService($c->get(PDO::class));
         },
     ]);
 };
