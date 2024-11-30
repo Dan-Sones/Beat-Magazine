@@ -162,7 +162,9 @@
                                             const handleTaken = async (taken, targetElementID) => {
                                                     console.log('handleTaken', taken, targetElementID);
                                                     if (taken === true) {
-                                                        document.getElementById(targetElementID).innerHTML = '<i class="bi bi-slash-circle icon-error"></i>'
+                                                        const tooltipContents = `This ${targetElementID === 'emailStatus' ? 'email' : 'username'} is already taken`;
+                                                        document.getElementById(targetElementID).innerHTML = `<i data-bs-toggle="tooltip" class="bi bi-slash-circle icon-error"></i>`
+                                                        document.getElementById(targetElementID).setAttribute("title", tooltipContents);
                                                         document.querySelector('button[type="submit"]').disabled = true;
                                                     } else {
                                                         document.getElementById(targetElementID).innerHTML = '<i class="bi bi-check-circle-fill icon-success"></i>';
