@@ -62,6 +62,7 @@ class RegisterController
     public function submit(Request $request, Response $response, array $args): Response
     {
         $data = $request->getParsedBody();
+        var_dump($data);
         $username = $data['username'];
         $email = $data['email'];
         $firstName = $data['firstName'];

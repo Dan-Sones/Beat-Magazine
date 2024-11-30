@@ -19,6 +19,11 @@
                                         <input type="email" class="form-control" id="email"
                                                placeholder="Enter email" required>
                                     </div>
+                                    <div class="mb-3">
+                                        <label for="password" class="form-label">Password</label>
+                                        <input type="password" class="form-control" id="password"
+                                               placeholder="Enter password" required>
+                                    </div>
                                     <div class="d-flex justify-content-center">
                                         <button class=" btn btn-primary next-btn me-2
                                     " type="button"
@@ -57,7 +62,7 @@
 
                             <div class="carousel-item">
                                 <h3 class="mb-4 text-center">Step 3: Confirm Details</h3>
-                                <form id="step3Form">
+                                <form id="step3Form" onsubmit="submitForm(event)">
                                     <p class="text-center">Please review your details and click submit.</p>
 
                                     <div class="confirm-details">
@@ -220,6 +225,25 @@
                                                 });
                                             });
 
+                                            const submitForm = async (event) => {
+                                                event.preventDefault();
+                                                const data = new FormData();
+                                                data.set("username", document.getElementById("username").value);
+                                                data.set("email", document.getElementById("email").value);
+                                                data.set("firstName", document.getElementById("firstName").value);
+                                                data.set("lastName", document.getElementById("lastName").value);
+                                                data.set("password", document.getElementById("password").value);
+                                                const response = await fetch('/api/register', {
+                                                    method: 'POST',
+                                                    content_type: 'form-data',
+                                                    body: data
+                                                });
+                                                if (response.ok) {
+                                                    alert('Registration successful');
+                                                } else {
+                                                    alert('Registration failed');
+                                                }
+                                            };
 
                                         </script>
 

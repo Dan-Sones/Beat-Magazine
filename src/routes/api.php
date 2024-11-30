@@ -8,6 +8,6 @@ return function (App $app) {
     $app->group('/api', function (RouteCollectorProxy $group) {
         $group->get('/register/isUsernameTaken', [RegisterController::class, 'isUsernameTaken']);
         $group->get('/register/isEmailTaken', [RegisterController::class, 'isEmailTaken']);
-        $group->post('/register/submit', [RegisterController::class, 'submit']);
+        $group->post('/register', [RegisterController::class, 'submit']);
     });
 };
