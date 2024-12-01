@@ -3,7 +3,7 @@
     <main class="register-wrapper d-flex justify-content-center align-items-center">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-xl-4 col-xs-10">
+                <div class="col-12 col-md-8 col-lg-6 col-sm-6">
                     <div id="registrationCarousel" class="carousel slide" data-bs-interval="false">
                         <div class="carousel-inner">
                             <div class="carousel-item active">
@@ -164,16 +164,14 @@
                                                 });
                                             };
 
+
                                             const handleTaken = async (taken, targetElementID) => {
-                                                    console.log('handleTaken', taken, targetElementID);
                                                     if (taken === true) {
                                                         const tooltipContents = `This ${targetElementID === 'emailStatus' ? 'email' : 'username'} is already taken`;
                                                         document.getElementById(targetElementID).innerHTML = `<i data-bs-toggle="tooltip" class="bi bi-slash-circle icon-error"></i>`
                                                         document.getElementById(targetElementID).setAttribute("title", tooltipContents);
-                                                        document.querySelector('button[type="submit"]').disabled = true;
                                                     } else {
                                                         document.getElementById(targetElementID).innerHTML = '<i class="bi bi-check-circle-fill icon-success"></i>';
-                                                        document.querySelector('button[type="submit"]').disabled = false;
                                                     }
                                                 }
                                             ;
@@ -216,6 +214,15 @@
                                                             isEmailTaken(document.getElementById('email').value),
                                                             isUsernameTaken(document.getElementById('username').value)
                                                         ]).then(([emailTaken, usernameTaken]) => {
+
+                                                            if (emailTaken === false && usernameTaken === false) {
+                                                                document.querySelector('button[type="submit"]').disabled = false;
+                                                            } else {
+                                                                document.querySelector('button[type="submit"]').disabled = true;
+                                                            }
+
+                                                            document.querySelector('button[type="submit"]').disabled = true;
+
                                                             handleEmailTaken(emailTaken);
                                                             handleUsernameTaken(usernameTaken);
                                                         });
@@ -226,6 +233,7 @@
                                             });
 
                                             const submitForm = async (event) => {
+                                                // Prevent form from submitting normally
                                                 event.preventDefault();
                                                 const data = new FormData();
                                                 data.set("username", document.getElementById("username").value);
