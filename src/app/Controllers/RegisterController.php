@@ -4,23 +4,29 @@ namespace S246109\BeatMagazine\Controllers;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use S246109\BeatMagazine\services\UserService;
+use S246109\BeatMagazine\Services\UserService;
+use RobThree\Auth\TwoFactorAuth;
+use RobThree\Auth\Providers\Qr\BaconQrCodeProvider;
 
 class RegisterController
 {
 
-    private userService $userService;
+    private UserService $userService;
 
-    /**
-     * @param UserService $userService
-     */
     public function __construct(UserService $userService)
     {
         $this->userService = $userService;
+        session_start();
     }
 
     public function index(Request $request, Response $response, array $args): Response
     {
+
+        $tfa = new TwoFactorAuth(new BaconQrCodeProvider());
+
+        $google2faSecret = $tfa->createSecret();
+        $_SESSION['google2faSecret'] = $google2faSecret;
+        $qrCodeUrl = $tfa->getQRCodeImageAsDataUri('BeatMagazine', $google2faSecret);
 
         ob_start();
         include __DIR__ . '/../Views/register.php';
@@ -33,25 +39,25 @@ class RegisterController
 
     public function isUsernameTaken(Request $request, Response $response, array $args): Response
     {
-        // get Username from query params
-        $username = $request->getQueryParams()['username'];
+        $username = $request->getQueryParams()['username'] ?? '';
 
-        // Maybe this should be frontend validation?
-//        if (empty($username) || !is_string($username)) {
-//            return $response->withStatus(400);
-//        }
+        if (empty($username) || !is_string($username)) {
+            return $response->withStatus(400);
+        }
 
         $isUsernameTaken = $this->userService->isUsernameTaken($username);
 
         $response->getBody()->write(json_encode(['taken' => $isUsernameTaken]));
         return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
-
     }
 
     public function isEmailTaken(Request $request, Response $response, array $args): Response
     {
-        // get Email from query params
-        $email = $request->getQueryParams()['email'];
+        $email = $request->getQueryParams()['email'] ?? '';
+
+        if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return $response->withStatus(400);
+        }
 
         $isEmailTaken = $this->userService->isEmailTaken($email);
 
@@ -59,26 +65,47 @@ class RegisterController
         return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
     }
 
+    public function check2FACode(Request $request, Response $response, array $args): Response
+    {
+        $code = $request->getQueryParams()['code'] ?? '';
+
+        if (empty($code) || !is_string($code)) {
+            return $response->withStatus(400);
+        }
+
+        $tfa = new TwoFactorAuth(new BaconQrCodeProvider());
+
+        $isCodeValid = $tfa->verifyCode($this->getGoogle2faSecret(), $code);
+
+        $response->getBody()->write(json_encode(['valid' => $isCodeValid]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
+    }
+
+    public function getGoogle2faSecret(): string
+    {
+        return $_SESSION['google2faSecret'] ?? '';
+    }
+
     public function submit(Request $request, Response $response, array $args): Response
     {
         $data = $request->getParsedBody();
-        var_dump($data);
-        $username = $data['username'];
-        $email = $data['email'];
-        $firstName = $data['firstName'];
-        $lastName = $data['lastName'];
-        $password = $data['password'];
+        $username = $data['username'] ?? '';
+        $email = $data['email'] ?? '';
+        $firstName = $data['firstName'] ?? '';
+        $lastName = $data['lastName'] ?? '';
+        $password = $data['password'] ?? '';
+
+        if (empty($username) || empty($email) || empty($firstName) || empty($lastName) || empty($password)) {
+            return $response->withStatus(400);
+        }
 
         try {
-            $this->userService->registerUser($email, $username, $password, $firstName, $lastName);
+            $this->userService->registerUser($email, $username, $password, $firstName, $lastName, $this->getGoogle2faSecret());
         } catch (\Exception $e) {
             $response->getBody()->write($e->getMessage());
             return $response->withStatus(500);
         }
 
         return $response->withStatus(201);
-
     }
-
-
 }

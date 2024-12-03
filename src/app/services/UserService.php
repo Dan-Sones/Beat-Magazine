@@ -16,11 +16,11 @@ class UserService
         $this->db = $db;
     }
 
-    public function registerUser(string $email, string $username, string $password, string $firstName, string $lastName): void
+    public function registerUser(string $email, string $username, string $password, string $firstName, string $lastName, string $google2fa_secret): void
     {
         $query = '
-            INSERT INTO users (email, username, password, first_name, last_name)
-            VALUES (:email, :username, :password, :first_name, :last_name)
+            INSERT INTO users (email, username, password, first_name, last_name, google2fa_secret)
+            VALUES (:email, :username, :password, :first_name, :last_name, :google2fa_secret)
         ';
 
         $statement = $this->db->prepare($query);
@@ -29,6 +29,7 @@ class UserService
         $statement->bindValue(':password', password_hash($password, PASSWORD_DEFAULT), PDO::PARAM_STR);
         $statement->bindValue(':first_name', $firstName, PDO::PARAM_STR);
         $statement->bindValue(':last_name', $lastName, PDO::PARAM_STR);
+        $statement->bindValue(':google2fa_secret', $google2fa_secret, PDO::PARAM_STR);
         $statement->execute();
     }
 
