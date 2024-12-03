@@ -220,9 +220,6 @@
                                                             } else {
                                                                 document.querySelector('button[type="submit"]').disabled = true;
                                                             }
-
-                                                            document.querySelector('button[type="submit"]').disabled = true;
-
                                                             handleEmailTaken(emailTaken);
                                                             handleUsernameTaken(usernameTaken);
                                                         });
@@ -247,7 +244,8 @@
                                                     body: data
                                                 });
                                                 if (response.ok) {
-                                                    alert('Registration successful');
+                                                    // Redirect to login page
+                                                    window.location.href = '/login';
                                                 } else {
                                                     alert('Registration failed');
                                                 }

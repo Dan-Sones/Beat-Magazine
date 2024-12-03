@@ -6,7 +6,6 @@ use PDO;
 
 class UserService
 {
-
     private PDO $db;
 
     /**
