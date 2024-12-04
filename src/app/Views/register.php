@@ -286,11 +286,8 @@
                 const form = event.target;
                 const formData = new FormData(form);
 
-
                 const code = formData.get('2faCode');
 
-                console.log('Validating code');
-                console.log(code);
                 return await fetch('/api/register/check2faCode?' + new URLSearchParams({
                     "code": code
                 }), {
@@ -313,8 +310,6 @@
 
         <script>
 
-
-            // TODO: Check to see username, password, email meet requirements
 
             const isUsernameTaken = async (username) => {
                 return await fetch('/api/register/isUsernameTaken?' + new URLSearchParams({

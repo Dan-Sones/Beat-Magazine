@@ -38,6 +38,7 @@ return function (ContainerBuilder $containerBuilder) {
         UserService::class => function (ContainerInterface $c) {
             return new UserService($c->get(PDO::class));
         },
+
     ]);
 };
 

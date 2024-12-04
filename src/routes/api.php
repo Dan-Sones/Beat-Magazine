@@ -1,5 +1,6 @@
 <?php
 
+use S246109\BeatMagazine\Controllers\LoginController;
 use S246109\BeatMagazine\Controllers\RegisterController;
 use Slim\App;
 use Slim\Routing\RouteCollectorProxy;
@@ -10,5 +11,6 @@ return function (App $app) {
         $group->get('/register/isEmailTaken', [RegisterController::class, 'isEmailTaken']);
         $group->get('/register/check2faCode', [RegisterController::class, 'check2FACode']);
         $group->post('/register', [RegisterController::class, 'submit']);
+        $group->post('/login', [LoginController::class, 'login']);
     });
 };

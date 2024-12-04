@@ -5,7 +5,7 @@
             <div class="row justify-content-center">
                 <div class="col-10 col-md-8 col-lg-6 col-sm-6">
                     <h2 class="mb-4 text-center">Login</h2>
-                    <form id="loginForm">
+                    <form id="loginForm" onsubmit="submitLoginForm(event)">
                         <div class="mb-3">
                             <label for="email" class="form-label">Email Address</label>
                             <input type="text" class="form-control" id="email"
@@ -22,24 +22,33 @@
                     </form>
 
                     <script>
-                        // TODO: Passwording checking stuff
+
+                        const emailInput = document.getElementById('email');
+                        const passwordInput = document.getElementById('password');
                         const form = document.getElementById('loginForm');
 
-                        const submitForm = async (event) => {
+                        const submitLoginForm = async (event) => {
                             event.preventDefault();
-                            const data = new FormData(form);
+                            const data = {
+                                email: emailInput.value,
+                                password: passwordInput.value
+                            };
                             return await fetch('/api/login', {
                                 method: 'POST',
-                                body: data
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(data)
                             }).then(response => {
+                                console.log(response);
                                 if (response.status === 200) {
                                     window.location.href = '/albums';
                                 } else {
-                                    alert('Invalid credentials');
+                                    emailInput.classList.add('is-invalid');
+                                    passwordInput.classList.add('is-invalid');
                                 }
-                            )
-                            }
-
+                            });
+                        };
 
                     </script>
 
