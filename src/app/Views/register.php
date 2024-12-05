@@ -280,6 +280,7 @@
         <script>
 
 
+            // TODO: Replace with Post request as it's more secture
             const validateAuthenticatorCode = async (event) => {
                 event.preventDefault();
 
@@ -288,7 +289,7 @@
 
                 const code = formData.get('2faCode');
 
-                return await fetch('/api/register/check2faCode?' + new URLSearchParams({
+                return await fetch('/api/register/verify-otp?' + new URLSearchParams({
                     "code": code
                 }), {
                     method: 'GET',

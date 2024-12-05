@@ -23,4 +23,6 @@ $app->addErrorMiddleware(true, true, true);
 (require __DIR__ . '/../routes/web.php')($app);
 (require __DIR__ . '/../routes/api.php')($app);
 
+session_start();
+
 $app->run();

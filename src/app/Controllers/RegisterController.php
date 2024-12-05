@@ -16,7 +16,6 @@ class RegisterController
     public function __construct(UserService $userService)
     {
         $this->userService = $userService;
-        session_start();
     }
 
     public function index(Request $request, Response $response, array $args): Response

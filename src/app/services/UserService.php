@@ -51,4 +51,13 @@ class UserService
         return $statement->fetchColumn() > 0;
     }
 
+    public function getGoogle2fa_secretForUser(int $userID): ?string
+    {
+        $query = 'SELECT google2fa_secret FROM users WHERE id = :id';
+        $statement = $this->db->prepare($query);
+        $statement->bindValue(':id', $userID, PDO::PARAM_INT);
+        $statement->execute();
+        return $statement->fetchColumn();
+    }
+
 }

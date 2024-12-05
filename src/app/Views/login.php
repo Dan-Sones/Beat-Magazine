@@ -17,7 +17,18 @@
                                    placeholder="Enter password" required>
                         </div>
                         <div class="d-flex justify-content-center">
-                            <button class="btn btn-success" type="submit">Submit</button>
+                            <button class="btn btn-success" id="submitLogin" type="submit">Submit</button>
+                        </div>
+                    </form>
+
+                    <form id="otpForm" class="d-none" onsubmit="submitOTPForm(event)">
+                        <div class="mb-3">
+                            <label for="otp" class="form-label">OTP</label>
+                            <input type="text" class="form-control" id="otp" name="otp"
+                                   placeholder="Enter OTP" required>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <button class="btn btn-success" id="submitOTP" type="submit">Submit</button>
                         </div>
                     </form>
 
@@ -25,7 +36,7 @@
 
                         const emailInput = document.getElementById('email');
                         const passwordInput = document.getElementById('password');
-                        const form = document.getElementById('loginForm');
+                        const loginForm = document.getElementById('loginForm');
 
                         const submitLoginForm = async (event) => {
                             event.preventDefault();
@@ -41,13 +52,49 @@
                                 body: JSON.stringify(data)
                             }).then(response => {
                                 if (response.status === 200) {
-                                    window.location.href = '/albums';
+                                    // Hide Login form and show otp form
+                                    loginForm.classList.add('d-none');
+                                    document.getElementById('otpForm').classList.remove('d-none');
+
                                 } else {
                                     emailInput.classList.add('is-invalid');
                                     passwordInput.classList.add('is-invalid');
                                 }
                             });
                         };
+
+
+                        const submitOTPForm = async (event) => {
+                            event.preventDefault();
+
+                            const form = event.target;
+                            const formData = new FormData(form);
+
+                            const otp = formData.get('otp');
+
+                            const data = {
+                                otp: otp
+                            };
+
+                            return await fetch('/api/verify-otp', {
+                                method: 'POST',
+                                body: JSON.stringify(data),
+                                contentType: 'application/json'
+                            }).then(response => {
+                                if (!response.ok) {
+                                    alert('Invalid code');
+                                }
+                                return response.json();
+                            }).then(data => {
+                                if (data.valid) {
+                                    window.location.href = '/albums';
+                                } else {
+                                    alert('Invalid code');
+                                    document.getElementById('submitOTP').disabled = true;
+                                }
+                            });
+                        };
+
 
                     </script>
 
