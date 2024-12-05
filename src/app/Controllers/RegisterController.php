@@ -64,19 +64,26 @@ class RegisterController
         return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
     }
 
-    public function check2FACode(Request $request, Response $response, array $args): Response
+    public function verifyOTP(Request $request, Response $response, array $args): Response
     {
-        $code = $request->getQueryParams()['code'] ?? '';
+        $data = json_decode($request->getBody()->getContents(), true);
 
-        if (empty($code) || !is_string($code)) {
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            return $response->withStatus(400);
+        }
+
+        if (!isset($data['otp'])) {
             return $response->withStatus(400);
         }
 
         $tfa = new TwoFactorAuth(new BaconQrCodeProvider());
+        $otp = $data['otp'];
 
-        $isCodeValid = $tfa->verifyCode($this->getGoogle2faSecret(), $code);
+        if (!$tfa->verifyCode($this->getGoogle2faSecret(), $otp)) {
+            return $response->withStatus(401);
+        }
 
-        $response->getBody()->write(json_encode(['valid' => $isCodeValid]));
+        $response->getBody()->write(json_encode(['valid' => true]));
         return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
     }
 
@@ -93,18 +100,22 @@ class RegisterController
         $firstName = $data['firstName'] ?? '';
         $lastName = $data['lastName'] ?? '';
         $password = $data['password'] ?? '';
+        $google2faSecret = $this->getGoogle2faSecret();
 
-        if (empty($username) || empty($email) || empty($firstName) || empty($lastName) || empty($password)) {
+
+        if (empty($username) || empty($email) || empty($firstName) || empty($lastName) || empty($password) || empty($google2faSecret)) {
             return $response->withStatus(400);
         }
 
         try {
-            $this->userService->registerUser($email, $username, $password, $firstName, $lastName, $this->getGoogle2faSecret());
+            $this->userService->registerUser($email, $username, $password, $firstName, $lastName, $google2faSecret);
         } catch (\Exception $e) {
             $response->getBody()->write($e->getMessage());
             return $response->withStatus(500);
         }
 
+        $_SESSION['google2faSecret'] = "";
+        
         return $response->withStatus(201);
     }
 }

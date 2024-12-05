@@ -246,7 +246,7 @@
                                             <div class="row justify-content-center">
                                                 <p>Scan the QR code above with your authenticator app</p>
                                             </div>
-                                            <form onsubmit="validateAuthenticatorCode(event)">
+                                            <form onsubmit="validateOTP(event)">
                                                 <div class="mb-3">
                                                     <label for="2faCode" class="form-label">Enter the code from your
                                                         authenticator
@@ -281,7 +281,7 @@
 
 
             // TODO: Replace with Post request as it's more secture
-            const validateAuthenticatorCode = async (event) => {
+            const validateOTP = async (event) => {
                 event.preventDefault();
 
                 const form = event.target;
@@ -289,13 +289,12 @@
 
                 const code = formData.get('2faCode');
 
-                return await fetch('/api/register/verify-otp?' + new URLSearchParams({
-                    "code": code
-                }), {
-                    method: 'GET',
+                return await fetch('/api/register/verify-otp?', {
+                    method: 'POST',
+                    content_type: 'application/json',
+                    body: JSON.stringify({otp: code})
                 }).then(response => {
                     if (!response.ok) {
-                        // Do stuff
                     }
                     return response.json();
                 }).then(data => {

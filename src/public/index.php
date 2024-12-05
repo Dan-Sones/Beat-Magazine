@@ -20,9 +20,10 @@ $app->addBodyParsingMiddleware();
 $app->addRoutingMiddleware();
 $app->addErrorMiddleware(true, true, true);
 
+session_start();
+
 (require __DIR__ . '/../routes/web.php')($app);
 (require __DIR__ . '/../routes/api.php')($app);
 
-session_start();
 
 $app->run();
