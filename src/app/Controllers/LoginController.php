@@ -54,7 +54,7 @@ class LoginController
             session_start();
         }
 
-//        $_SESSION['username'] = $user->getUsername();
+        $_SESSION['username'] = $user->getUsername();
 //        $_SESSION['firstName'] = $user->getFirstName();
 //        $_SESSION['lastName'] = $user->getLastName();
 //        $_SESSION['email'] = $user->getEmail();

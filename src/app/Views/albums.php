@@ -1,4 +1,4 @@
-<?php include 'includes/header.php'; ?>
+<?php include 'includes/loadHeader.php'; ?>
 
     <main class="albums-container">
         <div class="container-fluid grid-container">

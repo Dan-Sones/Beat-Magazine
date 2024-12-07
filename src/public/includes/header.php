@@ -19,7 +19,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item active">
                     <a class="nav-link text-light">Home</a>
                 </li>
@@ -33,6 +33,13 @@
                     <a class="nav-link text-light">Profile</a>
                 </li>
             </ul>
+            <div class="user-info">
+                <?php if (isset($_SESSION['authenticated']) && $_SESSION['authenticated'] === true): ?>
+                    <span class="text-light">Hi, <?= $_SESSION['username'] ?>!</span>
+                <?php else: ?>
+                    <a href="/login" class="btn btn-outline-light">Login</a>
+                <?php endif; ?>
+            </div>
         </div>
     </nav>
 
