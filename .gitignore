@@ -9,7 +9,7 @@ vendor/
 
 
 # compiled css
-/src/public/css/
+/public/css/
 
 # SCSS cache
 /assets/scss/.sass-cache/
