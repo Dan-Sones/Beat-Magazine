@@ -238,9 +238,9 @@
                                 <h3 class="mb-4 text-center">Step 4: Setup 2FA</h3>
                                 <div class="d-flex justify-content-center">
                                     <?php if (isset($qrCodeUrl)) : ?>
-                                        <div class="col-12">
+                                        <div class="col-12 pb-3">
                                             <div class="row justify-content-center">
-                                                <img src="<?php echo $qrCodeUrl ?>"
+                                                <img class="img-fluid" src="<?php echo $qrCodeUrl ?>"
                                                      alt="QR Code">
                                             </div>
                                             <div class="row justify-content-center">
