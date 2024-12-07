@@ -2,6 +2,10 @@
 @import "../../node_modules/bootstrap/scss/variables";
 @import "../../node_modules/bootstrap/scss/bootstrap";
 
+//TODO change this back to the original local path
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css");
+
+
 $brand-light: #F1F6F9;
 $brand-secondary-light: #9BA4B5;
 $brand-muted: #394867;
@@ -17,28 +21,46 @@ $body-color: $brand-dark;
 
 $text-primary: $brand-dark;
 
+$error: #dc3545;
+$success: #28a745;
+
+.icon-success {
+  color: $success;
+}
+
+.icon-error {
+  color: $error;
+}
 
 :root {
   interpolate-size: allow-keywords; /* 👈 */
 }
 
 html, body {
-  height: 100%;
-  font-family: "Outfit", sans-serif;
-}
-
-footer {
-  flex-shrink: 0;
+  margin: 0; /* Remove default margins */
+  padding: 0; /* Remove default padding */
+  min-height: 100%; /* Ensure the page fills the viewport height */
+  display: flex;
+  flex-direction: column; /* Stack elements vertically */
 }
 
 .wrapper {
-  flex: 1 0 auto;
+  flex: 1; /* Let the wrapper grow to fill available space */
+  display: flex;
+  flex-direction: column; /* Allow for nested flex layouts if needed */
+}
+
+footer {
+  flex-shrink: 0; /* Prevent shrinking when content overflows */
 }
 
 main {
-  flex: 1;
+  flex: 1; /* Allows the main content to grow and push the footer down */
 }
 
+footer {
+  flex-shrink: 0; /* Prevent footer from shrinking */
+}
 
 @import "base/_base";
 @import "pages/_albums";

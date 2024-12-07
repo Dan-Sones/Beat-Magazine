@@ -4,12 +4,8 @@ use DI\ContainerBuilder;
 use Dotenv\Dotenv;
 use Slim\Factory\AppFactory;
 
-session_start();
-
 require_once __DIR__ . '/../../config/config.php';
 require_once __DIR__ . '/../../vendor/autoload.php';
-require_once __DIR__ . '/../routes/web.php';
-
 $dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
 $dotenv->load();
 
@@ -20,8 +16,14 @@ $container = $containerBuilder->build();
 
 AppFactory::setContainer($container);
 $app = AppFactory::create();
+$app->addBodyParsingMiddleware();
+$app->addRoutingMiddleware();
+$app->addErrorMiddleware(true, true, true);
 
-$routes = require __DIR__ . '/../routes/web.php';
-$routes($app);
+session_start();
+
+(require __DIR__ . '/../routes/web.php')($app);
+(require __DIR__ . '/../routes/api.php')($app);
+
 
 $app->run();

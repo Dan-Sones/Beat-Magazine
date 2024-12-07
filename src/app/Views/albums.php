@@ -1,7 +1,7 @@
-<?php include 'includes/header.php'; ?>
+<?php include 'includes/loadHeader.php'; ?>
 
     <main class="albums-container">
-        <div class="container-fluid">
+        <div class="container-fluid grid-container">
             <div class="row px-5 gy-5">
                 <?php if (isset($albums) && is_array($albums)): ?>
                     <?php foreach ($albums as $album): ?>

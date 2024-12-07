@@ -22,12 +22,13 @@ class AlbumController
 
     public function show(Request $request, Response $response, array $args): Response
     {
-        $albumName = urldecode(htmlspecialchars($args['albumName']));
-        $artistName = urldecode(htmlspecialchars($args['artistName']));
+        $albumName = urldecode($args['albumName']);
+        $artistName = urldecode($args['artistName']);
+
         $album = $this->albumFactory->getAlbumByName($albumName, $artistName);
 
         $journalistReview = $this->journalistReviewFactory->getJournalistReviewForAlbum($album->getAlbumID());
-        
+
         ob_start();
         include __DIR__ . '/../Views/album.php';
         $output = ob_get_clean();
