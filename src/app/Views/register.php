@@ -280,7 +280,6 @@
         <script>
 
 
-            // TODO: Replace with Post request as it's more secture
             const validateOTP = async (event) => {
                 event.preventDefault();
 
@@ -318,7 +317,8 @@
                     method: 'GET',
                 }).then(response => {
                     if (!response.ok) {
-                        // Do stuff
+                        // Something went wrong so assume it's taken
+                        return true;
                     }
                     return response.json();
                 }).then(data => {
@@ -333,7 +333,8 @@
                     method: 'GET',
                 }).then(response => {
                     if (!response.ok) {
-                        // Do stuff
+                        // Something went wrong so assume it's taken
+                        return true;
                     }
                     return response.json();
                 }).then(data => {
@@ -382,7 +383,6 @@
 
                     if (activeIndex === totalSlides - 2) {
 
-                        // document.querySelector('button[type="submit"]').disabled = true;
                         document.getElementById('step3Next').disabled = true;
 
                         setSpinner('emailStatus');
@@ -394,11 +394,9 @@
                         ]).then(([emailTaken, usernameTaken]) => {
 
                             if (emailTaken === false && usernameTaken === false) {
-                                // document.querySelector('button[type="submit"]').disabled = false;
                                 document.getElementById('step3Next').disabled = false;
                             } else {
                                 document.getElementById('step3Next').disabled = true;
-                                // document.querySelector('button[type="submit"]').disabled = true;
                             }
                             handleEmailTaken(emailTaken);
                             handleUsernameTaken(usernameTaken);
@@ -410,7 +408,6 @@
             });
 
             const submitForm = async (event) => {
-                // Prevent form from submitting normally
                 event.preventDefault();
                 const data = new FormData();
                 data.set("username", document.getElementById("username").value);
@@ -425,6 +422,7 @@
                 });
                 if (response.ok) {
                     // Redirect to login page
+                    alert('Registration successful');
                     window.location.href = '/login';
                 } else {
                     alert('Registration failed');

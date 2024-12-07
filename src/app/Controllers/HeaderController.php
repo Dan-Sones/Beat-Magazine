@@ -16,7 +16,13 @@ class HeaderController
 
         ob_start();
         include __DIR__ . '/../../public/includes/header.php';
-        return ob_get_clean(); // Return the captured output
+        return ob_get_clean();
+    }
+
+    public function logout(Request $request, Response $response, array $args): Response
+    {
+        session_destroy();
+        return $response->withStatus(200);
     }
 
 }

@@ -1,5 +1,6 @@
 <?php
 
+use S246109\BeatMagazine\Controllers\HeaderController;
 use S246109\BeatMagazine\Controllers\LoginController;
 use S246109\BeatMagazine\Controllers\RegisterController;
 use Slim\App;
@@ -13,5 +14,6 @@ return function (App $app) {
         $group->post('/register', [RegisterController::class, 'submit']);
         $group->post('/login', [LoginController::class, 'login']);
         $group->post('/verify-otp', [LoginController::class, 'verifyOTP']);
+        $group->post('/logout', [HeaderController::class, 'logout']);
     });
 };
