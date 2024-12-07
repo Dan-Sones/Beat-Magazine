@@ -21,6 +21,11 @@ class RegisterController
     public function index(Request $request, Response $response, array $args): Response
     {
 
+        // Redirect to albums if already authenticated
+        if (isset($_SESSION['authenticated']) && $_SESSION['authenticated'] === true) {
+            return $response->withHeader('Location', '/albums')->withStatus(302);
+        }
+
         $tfa = new TwoFactorAuth(new BaconQrCodeProvider());
 
         $google2faSecret = $tfa->createSecret();
@@ -115,7 +120,7 @@ class RegisterController
         }
 
         $_SESSION['google2faSecret'] = "";
-        
+
         return $response->withStatus(201);
     }
 }

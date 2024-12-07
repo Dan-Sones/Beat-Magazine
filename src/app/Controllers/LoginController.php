@@ -109,6 +109,10 @@ class LoginController
 
     public function index(Request $request, Response $response, array $args): Response
     {
+        // If the user is already authenticated, redirect them to the albums page
+        if (isset($_SESSION['authenticated']) && $_SESSION['authenticated'] === true) {
+            return $response->withHeader('Location', '/albums')->withStatus(302);
+        }
 
         ob_start();
         include __DIR__ . '/../Views/login.php';
