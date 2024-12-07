@@ -14,7 +14,7 @@ class HeaderController
         $username = $_SESSION['username'] ?? null;
 
         ob_start();
-        include __DIR__ . '/../../../public/includes/header.php';
+        include PUBLIC_PATH . '/includes/header.php';
         return ob_get_clean();
     }
 
