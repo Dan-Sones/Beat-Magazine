@@ -14,9 +14,9 @@ if (basename(dirname($currentDir)) === 'S246109-BeatMagazine') {
     define('PUBLIC_PATH', BASE_PATH . '/public');
     define('PRIVATE_PATH', BASE_PATH);
 } else {
-    define('BASE_PATH', '/var/www');
+    define('BASE_PATH', dirname(__DIR__));
     define('PUBLIC_PATH', BASE_PATH . '/httpdocs');
-    define('PRIVATE_PATH', BASE_PATH . '/../private/');
+    define('PRIVATE_PATH', BASE_PATH . '/../private');
 }
 
 
