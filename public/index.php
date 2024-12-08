@@ -5,16 +5,33 @@ use Dotenv\Dotenv;
 use Slim\Factory\AppFactory;
 
 
-require_once __DIR__ . '/../vendor/autoload.php';
+$currentDir = realpath(__DIR__);
 
-$dotenv = Dotenv::createImmutable(__DIR__ . '/..');
+// if the directory two levels above currentDir is S246109-BeatMagazine then we are in a development environment
+// otherwise we are in a production environment
+if (basename(dirname($currentDir)) === 'S246109-BeatMagazine') {
+    define('BASE_PATH', dirname(__DIR__));
+    define('PUBLIC_PATH', BASE_PATH . '/public');
+    define('PRIVATE_PATH', BASE_PATH);
+} else {
+    define('BASE_PATH', '/var/www');
+    define('PUBLIC_PATH', BASE_PATH . '/httpdocs');
+    define('PRIVATE_PATH', BASE_PATH . '/../private/');
+}
+
+
+// Load Composer's autoloader
+require_once PRIVATE_PATH . '/vendor/autoload.php';
+
+
+$dotenv = Dotenv::createImmutable(PRIVATE_PATH);
 $dotenv->load();
 
-require_once __DIR__ . '/../config/config.php';
+require_once PRIVATE_PATH . '/config/config.php';
 
 
 $containerBuilder = new ContainerBuilder();
-$dependencies = require __DIR__ . '/../config/dependencies.php';
+$dependencies = require PRIVATE_PATH . '/config/dependencies.php';
 $dependencies($containerBuilder);
 $container = $containerBuilder->build();
 
@@ -26,8 +43,8 @@ $app->addErrorMiddleware(true, true, true);
 
 session_start();
 
-(require __DIR__ . '/../src/routes/web.php')($app);
-(require __DIR__ . '/../src/routes/api.php')($app);
+(require PRIVATE_PATH . '/src/routes/web.php')($app);
+(require PRIVATE_PATH . '/src/routes/api.php')($app);
 
 
 $app->run();

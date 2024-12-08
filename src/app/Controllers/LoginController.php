@@ -115,7 +115,7 @@ class LoginController
         }
 
         ob_start();
-        include __DIR__ . '/../Views/login.php';
+        include PRIVATE_PATH . '/src/app/Views/login.php';
         $output = ob_get_clean();
         $response->getBody()->write($output);
 
