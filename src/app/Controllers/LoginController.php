@@ -7,7 +7,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use RobThree\Auth\Providers\Qr\BaconQrCodeProvider;
 use RobThree\Auth\TwoFactorAuth;
 use S246109\BeatMagazine\Factories\UserFactory;
-use S246109\BeatMagazine\services\UserService;
+use S246109\BeatMagazine\Services\UserService;
 
 class LoginController
 {

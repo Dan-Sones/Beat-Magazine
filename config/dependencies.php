@@ -5,7 +5,7 @@ use Psr\Container\ContainerInterface;
 use S246109\BeatMagazine\Factories\AlbumFactory;
 use S246109\BeatMagazine\Factories\ArtistFactory;
 use S246109\BeatMagazine\Factories\JournalistReviewFactory;
-use S246109\BeatMagazine\services\UserService;
+use S246109\BeatMagazine\Services\UserService;
 
 return function (ContainerBuilder $containerBuilder) {
     $containerBuilder->addDefinitions([

@@ -1,6 +1,6 @@
 <?php
 
-namespace S246109\BeatMagazine\services;
+namespace S246109\BeatMagazine\Services;
 
 use PDO;
 
