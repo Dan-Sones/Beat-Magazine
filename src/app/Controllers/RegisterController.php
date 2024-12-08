@@ -33,7 +33,7 @@ class RegisterController
         $qrCodeUrl = $tfa->getQRCodeImageAsDataUri('BeatMagazine', $google2faSecret);
 
         ob_start();
-        include PRIVATE_PATH . '/src/app/views/register.php';
+        include PRIVATE_PATH . '/src/app/Views/register.php';
         $output = ob_get_clean();
         $response->getBody()->write($output);
 
