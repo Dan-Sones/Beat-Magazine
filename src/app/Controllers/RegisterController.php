@@ -4,9 +4,9 @@ namespace S246109\BeatMagazine\Controllers;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use S246109\BeatMagazine\Services\UserService;
 use RobThree\Auth\TwoFactorAuth;
 use RobThree\Auth\Providers\Qr\BaconQrCodeProvider;
+use S246109\BeatMagazine\Services\UserService;
 
 class RegisterController
 {
@@ -33,7 +33,7 @@ class RegisterController
         $qrCodeUrl = $tfa->getQRCodeImageAsDataUri('BeatMagazine', $google2faSecret);
 
         ob_start();
-        include __DIR__ . '/../Views/register.php';
+        include PRIVATE_PATH . '/src/app/Views/register.php';
         $output = ob_get_clean();
         $response->getBody()->write($output);
 

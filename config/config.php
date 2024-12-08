@@ -1,2 +1,4 @@
 <?php
-// config.php placeholder, add configurations here later if needed
+
+$env = $_ENV['APP_ENV'] ?? 'production'; // Default to 'production' if not set
+

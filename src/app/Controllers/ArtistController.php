@@ -28,12 +28,12 @@ class ArtistController
     public function show(Request $request, Response $response, array $args): Response
     {
         $artistName = urldecode(htmlspecialchars($args['artistName']));
-        
+
         $artist = $this->artistFactory->getArtistByName($artistName);
         $albums = $this->albumFactory->getAlbumsByArtistName($artistName);
 
         ob_start();
-        include __DIR__ . '/../Views/artist.php';
+        include PRIVATE_PATH . '/src/app/Views/artist.php';
         $output = ob_get_clean();
         $response->getBody()->write($output);
 

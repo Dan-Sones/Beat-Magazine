@@ -7,7 +7,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use RobThree\Auth\Providers\Qr\BaconQrCodeProvider;
 use RobThree\Auth\TwoFactorAuth;
 use S246109\BeatMagazine\Factories\UserFactory;
-use S246109\BeatMagazine\services\UserService;
+use S246109\BeatMagazine\Services\UserService;
 
 class LoginController
 {
@@ -115,7 +115,7 @@ class LoginController
         }
 
         ob_start();
-        include __DIR__ . '/../Views/login.php';
+        include PRIVATE_PATH . '/src/app/Views/login.php';
         $output = ob_get_clean();
         $response->getBody()->write($output);
 

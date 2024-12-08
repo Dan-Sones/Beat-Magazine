@@ -28,7 +28,7 @@ class AlbumsController
         $albums = $this->albumFactory->getAllAlbums();
 
         ob_start();
-        include __DIR__ . '/../Views/albums.php';
+        include PRIVATE_PATH . '/src/app/Views/albums.php';
         $output = ob_get_clean();
         $response->getBody()->write($output);
 

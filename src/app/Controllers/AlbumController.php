@@ -30,7 +30,7 @@ class AlbumController
         $journalistReview = $this->journalistReviewFactory->getJournalistReviewForAlbum($album->getAlbumID());
 
         ob_start();
-        include __DIR__ . '/../Views/album.php';
+        include PRIVATE_PATH . '/src/app/Views/album.php';
         $output = ob_get_clean();
         $response->getBody()->write($output);
 

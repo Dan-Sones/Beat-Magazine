@@ -3,7 +3,7 @@
 namespace S246109\BeatMagazine\Models;
 
 use PDO;
-use S246109\BeatMagazine\services\UserService;
+use S246109\BeatMagazine\Services\UserService;
 
 class User
 {

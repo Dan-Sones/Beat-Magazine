@@ -3,6 +3,7 @@
 use S246109\BeatMagazine\Controllers\AlbumController;
 use S246109\BeatMagazine\Controllers\AlbumsController;
 use S246109\BeatMagazine\Controllers\ArtistController;
+use S246109\BeatMagazine\Controllers\HomeController;
 use S246109\BeatMagazine\Controllers\LoginController;
 use S246109\BeatMagazine\Controllers\RegisterController;
 use Slim\App;
