@@ -157,50 +157,90 @@
                     <?php endif; ?>
 
 
-                    <p id="review" class="mt-3" style="display: none;">
-                        This is a review displayed when the second button is clicked.
-                    </p>
+                    <div class="container" id="user-reviews-container" style="display: none">
+                        <div class="row gy-3">
+                            <?php for ($i = 0; $i < 10; $i++) { ?>
+                                <div class="col-12">
+                                    <div class="card shadow-sm">
+                                        <div class="container p-3 ps-4">
+                                            <div class="row">
+                                                <!--                                                Mobile layout-->
+                                                <div class="col-12 d-flex align-items-center d-md-none order-1 pb-3">
+                                                    <img src="https://preview.redd.it/fan-theory-is-philip-j-fry-the-messiah-v0-uzlu3cobnpea1.jpg?width=3200&format=pjpg&auto=webp&s=19cd72a211cf9fe16378153333e914643a828ed2"
+                                                         class="img-fluid rounded-circle"
+                                                         style="width: 60px; height: 60px; object-fit: cover">
+                                                    <div class="ms-2">
+                                                        <a href="/albums" class="text-center pt-1">Phillip J Fry</a>
+                                                        <p class="mb-0" style="font-size: 0.8rem;">7/10</p>
+                                                    </div>
+                                                </div>
+                                                <!--                                                desktop layout-->
+                                                <div class="col-12 col-md-2 d-none d-md-flex flex-column align-items-center order-md-1">
+                                                    <img src="https://preview.redd.it/fan-theory-is-philip-j-fry-the-messiah-v0-uzlu3cobnpea1.jpg?width=3200&format=pjpg&auto=webp&s=19cd72a211cf9fe16378153333e914643a828ed2"
+                                                         class="img-fluid rounded-circle"
+                                                         style="width: 120px; height: 120px; object-fit: cover">
+                                                    <a href="/albums" class="text-center pt-3">Phillip J Fry</a>
+                                                </div>
+                                                <div class="col-md-1 align-items-center justify-content-center d-none d-md-flex order-2 order-md-2">
+                                                    <h3>7/10</h3>
+                                                </div>
+                                                <div class="col-12 col-md-9 order-3 order-md-3 d-flex justify-content-center align-items-center mb-0">
+                                                    <p class="mb-0">100% Electronica is not just an album; it’s a
+                                                        fully-realized
+                                                        experience. George Clanton has created a work that feels
+                                                        timeless and forward-thinking, perfectly capturing the emotional
+                                                        resonance of nostalgia without becoming trapped in it. Whether
+                                                        you’re a vaporwave enthusiast or new to the genre, this album is
+                                                        a must-listen for anyone who craves music that stirs the soul
+                                                        while making your head bob..</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+
+                    <script>
+
+                        const handleShowTracklist = () => {
+                            document.getElementById("tracklist").style.display = "block";
+                            document.getElementById("user-reviews-container").style.display = "none";
+
+                            document.getElementById("tracklistButton").classList.remove("btn-secondary");
+                            document.getElementById("tracklistButton").classList.add("btn-primary");
+
+                            document.getElementById("reviewButton").classList.remove("btn-primary");
+                            document.getElementById("reviewButton").classList.add("btn-secondary");
+                        }
+
+                        const handleShowReviews = () => {
+                            document.getElementById("tracklist").style.display = "none";
+                            document.getElementById("user-reviews-container").style.display = "block";
+
+                            document.getElementById("tracklistButton").classList.remove("btn-primary");
+                            document.getElementById("tracklistButton").classList.add("btn-secondary");
+
+                            document.getElementById("reviewButton").classList.remove("btn-secondary");
+                            document.getElementById("reviewButton").classList.add("btn-primary");
+                        }
+
+                        document.addEventListener("DOMContentLoaded", function () {
+                            handleShowTracklist();
+                        });
+
+                        document.getElementById("tracklistButton").addEventListener("click", handleShowTracklist);
+
+                        document.getElementById("reviewButton").addEventListener("click", handleShowReviews);
+                    </script>
+
+                    <?php else: ?>
+                        <p>404: Album not Found</p>
+                    <?php endif; ?>
+
                 </div>
-
-                <script>
-
-                    const handleShowTracklist = () => {
-                        document.getElementById("tracklist").style.display = "block";
-                        document.getElementById("review").style.display = "none";
-
-                        document.getElementById("tracklistButton").classList.remove("btn-secondary");
-                        document.getElementById("tracklistButton").classList.add("btn-primary");
-
-                        document.getElementById("reviewButton").classList.remove("btn-primary");
-                        document.getElementById("reviewButton").classList.add("btn-secondary");
-                    }
-
-                    const handleShowReviews = () => {
-                        document.getElementById("tracklist").style.display = "none";
-                        document.getElementById("review").style.display = "block";
-
-                        document.getElementById("tracklistButton").classList.remove("btn-primary");
-                        document.getElementById("tracklistButton").classList.add("btn-secondary");
-
-                        document.getElementById("reviewButton").classList.remove("btn-secondary");
-                        document.getElementById("reviewButton").classList.add("btn-primary");
-                    }
-
-                    document.addEventListener("DOMContentLoaded", function () {
-                        handleShowTracklist();
-                    });
-
-                    document.getElementById("tracklistButton").addEventListener("click", handleShowTracklist);
-
-                    document.getElementById("reviewButton").addEventListener("click", handleShowReviews);
-                </script>
-
-                <?php else: ?>
-                    <p>404: Album not Found</p>
-                <?php endif; ?>
-
             </div>
-        </div>
         </div>
 
     </main>

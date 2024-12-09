@@ -40,9 +40,7 @@
                                 <div class="col-4 text-center">
                                     <h5>Total Likes</h5>
                                 </div>
-                                <div class="col-4 text-center">
-                                    <h5>Review Count</h5>
-                                </div>
+                             
                                 <div class="col-4 text-center">
                                     <h5>User Since</h5>
                                 </div>
@@ -51,9 +49,7 @@
                                 <div class="col-4 text-center">
                                     <p>21</p>
                                 </div>
-                                <div class="col-4 text-center">
-                                    <p>15</p>
-                                </div>
+
                                 <div class="col-4 text-center">
                                     <p>21/01/02</p>
                                 </div>
