@@ -158,7 +158,42 @@
 
 
                     <div class="container" id="user-reviews-container" style="display: none">
+
+
                         <div class="row gy-3">
+                            <div class="col-12">
+
+                                <!--                        If the user is logged in-->
+                                <div class="card shadow-sm">
+                                    <form class="p-4 shadow-sm rounded">
+                                        <div class="mb-3">
+                                            <label for="reviewRating" class="form-label">Rating</label>
+                                            <select class="form-select" id="reviewRating">
+                                                <option selected>Select a rating</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
+                                                <option value="7">7</option>
+                                                <option value="8">8</option>
+                                                <option value="9">9</option>
+                                                <option value="10">10</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="reviewText" class="form-label">Review</label>
+                                            <textarea class="form-control" id="reviewText" rows="5"
+                                                      placeholder="Write your review here"></textarea>
+                                        </div>
+                                        <div class="d-grid">
+                                            <button type="submit" class="btn btn-primary">Submit Review</button>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
                             <?php for ($i = 0; $i < 10; $i++) { ?>
                                 <div class="col-12">
                                     <div class="card shadow-sm">
@@ -192,7 +227,7 @@
                                                         resonance of nostalgia without becoming trapped in it. Whether
                                                         you’re a vaporwave enthusiast or new to the genre, this album is
                                                         a must-listen for anyone who craves music that stirs the soul
-                                                        while making your head bob..</p>
+                                                        while making your head bob.</p>
                                                 </div>
                                             </div>
                                         </div>
