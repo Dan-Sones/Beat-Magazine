@@ -4,6 +4,7 @@ namespace S246109\BeatMagazine\Factories;
 
 use PDO;
 use S246109\BeatMagazine\Models\Album;
+use S246109\BeatMagazine\Models\PublicUserViewModel;
 use S246109\BeatMagazine\Models\Song;
 use S246109\BeatMagazine\Models\User;
 
@@ -14,6 +15,28 @@ class UserFactory
     public function __construct(PDO $db)
     {
         $this->db = $db;
+    }
+
+
+    public function getPublicUserByUsername(string $username): ?PublicUserViewModel
+    {
+        $query = 'SELECT profile_picture, id FROM users WHERE username = :username LIMIT 1';
+        $statement = $this->db->prepare($query);
+        $statement->bindValue(':username', $username, PDO::PARAM_STR);
+        $statement->execute();
+
+        $userInfo = $statement->fetch();
+
+        if ($userInfo === false) {
+            return null;
+        }
+        
+        return new PublicUserViewModel(
+            $username,
+            $userInfo['profile_picture'] ?? '',
+            $userInfo['id']
+        );
+
     }
 
     public function getUserByUsername(string $username): ?User

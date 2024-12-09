@@ -1,0 +1,13 @@
+.profile-container {
+  margin-top: 4vh;
+}
+
+
+.album-art {
+  transition: transform 0.8s ease-in-out;
+}
+
+.album-art:hover {
+  transform: scale(1.02);
+  cursor: grab;
+}
