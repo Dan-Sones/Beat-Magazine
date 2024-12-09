@@ -75,8 +75,8 @@
                                         <div class="row gx-5 d-flex align-items-center pb-5"
                                              data-aos="fade-<?php echo $i % 2 == 0 ? 'right' : 'left'; ?>"
                                              data-aos-duration="3000">
-                                            <div class="col-md-6 col-12 order-0 order-md-<?php echo $i % 2 == 0 ? '1' : '0'; ?> justify-content-center">
-                                                <div class="album-art pb-sm-3">
+                                            <div class="col-md-6 col-12 order-0 order-md-<?php echo $i % 2 == 0 ? '1' : '0'; ?> justify-content-center pb-sm-3">
+                                                <div class="album-art pb-3">
                                                     <img src="/images/100%25-Electronica.jpg"
                                                          class="img-fluid shadow album-art" alt="Album Art"/>
                                                 </div>
