@@ -29,6 +29,10 @@ class PublicUserViewModel
 
     public function getProfilePictureUri(): string
     {
+        if ($this->profilePictureUri === '') {
+            return 'https://via.placeholder.com/150';
+        }
+
         return $this->profilePictureUri;
     }
 

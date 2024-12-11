@@ -30,11 +30,31 @@ class UserFactory
         if ($userInfo === false) {
             return null;
         }
-        
+
         return new PublicUserViewModel(
             $username,
             $userInfo['profile_picture'] ?? '',
             $userInfo['id']
+        );
+    }
+
+    public function getPublicUserByUserId(string $id): ?PublicUserViewModel
+    {
+        $query = 'SELECT profile_picture, username FROM users WHERE id = :id LIMIT 1';
+        $statement = $this->db->prepare($query);
+        $statement->bindValue(':id', $id, PDO::PARAM_STR);
+        $statement->execute();
+
+        $userInfo = $statement->fetch();
+
+        if ($userInfo === false) {
+            return null;
+        }
+
+        return new PublicUserViewModel(
+            $userInfo['username'],
+            $userInfo['profile_picture'] ?? '',
+            $id
         );
 
     }

@@ -5,6 +5,7 @@ use Psr\Container\ContainerInterface;
 use S246109\BeatMagazine\Factories\AlbumFactory;
 use S246109\BeatMagazine\Factories\ArtistFactory;
 use S246109\BeatMagazine\Factories\JournalistReviewFactory;
+use S246109\BeatMagazine\Factories\UserFactory;
 use S246109\BeatMagazine\Factories\UserReviewFactory;
 use S246109\BeatMagazine\Services\UserReviewService;
 use S246109\BeatMagazine\Services\UserService;
@@ -40,11 +41,14 @@ return function (ContainerBuilder $containerBuilder) {
         UserService::class => function (ContainerInterface $c) {
             return new UserService($c->get(PDO::class));
         },
+        UserFactory::class => function (ContainerInterface $c) {
+            return new UserFactory($c->get(PDO::class));
+        },
         UserReviewService::class => function (ContainerInterface $c) {
-            return new UserReviewService($c->get(PDO::class));
+            return new UserReviewService($c->get(PDO::class), $c->get(UserService::class));
         },
         UserReviewFactory::class => function (ContainerInterface $c) {
-            return new UserReviewFactory($c->get(PDO::class));
+            return new UserReviewFactory($c->get(PDO::class), $c->get(UserFactory::class));
         },
 
     ]);

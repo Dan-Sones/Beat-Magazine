@@ -6,25 +6,26 @@ class UserReview
 {
     private string $id;
     private string $albumId;
-    private string $userId;
+    private PublicUserViewModel $User;
     private string $review;
     private string $rating;
 
     /**
      * @param string $id
      * @param string $albumId
-     * @param string $userId
+     * @param PublicUserViewModel $User
      * @param string $review
      * @param string $rating
      */
-    public function __construct(string $id, string $albumId, string $userId, string $review, string $rating)
+    public function __construct(string $id, string $albumId, PublicUserViewModel $User, string $review, string $rating)
     {
         $this->id = $id;
         $this->albumId = $albumId;
-        $this->userId = $userId;
+        $this->User = $User;
         $this->review = $review;
         $this->rating = $rating;
     }
+
 
     public function getId(): string
     {
@@ -36,9 +37,9 @@ class UserReview
         return $this->albumId;
     }
 
-    public function getUserId(): string
+    public function getUser(): PublicUserViewModel
     {
-        return $this->userId;
+        return $this->User;
     }
 
     public function getReview(): string

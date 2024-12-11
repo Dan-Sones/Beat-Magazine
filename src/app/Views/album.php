@@ -186,8 +186,9 @@
                                             <textarea class="form-control" id="reviewText" rows="5"
                                                       placeholder="Write your review here"></textarea>
                                         </div>
-                                        <div class="d-grid">
-                                            <button id="submitReview" type="submit" class="btn btn-primary">Submit
+                                        <div class="d-grid" id="submitReviewWrapper" data-toggle="tooltip">
+                                            <button id="submitReview" type="submit"
+                                                    class="btn btn-primary">Submit
                                                 Review
                                             </button>
                                         </div>
@@ -200,14 +201,24 @@
                                 document.addEventListener('DOMContentLoaded', () => {
                                     const activeSession = <?= isset($_SESSION['authenticated']) && $_SESSION['authenticated'] === true ? 'true' : 'false' ?>;
 
+                                    const submitReviewButton = document.getElementById('submitReview');
+                                    const submitReviewWrapper = document.getElementById('submitReviewWrapper');
+                                    
                                     if (!activeSession) {
-                                        // Disable the submit review form button and add a tooltip if the user is not logged in
-                                        const submitReviewButton = document.getElementById('submitReview');
-
                                         submitReviewButton.disabled = true;
-                                        submitReviewButton.title = 'You must be logged in to submit a review';
+                                        submitReviewWrapper.title = 'You must be logged in to submit a review';
+
+                                    } else if (activeSession) {
+                                        const leftReview = <?= isset($hasUserLeftReview) && $hasUserLeftReview ? 'true' : 'false' ?>;
+
+                                        if (leftReview) {
+                                            submitReviewButton.disabled = true;
+                                            submitReviewWrapper.title = 'You have already left a review for this album';
+                                        }
 
                                     }
+
+
                                 });
 
 
@@ -244,46 +255,47 @@
                             </script>
 
 
-                            <?php for ($i = 0; $i < 10; $i++) { ?>
-                                <div class="col-12">
-                                    <div class="card shadow-sm">
-                                        <div class="container p-3 ps-4">
-                                            <div class="row">
-                                                <!--                                                Mobile layout-->
-                                                <div class="col-12 d-flex align-items-center d-md-none order-1 pb-3">
-                                                    <img src="https://preview.redd.it/fan-theory-is-philip-j-fry-the-messiah-v0-uzlu3cobnpea1.jpg?width=3200&format=pjpg&auto=webp&s=19cd72a211cf9fe16378153333e914643a828ed2"
-                                                         class="img-fluid rounded-circle"
-                                                         style="width: 60px; height: 60px; object-fit: cover">
-                                                    <div class="ms-2">
-                                                        <a href="/albums" class="text-center pt-1">Phillip J Fry</a>
-                                                        <p class="mb-0" style="font-size: 0.8rem;">7/10</p>
+                            <?php if (isset($userReviews) && is_array($userReviews)): ?>
+
+                                <?php foreach ($userReviews as $userReview): ?>
+                                    <div class="col-12">
+                                        <div class="card shadow-sm">
+                                            <div class="container p-3 ps-4">
+                                                <div class="row">
+                                                    <!--                                                Mobile layout-->
+                                                    <div class="col-12 d-flex align-items-center d-md-none order-1 pb-3">
+                                                        <img src="<?= $userReview->getUser()->getProfilePictureUri() ?>"
+                                                             class="img-fluid rounded-circle"
+                                                             style="width: 60px; height: 60px; object-fit: cover">
+                                                        <div class="ms-2">
+                                                            <a href="/albums" class="text-center pt-1">Phillip J Fry</a>
+                                                            <p class="mb-0"
+                                                               style="font-size: 0.8rem;"><?= $userReview->getRating() ?>
+                                                                /10</p>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <!--                                                desktop layout-->
-                                                <div class="col-12 col-md-3 d-none d-md-flex flex-column align-items-center order-md-1 d-flex justify-content-center">
-                                                    <img src="https://preview.redd.it/fan-theory-is-philip-j-fry-the-messiah-v0-uzlu3cobnpea1.jpg?width=3200&format=pjpg&auto=webp&s=19cd72a211cf9fe16378153333e914643a828ed2"
-                                                         class="img-fluid rounded-circle"
-                                                         style="width: 120px; height: 120px; object-fit: cover">
-                                                    <a href="/albums" class="text-center pt-3">Phillip J Fry</a>
-                                                </div>
-                                                <div class="col-md-2 align-items-center justify-content-center d-none d-md-flex order-2 order-md-2">
-                                                    <h3>7/10</h3>
-                                                </div>
-                                                <div class="col-12 col-md-7 order-3 order-md-3 d-flex justify-content-center align-items-center mb-0">
-                                                    <p class="mb-0">100% Electronica is not just an album; it’s a
-                                                        fully-realized
-                                                        experience. George Clanton has created a work that feels
-                                                        timeless and forward-thinking, perfectly capturing the emotional
-                                                        resonance of nostalgia without becoming trapped in it. Whether
-                                                        you’re a vaporwave enthusiast or new to the genre, this album is
-                                                        a must-listen for anyone who craves music that stirs the soul
-                                                        while making your head bob.</p>
+                                                    <!--                                                desktop layout-->
+                                                    <div class="col-12 col-md-3 d-none d-md-flex flex-column align-items-center order-md-1 d-flex justify-content-center">
+                                                        <img src="<?= $userReview->getUser()->getProfilePictureUri() ?>"
+                                                             class="img-fluid rounded-circle"
+                                                             style="width: 120px; height: 120px; object-fit: cover">
+                                                        <a href="/albums"
+                                                           class="text-center pt-3"><?= $userReview->getUser()->getUsername() ?></a>
+                                                    </div>
+                                                    <div class="col-md-2 align-items-center justify-content-center d-none d-md-flex order-2 order-md-2">
+                                                        <h3><?= $userReview->getRating() ?>/10</h3>
+                                                    </div>
+                                                    <div class="col-12 col-md-7 order-3 order-md-3 d-flex justify-content-center align-items-center mb-0">
+                                                        <p class="mb-0"><?= $userReview->getReview() ?></p>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            <?php } ?>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <p>No reviews available for this album</p>
+                            <?php endif; ?>
                         </div>
                     </div>
 

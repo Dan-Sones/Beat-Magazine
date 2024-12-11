@@ -60,4 +60,14 @@ class UserService
         return $statement->fetchColumn();
     }
 
+    public function isUserAuthenticated(): bool
+    {
+        return isset($_SESSION['user_id']) && isset($_SESSION['authenticated']) && $_SESSION['authenticated'] === true;
+    }
+
+    public function getUserID(): ?int
+    {
+        return $_SESSION['user_id'] ?? null;
+    }
+
 }

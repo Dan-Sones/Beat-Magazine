@@ -6,6 +6,10 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use S246109\BeatMagazine\Factories\AlbumFactory;
 use S246109\BeatMagazine\Factories\JournalistReviewFactory;
+use S246109\BeatMagazine\Factories\UserReviewFactory;
+use S246109\BeatMagazine\Models\User;
+use S246109\BeatMagazine\Services\UserReviewService;
+use S246109\BeatMagazine\Services\UserService;
 
 class AlbumController
 {
@@ -14,11 +18,24 @@ class AlbumController
 
     private JournalistReviewFactory $journalistReviewFactory;
 
-    public function __construct(AlbumFactory $albumFactory, JournalistReviewFactory $journalistReviewFactory)
+    private UserReviewFactory $userReviewFactory;
+
+    private UserReviewService $userReviewService;
+
+    /**
+     * @param AlbumFactory $albumFactory
+     * @param JournalistReviewFactory $journalistReviewFactory
+     * @param UserReviewFactory $userReviewFactory
+     * @param UserReviewService $userReviewService
+     */
+    public function __construct(AlbumFactory $albumFactory, JournalistReviewFactory $journalistReviewFactory, UserReviewFactory $userReviewFactory, UserReviewService $userReviewService)
     {
         $this->albumFactory = $albumFactory;
         $this->journalistReviewFactory = $journalistReviewFactory;
+        $this->userReviewFactory = $userReviewFactory;
+        $this->userReviewService = $userReviewService;
     }
+
 
     public function show(Request $request, Response $response, array $args): Response
     {
@@ -26,8 +43,11 @@ class AlbumController
         $artistName = urldecode($args['artistName']);
 
         $album = $this->albumFactory->getAlbumByName($albumName, $artistName);
-
+        $userReviews = $this->userReviewFactory->getAllUserReviewsForAlbum($album->getAlbumID());
         $journalistReview = $this->journalistReviewFactory->getJournalistReviewForAlbum($album->getAlbumID());
+
+
+        $hasUserLeftReview = $this->userReviewService->hasUserLeftReviewForAlbum($album->getAlbumID());
 
         ob_start();
         include PRIVATE_PATH . '/src/app/Views/album.php';
@@ -36,5 +56,6 @@ class AlbumController
 
         return $response;
     }
+
 
 }
