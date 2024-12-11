@@ -59,4 +59,45 @@ class UserReviewService
         return $statement->fetchColumn() > 0;
     }
 
+    public function updateReviewForAlbum(string $albumId, string $userId, string $review, string $rating): bool
+    {
+        $query = '
+            UPDATE user_reviews
+            SET review_text = :review, rating = :rating
+            WHERE album_id = :album_id AND user_id = :user_id
+        ';
+
+        $statement = $this->db->prepare($query);
+        $statement->bindValue(':album_id', $albumId, PDO::PARAM_STR);
+        $statement->bindValue(':user_id', $userId, PDO::PARAM_STR);
+        $statement->bindValue(':review', $review, PDO::PARAM_STR);
+        $statement->bindValue(':rating', $rating, PDO::PARAM_STR);
+
+        return $statement->execute();
+    }
+
+
+    public function doesUserOwnReview(int $reviewId, string $userId, string $albumId): bool
+    {
+        $query = '
+        SELECT COUNT(*) FROM user_reviews WHERE id = :review_id AND user_id = :user_id AND album_id = :album_id
+    ';
+
+        $statement = $this->db->prepare($query);
+        $statement->bindValue(':review_id', $reviewId, PDO::PARAM_INT);
+        $statement->bindValue(':user_id', $userId, PDO::PARAM_STR);
+        $statement->bindValue(':album_id', $albumId, PDO::PARAM_STR);
+
+        // Log the query and parameters
+        error_log("Executing query: $query with review_id=$reviewId, user_id=$userId, album_id=$albumId");
+
+        $statement->execute();
+
+        $result = $statement->fetchColumn();
+
+        // Log the result
+        error_log("Query result: $result");
+
+        return $result > 0;
+    }
 }

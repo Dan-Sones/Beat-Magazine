@@ -51,5 +51,39 @@ class UserReviewController
 
     }
 
+    public function update(Request $request, Response $response, array $args): Response
+    {
+        $userId = $_SESSION['user_id'];
+
+        if (!isset($userId)) {
+            return $response->withStatus(401);
+        }
+
+        $data = json_decode($request->getBody()->getContents(), true);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            return $response->withStatus(400);
+        }
+
+        if (!isset($data['review']) || !isset($data['rating']) || !isset($args['albumId']) || !isset($args['reviewId'])) {
+            return $response->withStatus(400);
+        }
+
+        $reviewID = $args['reviewId'];
+        $albumId = $args['albumId'];
+
+        if (!$this->userReviewService->doesUserOwnReview($reviewID, $userId, $albumId)) {
+            return $response->withStatus(403);
+        }
+
+        $success = $this->userReviewService->UpdateReviewForAlbum($args['albumId'], $userId, $data['review'], $data['rating']);
+
+        if (!$success) {
+            return $response->withStatus(500);
+        }
+
+        return $response->withStatus(200);
+    }
+
 
 }

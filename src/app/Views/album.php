@@ -291,22 +291,42 @@
                                                         <form class="p-2 rounded w-100"
                                                               id="editUserReview-<?= $userReview->getId() ?>"
                                                               style="display: none"
-                                                              onsubmit="handleReviewSubmission(event)">
+                                                              onsubmit="handleSubmitEditReview(event, <?= $userReview->getId() ?>)">
                                                             <div class="mb-3">
                                                                 <label for="reviewRating"
                                                                        class="form-label">Updated Rating</label>
-                                                                <select class="form-select" id="reviewRating">
-                                                                    <option selected>Select a rating</option>
-                                                                    <option value="1">1</option>
-                                                                    <option value="2">2</option>
-                                                                    <option value="3">3</option>
-                                                                    <option value="4">4</option>
-                                                                    <option value="5">5</option>
-                                                                    <option value="6">6</option>
-                                                                    <option value="7">7</option>
-                                                                    <option value="8">8</option>
-                                                                    <option value="9">9</option>
-                                                                    <option value="10">10</option>
+                                                                <select class="form-select"
+                                                                        id="updateReviewRating-<?= $userReview->getId() ?>">
+                                                                    <option value="1" <?= $userReview->getRating() == 1 ? 'selected' : '' ?>>
+                                                                        1
+                                                                    </option>
+                                                                    <option value="2" <?= $userReview->getRating() == 2 ? 'selected' : '' ?>>
+                                                                        2
+                                                                    </option>
+                                                                    <option value="3" <?= $userReview->getRating() == 3 ? 'selected' : '' ?>>
+                                                                        3
+                                                                    </option>
+                                                                    <option value="4" <?= $userReview->getRating() == 4 ? 'selected' : '' ?>>
+                                                                        4
+                                                                    </option>
+                                                                    <option value="5" <?= $userReview->getRating() == 5 ? 'selected' : '' ?>>
+                                                                        5
+                                                                    </option>
+                                                                    <option value="6" <?= $userReview->getRating() == 6 ? 'selected' : '' ?>>
+                                                                        6
+                                                                    </option>
+                                                                    <option value="7" <?= $userReview->getRating() == 7 ? 'selected' : '' ?>>
+                                                                        7
+                                                                    </option>
+                                                                    <option value="8" <?= $userReview->getRating() == 8 ? 'selected' : '' ?>>
+                                                                        8
+                                                                    </option>
+                                                                    <option value="9" <?= $userReview->getRating() == 9 ? 'selected' : '' ?>>
+                                                                        9
+                                                                    </option>
+                                                                    <option value="10" <?= $userReview->getRating() == 10 ? 'selected' : '' ?>>
+                                                                        10
+                                                                    </option>
                                                                 </select>
                                                             </div>
                                                             <div class="mb-3">
@@ -375,31 +395,33 @@
                                     editForm.style.display = 'none';
                                 }
 
-                                const handleSubmitEditReview = async (event) => {
+                                const handleSubmitEditReview = async (event, reviewId) => {
                                     event.preventDefault();
-                                    const rating = document.getElementById('reviewRating').value;
-                                    const review = document.getElementById('reviewText').value;
+                                    const rating = document.getElementById(`updateReviewRating-${reviewId}`).value;
+                                    const review = document.getElementById(`updatedReviewText-${reviewId}`).value;
+
+                                    console.log(rating, review);
 
                                     const albumId = <?= $album->getAlbumID() ?>;
 
-                                    return await fetch(`/api/albums/${albumId}/reviews`, {
+                                    return await fetch(`/api/albums/${albumId}/reviews/${reviewId}`, {
                                         method: 'PUT',
                                         headers: {
                                             'Content-Type': 'application/json'
                                         },
                                         body: JSON.stringify({
                                             rating: rating,
-                                            review: review
+                                            review: review,
                                         })
                                     }).then(response => {
                                         if (response.status === 200) {
                                             alert('Review Edited successfully');
                                             location.reload();
                                         } else {
-                                            alert('An error occurred while submitting your review');
+                                            alert('An error occurred whilst updating your review');
                                         }
                                     });
-                                }
+                                };
                             </script>
 
                         </div>
