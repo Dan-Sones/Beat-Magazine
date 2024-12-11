@@ -187,13 +187,29 @@
                                                       placeholder="Write your review here"></textarea>
                                         </div>
                                         <div class="d-grid">
-                                            <button type="submit" class="btn btn-primary">Submit Review</button>
+                                            <button id="submitReview" type="submit" class="btn btn-primary">Submit
+                                                Review
+                                            </button>
                                         </div>
                                     </form>
                                 </div>
                             </div>
 
                             <script>
+
+                                document.addEventListener('DOMContentLoaded', () => {
+                                    const activeSession = <?= isset($_SESSION['authenticated']) && $_SESSION['authenticated'] === true ? 'true' : 'false' ?>;
+
+                                    if (!activeSession) {
+                                        // Disable the submit review form button and add a tooltip if the user is not logged in
+                                        const submitReviewButton = document.getElementById('submitReview');
+
+                                        submitReviewButton.disabled = true;
+                                        submitReviewButton.title = 'You must be logged in to submit a review';
+
+                                    }
+                                });
+
 
                                 // TODO: Check if the user has already submitted a review for this album before allowing them to submit another
                                 // This should also be checked on the backend in the event the user manually removes the disabled attribute
