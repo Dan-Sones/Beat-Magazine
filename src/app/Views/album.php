@@ -258,7 +258,7 @@
                             <?php if (isset($userReviews) && is_array($userReviews)): ?>
                                 <?php foreach ($userReviews as $userReview): ?>
                                     <div class="col-12">
-                                        <div class="card shadow-sm">
+                                        <div class="card shadow-sm" id="userReview-<?= $userReview->getId() ?>">
                                             <div class="container p-3 ps-4">
                                                 <div class="row">
                                                     <!--                                                Mobile layout-->
@@ -286,7 +286,51 @@
                                                         <h3><?= $userReview->getRating() ?>/10</h3>
                                                     </div>
                                                     <div class="col-12 col-md-6 order-3 order-md-3 d-flex justify-content-center align-items-center mb-0">
-                                                        <p class="mb-0"><?= $userReview->getReview() ?></p>
+                                                        <p class="mb-0"
+                                                           id="userReviewText-<?= $userReview->getId() ?>"><?= $userReview->getReview() ?></p>
+                                                        <form class="p-2 rounded w-100"
+                                                              id="editUserReview-<?= $userReview->getId() ?>"
+                                                              style="display: none"
+                                                              onsubmit="handleReviewSubmission(event)">
+                                                            <div class="mb-3">
+                                                                <label for="reviewRating"
+                                                                       class="form-label">Updated Rating</label>
+                                                                <select class="form-select" id="reviewRating">
+                                                                    <option selected>Select a rating</option>
+                                                                    <option value="1">1</option>
+                                                                    <option value="2">2</option>
+                                                                    <option value="3">3</option>
+                                                                    <option value="4">4</option>
+                                                                    <option value="5">5</option>
+                                                                    <option value="6">6</option>
+                                                                    <option value="7">7</option>
+                                                                    <option value="8">8</option>
+                                                                    <option value="9">9</option>
+                                                                    <option value="10">10</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="UpdatedReviewText"
+                                                                       class="form-label">Updated Review</label>
+                                                                <textarea class="form-control"
+                                                                          id="updatedReviewText-<?= $userReview->getId() ?>"
+                                                                          rows="5"><?= $userReview->getReview() ?></textarea>
+                                                            </div>
+                                                            <div class="d-grid"
+                                                                 id="submitUpdatedReviewWrapper-<?= $userReview->getId() ?>"
+                                                                 data-toggle="tooltip">
+                                                                <button id="submitUpdateReview-<?= $userReview->getId() ?>"
+                                                                        type="submit"
+                                                                        class="btn btn-primary mb-1">Submit
+                                                                    Review
+                                                                </button>
+
+                                                                <button type="button" class="btn btn-secondary"
+                                                                        onclick="handleCancelEditReview(<?= $userReview->getId() ?>)">
+                                                                    Cancel
+                                                                </button>
+                                                            </div>
+                                                        </form>
                                                     </div>
                                                     <?php if (isset($userID) && (int)$userID === (int)$userReview->getUser()->getId()): ?>
                                                         <div class="col-1 d-flex justify-content-center align-items-center order-4 order-md-4">
@@ -298,7 +342,8 @@
                                                                 <li><a class="dropdown-item text-danger"
                                                                        onclick="alert('jeff')">Delete
                                                                         Review</a></li>
-                                                                <li><a class="dropdown-item" onclick="alert('myname')">Edit
+                                                                <li><a class="dropdown-item"
+                                                                       onclick="handleEditReview(<?= $userReview->getId() ?>)">Edit
                                                                         Review</a>
                                                                 </li>
                                                             </ul>
@@ -312,6 +357,51 @@
                             <?php else: ?>
                                 <p>No reviews available for this album</p>
                             <?php endif; ?>
+
+                            <script>
+                                const handleEditReview = (reviewID) => {
+                                    const reviewText = document.getElementById('userReviewText-' + reviewID);
+                                    reviewText.style.display = 'none';
+
+                                    const editForm = document.getElementById('editUserReview-' + reviewID);
+                                    editForm.style.display = 'block';
+                                }
+
+                                const handleCancelEditReview = (reviewID) => {
+                                    const reviewText = document.getElementById('userReviewText-' + reviewID);
+                                    reviewText.style.display = 'block';
+
+                                    const editForm = document.getElementById('editUserReview-' + reviewID);
+                                    editForm.style.display = 'none';
+                                }
+
+                                const handleSubmitEditReview = async (event) => {
+                                    event.preventDefault();
+                                    const rating = document.getElementById('reviewRating').value;
+                                    const review = document.getElementById('reviewText').value;
+
+                                    const albumId = <?= $album->getAlbumID() ?>;
+
+                                    return await fetch(`/api/albums/${albumId}/reviews`, {
+                                        method: 'PUT',
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify({
+                                            rating: rating,
+                                            review: review
+                                        })
+                                    }).then(response => {
+                                        if (response.status === 200) {
+                                            alert('Review Edited successfully');
+                                            location.reload();
+                                        } else {
+                                            alert('An error occurred while submitting your review');
+                                        }
+                                    });
+                                }
+                            </script>
+
                         </div>
                     </div>
 
