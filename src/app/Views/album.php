@@ -162,10 +162,9 @@
 
                         <div class="row gy-3">
                             <div class="col-12">
-
                                 <!--                        If the user is logged in-->
                                 <div class="card shadow-sm">
-                                    <form class="p-4 shadow-sm rounded">
+                                    <form class="p-4 shadow-sm rounded" onsubmit="handleReviewSubmission(event)">
                                         <div class="mb-3">
                                             <label for="reviewRating" class="form-label">Rating</label>
                                             <select class="form-select" id="reviewRating">
@@ -192,8 +191,43 @@
                                         </div>
                                     </form>
                                 </div>
-
                             </div>
+
+                            <script>
+
+                                // TODO: Check if the user has already submitted a review for this album before allowing them to submit another
+                                // This should also be checked on the backend in the event the user manually removes the disabled attribute
+
+                                const handleReviewSubmission = async (event) => {
+                                    event.preventDefault();
+                                    const rating = document.getElementById('reviewRating').value;
+                                    const review = document.getElementById('reviewText').value;
+
+                                    const albumId = <?= $album->getAlbumID() ?>;
+
+                                    return await fetch(`/api/albums/${albumId}/reviews`, {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify({
+                                            rating: rating,
+                                            review: review
+                                        })
+                                    }).then(response => {
+                                        if (response.status === 201) {
+                                            alert('Review submitted successfully');
+                                            location.reload();
+                                        } else {
+                                            alert('An error occurred while submitting your review');
+                                        }
+                                    });
+                                };
+
+
+                            </script>
+
+
                             <?php for ($i = 0; $i < 10; $i++) { ?>
                                 <div class="col-12">
                                     <div class="card shadow-sm">
@@ -210,16 +244,16 @@
                                                     </div>
                                                 </div>
                                                 <!--                                                desktop layout-->
-                                                <div class="col-12 col-md-2 d-none d-md-flex flex-column align-items-center order-md-1">
+                                                <div class="col-12 col-md-3 d-none d-md-flex flex-column align-items-center order-md-1 d-flex justify-content-center">
                                                     <img src="https://preview.redd.it/fan-theory-is-philip-j-fry-the-messiah-v0-uzlu3cobnpea1.jpg?width=3200&format=pjpg&auto=webp&s=19cd72a211cf9fe16378153333e914643a828ed2"
                                                          class="img-fluid rounded-circle"
                                                          style="width: 120px; height: 120px; object-fit: cover">
                                                     <a href="/albums" class="text-center pt-3">Phillip J Fry</a>
                                                 </div>
-                                                <div class="col-md-1 align-items-center justify-content-center d-none d-md-flex order-2 order-md-2">
+                                                <div class="col-md-2 align-items-center justify-content-center d-none d-md-flex order-2 order-md-2">
                                                     <h3>7/10</h3>
                                                 </div>
-                                                <div class="col-12 col-md-9 order-3 order-md-3 d-flex justify-content-center align-items-center mb-0">
+                                                <div class="col-12 col-md-7 order-3 order-md-3 d-flex justify-content-center align-items-center mb-0">
                                                     <p class="mb-0">100% Electronica is not just an album; it’s a
                                                         fully-realized
                                                         experience. George Clanton has created a work that feels
