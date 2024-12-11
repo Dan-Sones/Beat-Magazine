@@ -49,6 +49,8 @@ class AlbumController
 
         $hasUserLeftReview = $this->userReviewService->hasUserLeftReviewForAlbum($album->getAlbumID());
 
+        $userID = $_SESSION['user_id'];
+
         ob_start();
         include PRIVATE_PATH . '/src/app/Views/album.php';
         $output = ob_get_clean();

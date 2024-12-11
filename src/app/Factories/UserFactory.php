@@ -34,11 +34,11 @@ class UserFactory
         return new PublicUserViewModel(
             $username,
             $userInfo['profile_picture'] ?? '',
-            $userInfo['id']
+            (int)$userInfo['id']
         );
     }
 
-    public function getPublicUserByUserId(string $id): ?PublicUserViewModel
+    public function getPublicUserByUserId(int $id): ?PublicUserViewModel
     {
         $query = 'SELECT profile_picture, username FROM users WHERE id = :id LIMIT 1';
         $statement = $this->db->prepare($query);

@@ -8,7 +8,7 @@ class PublicUserViewModel
     private string $username;
     private string $profilePictureUri;
 
-    private string $id;
+    private int $id;
 
     /**
      * @param string $username

@@ -203,7 +203,7 @@
 
                                     const submitReviewButton = document.getElementById('submitReview');
                                     const submitReviewWrapper = document.getElementById('submitReviewWrapper');
-                                    
+
                                     if (!activeSession) {
                                         submitReviewButton.disabled = true;
                                         submitReviewWrapper.title = 'You must be logged in to submit a review';
@@ -256,7 +256,6 @@
 
 
                             <?php if (isset($userReviews) && is_array($userReviews)): ?>
-
                                 <?php foreach ($userReviews as $userReview): ?>
                                     <div class="col-12">
                                         <div class="card shadow-sm">
@@ -268,7 +267,8 @@
                                                              class="img-fluid rounded-circle"
                                                              style="width: 60px; height: 60px; object-fit: cover">
                                                         <div class="ms-2">
-                                                            <a href="/albums" class="text-center pt-1">Phillip J Fry</a>
+                                                            <a href="/albums"
+                                                               class="text-center pt-1"><?= $userReview->getUser()->getUsername() ?></a>
                                                             <p class="mb-0"
                                                                style="font-size: 0.8rem;"><?= $userReview->getRating() ?>
                                                                 /10</p>
@@ -285,9 +285,25 @@
                                                     <div class="col-md-2 align-items-center justify-content-center d-none d-md-flex order-2 order-md-2">
                                                         <h3><?= $userReview->getRating() ?>/10</h3>
                                                     </div>
-                                                    <div class="col-12 col-md-7 order-3 order-md-3 d-flex justify-content-center align-items-center mb-0">
+                                                    <div class="col-12 col-md-6 order-3 order-md-3 d-flex justify-content-center align-items-center mb-0">
                                                         <p class="mb-0"><?= $userReview->getReview() ?></p>
                                                     </div>
+                                                    <?php if (isset($userID) && (int)$userID === (int)$userReview->getUser()->getId()): ?>
+                                                        <div class="col-1 d-flex justify-content-center align-items-center order-4 order-md-4">
+                                                            <button class="btn btn-link text-muted mb-0"
+                                                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                                                <i class="bi bi-three-dots"></i>
+                                                            </button>
+                                                            <ul class="dropdown-menu dropdown-menu-end">
+                                                                <li><a class="dropdown-item text-danger"
+                                                                       onclick="alert('jeff')">Delete
+                                                                        Review</a></li>
+                                                                <li><a class="dropdown-item" onclick="alert('myname')">Edit
+                                                                        Review</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    <?php endif; ?>
                                                 </div>
                                             </div>
                                         </div>
@@ -339,6 +355,7 @@
                 </div>
             </div>
         </div>
+
 
     </main>
 
