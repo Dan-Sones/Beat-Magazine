@@ -446,6 +446,7 @@
                     <script>
 
                         const handleShowTracklist = () => {
+                            localStorage.setItem("activeTab", "tracklist");
                             document.getElementById("tracklist").style.display = "block";
                             document.getElementById("user-reviews-container").style.display = "none";
 
@@ -457,6 +458,7 @@
                         }
 
                         const handleShowReviews = () => {
+                            localStorage.setItem("activeTab", "reviews");
                             document.getElementById("tracklist").style.display = "none";
                             document.getElementById("user-reviews-container").style.display = "block";
 
@@ -468,7 +470,7 @@
                         }
 
                         document.addEventListener("DOMContentLoaded", function () {
-                            handleShowTracklist();
+                            localStorage.getItem("activeTab") === "reviews" ? handleShowReviews() : handleShowTracklist();
                         });
 
                         document.getElementById("tracklistButton").addEventListener("click", handleShowTracklist);
