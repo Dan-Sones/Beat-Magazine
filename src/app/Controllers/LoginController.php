@@ -63,6 +63,8 @@ class LoginController
 //        $_SESSION['role'] = 'COMMUNITY-USER';
 
         $_SESSION['user_id'] = $user->getId();
+
+
         $_SESSION['otp_pending'] = true;
 
         return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
@@ -102,6 +104,7 @@ class LoginController
 
         $_SESSION['otp_pending'] = false;
         $_SESSION['authenticated'] = true;
+
 
         $response->getBody()->write(json_encode(['valid' => true]));
         return $response->withHeader('Content-Type', 'application/json')->withStatus(200);

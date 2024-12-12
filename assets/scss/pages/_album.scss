@@ -58,6 +58,10 @@
   transition: all 0.4s ease-in-out;
 }
 
+.border-right {
+  border-right: 1px solid $secondary;
+}
+
 .review-full-container {
   overflow: hidden;
   transition: height 0.8s ease-in-out;
