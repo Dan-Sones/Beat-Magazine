@@ -64,8 +64,6 @@ class LoginController
 
         $_SESSION['user_id'] = $user->getId();
 
-        var_dump($_SESSION['user_id']);
-        error_log('User ID: ' . $_SESSION['user_id']);
 
         $_SESSION['otp_pending'] = true;
 

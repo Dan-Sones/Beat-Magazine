@@ -360,7 +360,7 @@
                                                             </button>
                                                             <ul class="dropdown-menu dropdown-menu-end">
                                                                 <li><a class="dropdown-item text-danger"
-                                                                       onclick="alert('jeff')">Delete
+                                                                       onclick="handleDeleteReview(<?= $userReview->getId() ?>)">Delete
                                                                         Review</a></li>
                                                                 <li><a class="dropdown-item"
                                                                        onclick="handleEditReview(<?= $userReview->getId() ?>)">Edit
@@ -422,6 +422,22 @@
                                         }
                                     });
                                 };
+
+                                const handleDeleteReview = async (reviewId) => {
+                                    const albumId = <?= $album->getAlbumID() ?>;
+
+                                    return await fetch(`/api/albums/${albumId}/reviews/${reviewId}`, {
+                                        method: 'DELETE'
+                                    }).then(response => {
+                                        if (response.status === 200) {
+                                            alert('Review successfully deleted.');
+                                            location.reload();
+                                        } else {
+                                            alert('An error occurred whilst deleting your review');
+                                        }
+                                    });
+
+                                };
                             </script>
 
                         </div>
@@ -468,6 +484,24 @@
             </div>
         </div>
 
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal Title</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Modal body content here.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </main>
 

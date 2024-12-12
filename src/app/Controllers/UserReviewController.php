@@ -85,5 +85,33 @@ class UserReviewController
         return $response->withStatus(200);
     }
 
+    public function delete(Request $request, Response $response, array $args): Response
+    {
+        $userId = $_SESSION['user_id'];
+
+        if (!isset($userId)) {
+            return $response->withStatus(401);
+        }
+
+        if (!isset($args['albumId']) || !isset($args['reviewId'])) {
+            return $response->withStatus(400);
+        }
+
+        $reviewID = $args['reviewId'];
+        $albumId = $args['albumId'];
+
+        if (!$this->userReviewService->doesUserOwnReview($reviewID, $userId, $albumId)) {
+            return $response->withStatus(403);
+        }
+
+        $success = $this->userReviewService->DeleteReviewForAlbum($args['reviewId']);
+
+        if (!$success) {
+            return $response->withStatus(500);
+        }
+
+        return $response->withStatus(200);
+    }
+
 
 }

@@ -87,17 +87,22 @@ class UserReviewService
         $statement->bindValue(':review_id', $reviewId, PDO::PARAM_INT);
         $statement->bindValue(':user_id', $userId, PDO::PARAM_STR);
         $statement->bindValue(':album_id', $albumId, PDO::PARAM_STR);
-
-        // Log the query and parameters
-        error_log("Executing query: $query with review_id=$reviewId, user_id=$userId, album_id=$albumId");
-
         $statement->execute();
 
         $result = $statement->fetchColumn();
-
-        // Log the result
-        error_log("Query result: $result");
-
+        
         return $result > 0;
+    }
+
+    public function DeleteReviewForAlbum(int $reviewId): bool
+    {
+        $query = '
+            DELETE FROM user_reviews WHERE id = :review_id
+        ';
+
+        $statement = $this->db->prepare($query);
+        $statement->bindValue(':review_id', $reviewId, PDO::PARAM_INT);
+
+        return $statement->execute();
     }
 }
