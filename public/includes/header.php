@@ -41,6 +41,7 @@
                     <a onclick="logout()" class="btn btn-outline-light">Logout</a>
                 <?php else: ?>
                     <a href="/login" class="btn btn-outline-light">Login</a>
+                    <a href="/register" class="btn btn-outline-light">Register</a>
                 <?php endif; ?>
             </div>
         </div>
