@@ -3,6 +3,7 @@
 namespace S246109\BeatMagazine\Services;
 
 use PDO;
+use PHPMailer\PHPMailer\PHPMailer;
 
 class UserService
 {
@@ -63,6 +64,48 @@ class UserService
     public function isUserAuthenticated(): bool
     {
         return isset($_SESSION['user_id']) && isset($_SESSION['authenticated']) && $_SESSION['authenticated'] === true;
+    }
+
+    public function handlePasswordResetRequest(string $email): bool
+    {
+        $token = bin2hex(random_bytes(16));
+        $expires = date('Y-m-d H:i:s', time() + 1800); // 30 minutes from now
+
+        $stmt = $this->db->prepare('INSERT INTO password_resets (email, token, expires_at) VALUES (:email, :token, :expires)');
+        $stmt->execute(['email' => $email, 'token' => $token, 'expires' => $expires]);
+
+        $this->sendPasswordResetEmail($email, $token);
+
+        return true;
+    }
+
+    private function sendPasswordResetEmail(string $email, string $token): void
+    {
+        $reset_link = "http://localhost:8000/?token=$token";
+        if (getenv('APP_ENV') === 'production') {
+            $reset_link = "http://s246109.uosweb.co.uk/?token=$token";
+        }
+
+        $mail = new PHPMailer();
+        $mail->isSMTP();
+        $mail->Host = 'smtp.34sp.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'password-reset@s246109.uosweb.co.uk';
+        $mail->Password = $_ENV['EMAIL_PASSWORD'];
+        $mail->SMTPSecure = 'tls';
+        $mail->Port = 587;
+
+        $mail->setFrom('password-reset@s246109.uosweb.co.uk', 'Password Reset @ BeatMagazine');
+        $mail->addAddress($email);
+        $mail->Subject = 'Password Reset Request';
+        $mail->Body = 'To reset your password, click the following link: ' . $reset_link;
+
+        if ($mail->send()) {
+            error_log("Email sent to $email");
+        } else {
+            error_log("Failed to send email: " . $mail->ErrorInfo);
+            echo "Failed to send email. Please try again later.";
+        }
     }
 
     public function getUserID(): ?int

@@ -4,17 +4,23 @@ namespace S246109\BeatMagazine\Controllers;
 
 use PDO;
 use S246109\BeatMagazine\Models\User;
+use S246109\BeatMagazine\Services\UserService;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
 
 class PasswordResetController
 {
-    private PDO $db;
 
-    public function __construct(PDO $db)
+    private UserService $userService;
+
+    /**
+     * @param UserService $userService
+     */
+    public function __construct(UserService $userService)
     {
-        $this->db = $db;
+        $this->userService = $userService;
     }
+
 
     public function index(Request $request, Response $response, array $args): Response
     {
@@ -26,26 +32,32 @@ class PasswordResetController
         return $response;
     }
 
-//    public function requestPasswordReset(string $email)
-//    {
-//        $token = bin2hex(random_bytes(16));
-//        $expires = date('U') + 1800; // 30 minutes from now
-//
-//        $stmt = $this->db->prepare('INSERT INTO password_resets (email, token, expires) VALUES (:email, :token, :expires)');
-//        $stmt->execute(['email' => $email, 'token' => $token, 'expires' => $expires]);
-//
-//        $this->sendPasswordResetEmail($email, $token);
-//    }
-//
-//    private function sendPasswordResetEmail(string $email, string $token)
-//    {
-//        $mail = new PHPMailer(true);
-//        $mail->setFrom('no-reply@example.com', 'BeatMagazine');
-//        $mail->addAddress($email);
-//        $mail->Subject = 'Password Reset Request';
-//        $mail->Body = "Click the link to reset your password: http://example.com/reset-password?token=$token";
-//        $mail->send();
-//    }
+    public function handleResetRequest(Request $request, Response $response, array $args): Response
+    {
+        $data = json_decode($request->getBody()->getContents(), true);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            return $response->withStatus(400);
+        }
+
+        if (!isset($data['email'])) {
+            return $response->withStatus(400);
+        }
+
+        if (!$this->userService->isEmailTaken($data['email'])) {
+            return $response->withStatus(404);
+        }
+
+        $email = $data['email'];
+
+        $success = $this->userService->handlePasswordResetRequest($email);
+
+        if (!$success) {
+            return $response->withStatus(500);
+        }
+
+        return $response->withStatus(200);
+    }
 
 
 }

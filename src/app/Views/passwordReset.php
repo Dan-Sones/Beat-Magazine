@@ -2,7 +2,8 @@
 
     <main class="register-wrapper d-flex justify-content-center align-items-center min-vh-100">
         <div class="container">
-            <div class="row justify-content-center">
+            <div class="row justify-content-ce
+            nter">
                 <div class="col-12 col-md-8 col-lg-6">
                     <div class="card shadow p-4">
                         <h2 class="mb-4 text-center">Reset Password</h2>
@@ -141,8 +142,23 @@
 
                 document.getElementById('new_password').classList.remove('is-invalid')
 
-                console.log('Password meets criteria');
 
+                await fetch('/api/password-reset-request', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        new_password: newPassword,
+                    })
+                }).then(response => {
+                    if (response.status === 200) {
+                        alert('Password reset successfully');
+                        window.location.href = '/login';
+                    } else {
+                        alert('Unable to reset password');
+                    }
+                });
 
             }
 
