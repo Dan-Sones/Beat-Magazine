@@ -4,6 +4,8 @@ namespace S246109\BeatMagazine\Services;
 
 use PDO;
 use PHPMailer\PHPMailer\PHPMailer;
+use Ramsey\Uuid\Uuid;
+
 
 class UserService
 {
@@ -157,6 +159,32 @@ class UserService
         } else {
             throw new \Exception('Invalid or expired token.');
         }
+    }
+
+    public function getUserIdFromUsername(mixed $username)
+    {
+        $query = 'SELECT id FROM users WHERE username = :username LIMIT 1';
+        $statement = $this->db->prepare($query);
+        $statement->bindValue(':username', $username, PDO::PARAM_STR);
+        $statement->execute();
+        return $statement->fetchColumn();
+    }
+
+    public function uploadProfilePicture($uploadedFile): void
+    {
+        $directory = PUBLIC_PATH . '/images/user-profile-pictures';
+        // Rename the file to be a UUID
+        $filename = Uuid::uuid4() . '.' . pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
+        $uploadedFile->moveTo($directory . DIRECTORY_SEPARATOR . $filename);
+
+        // Save the relative path
+        $relativePath = '/images/user-profile-pictures/' . $filename;
+
+        $query = 'UPDATE users SET profile_picture = :profile_picture WHERE id = :id';
+        $statement = $this->db->prepare($query);
+        $statement->bindValue(':profile_picture', $relativePath, PDO::PARAM_STR);
+        $statement->bindValue(':id', $_SESSION['user_id'], PDO::PARAM_INT);
+        $statement->execute();
     }
 
 }

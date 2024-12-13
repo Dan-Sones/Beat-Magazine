@@ -18,14 +18,57 @@
                         <div class="content justify-content-center">
                             <div class="row">
                                 <div class="col-12 justify-content-center d-flex">
-                                    <!--TODO: Allow editing if logged in-->
-                                    <img src="<?= $user->getProfilePictureUri() ?>"
-                                         class="img-fluid rounded-circle p-2"
-                                         style="width: 250px; height: 250px; object-fit: cover"
-                                         alt="Profile Picture"/>
+                                    <?php if ($_SESSION['authenticated'] && isset($idForUser) && $_SESSION['user_id'] === $idForUser): ?>
+                                        <form id="uploadForm"
+                                              enctype="multipart/form-data" style="position: relative;">
+                                            <input type="file" name="profile_picture" id="profilePictureInput"
+                                                   style="display: none;">
+                                            <div id="profilePicture" style="cursor: pointer; position: relative;">
+                                                <img src="<?= $user->getProfilePictureUri() ?>" alt="Profile Picture"
+                                                     class="img-fluid rounded-circle"
+                                                     style="width: 200px; height: 200px; object-fit: cover">
+                                                <div id="uploadOverlay" class="rounded-circle">
+                                                    <i class="bi bi-cloud-upload"></i></div>
+                                            </div>
+                                        </form>
+                                    <?php else: ?>
+                                        <img src="<?= $user->getProfilePictureUri() ?>"
+                                             class="img-fluid rounded-circle p-2"
+                                             style="width: 250px; height: 250px; object-fit: cover"
+                                             alt="Profile Picture">
+                                    <?php endif; ?>
 
                                 </div>
                             </div>
+
+                            <script>
+                                // Show the file upload dialog when the profile picture is clicked - Because the file input is hidden
+                                document.getElementById('profilePicture').addEventListener('click', function () {
+                                    document.getElementById('profilePictureInput').click();
+                                });
+
+                                document.getElementById('profilePictureInput').addEventListener('change', function () {
+                                    handleUpload();
+                                });
+
+                                const handleUpload = async () => {
+                                    const fileInput = document.getElementById('profilePictureInput');
+                                    const file = fileInput.files[0];
+                                    const formData = new FormData();
+                                    formData.append('profile_picture', file);
+
+                                    const response = await fetch('/api/upload-profile-picture', {
+                                        method: 'POST',
+                                        body: formData
+                                    });
+
+                                    if (response.ok) {
+                                        window.location.reload();
+                                    } else {
+                                        console.error('Upload failed');
+                                    }
+                                };
+                            </script>
 
 
                             <div class="row">

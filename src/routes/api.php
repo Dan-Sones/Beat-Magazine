@@ -4,6 +4,7 @@ use S246109\BeatMagazine\Controllers\AlbumController;
 use S246109\BeatMagazine\Controllers\HeaderController;
 use S246109\BeatMagazine\Controllers\LoginController;
 use S246109\BeatMagazine\Controllers\PasswordResetController;
+use S246109\BeatMagazine\Controllers\ProfileController;
 use S246109\BeatMagazine\Controllers\RegisterController;
 use S246109\BeatMagazine\Controllers\UserReviewController;
 use S246109\BeatMagazine\Middleware\RestrictUserReviewsMiddleware;
@@ -24,6 +25,7 @@ return function (App $app) {
         $group->post('/logout', [HeaderController::class, 'logout']);
         $group->post('/password-reset-request', [PasswordResetController::class, 'handleResetRequest']);
         $group->post('/password-reset', [PasswordResetController::class, 'resetPassword']);
+        $group->post('/upload-profile-picture', [ProfileController::class, 'uploadProfilePicture']);
 
 
         $group->get('/albums', [AlbumController::class, 'index']);
