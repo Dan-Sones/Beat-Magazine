@@ -42,13 +42,16 @@ class UserFactory
 
     private function formatDateToDDMMYYYY($timestamp)
     {
-        $date = new DateTime($timestamp); // Create a DateTime object from the timestamp
+        if ($timestamp === null) {
+            return '';
+        }
+        $date = new DateTime($timestamp);
         return $date->format('d/m/Y');    // Format it as dd/mm/yyyy
     }
 
     public function getPublicUserByUserId(int $id): ?PublicUserViewModel
     {
-        $query = 'SELECT profile_picture, username FROM users WHERE id = :id LIMIT 1';
+        $query = 'SELECT profile_picture, username, created_at FROM users WHERE id = :id LIMIT 1';
         $statement = $this->db->prepare($query);
         $statement->bindValue(':id', $id, PDO::PARAM_STR);
         $statement->execute();

@@ -267,7 +267,7 @@
                                                              class="img-fluid rounded-circle"
                                                              style="width: 60px; height: 60px; object-fit: cover">
                                                         <div class="ms-2">
-                                                            <a href="/albums"
+                                                            <a href="/user/<?= $userReview->getUser()->getUsername() ?>"
                                                                class="text-center pt-1"><?= $userReview->getUser()->getUsername() ?></a>
                                                             <p class="mb-0"
                                                                style="font-size: 0.8rem;"><?= $userReview->getRating() ?>
@@ -279,7 +279,7 @@
                                                         <img src="<?= $userReview->getUser()->getProfilePictureUri() ?>"
                                                              class="img-fluid rounded-circle"
                                                              style="width: 120px; height: 120px; object-fit: cover">
-                                                        <a href="/albums"
+                                                        <a href="/user/<?= $userReview->getUser()->getUsername() ?>"
                                                            class="text-center pt-3"><?= $userReview->getUser()->getUsername() ?></a>
                                                     </div>
                                                     <div class="col-md-2 align-items-center justify-content-center d-none d-md-flex order-2 order-md-2">
