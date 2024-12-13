@@ -107,8 +107,16 @@ class RegisterController
         $password = $data['password'] ?? '';
         $google2faSecret = $this->getGoogle2faSecret();
 
-
         if (empty($username) || empty($email) || empty($firstName) || empty($lastName) || empty($password) || empty($google2faSecret)) {
+            return $response->withStatus(400);
+        }
+
+        $confirmNumbers = preg_match_all('/[0-9]/', $password) >= 3;
+        $confirmCapital = preg_match_all('/[A-Z]/', $password) >= 1;
+        $confirmPunctuation = preg_match_all('/[!@#$%^&*()_+]/', $password) >= 1;
+        $confirmLength = strlen($password) >= 8;
+
+        if (!$confirmNumbers || !$confirmCapital || !$confirmPunctuation || !$confirmLength) {
             return $response->withStatus(400);
         }
 

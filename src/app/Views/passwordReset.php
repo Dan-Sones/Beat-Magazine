@@ -62,7 +62,6 @@
 
             const checkPassword = () => {
                 const password = document.getElementById('new_password').value;
-                console.log("running")
 
                 // Check to see if the passsword:
                 // 1. Contains at least 3 numbers
