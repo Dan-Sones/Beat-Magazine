@@ -95,7 +95,7 @@ class UserService
     private function sendPasswordResetEmail(string $email, string $token): void
     {
         $reset_link = "http://localhost:8000/reset-password?token=$token";
-        if (getenv('APP_ENV') === 'production') {
+        if ($_ENV('APP_ENV') === 'production') {
             //TODO: Update to HTTPs when the site uses it
             $reset_link = "http://s246109.uosweb.co.uk/reset-password?token=$token";
         }
