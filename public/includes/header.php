@@ -32,7 +32,8 @@
                     <a class="nav-link text-light">Artists</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-light">Profile</a>
+                    <a href="javascript:void(0);" onclick="window.location.href = getProfileHref();"
+                       class="nav-link text-light">My Profile</a>
                 </li>
             </ul>
             <div class="user-info">
@@ -47,6 +48,17 @@
         </div>
 
         <script>
+
+
+            const getProfileHref = () => {
+                // if the user is not authenticated, redirect to login page
+                if (!<?= json_encode($_SESSION['authenticated'] ?? false) ?>) {
+                    return '/login';
+                }
+                // if the user is authenticated, redirect to their profile page
+                return '/user/' + <?= json_encode($_SESSION['username'] ?? '') ?>;
+            }
+
             const logout = async () => {
                 return await fetch('/api/logout', {
                     method: 'POST',
