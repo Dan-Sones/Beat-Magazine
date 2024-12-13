@@ -4,6 +4,8 @@ namespace S246109\BeatMagazine\Services;
 
 use PDO;
 use PHPMailer\PHPMailer\PHPMailer;
+use Ramsey\Uuid\Uuid;
+
 
 class UserService
 {
@@ -156,6 +158,67 @@ class UserService
             return true;
         } else {
             throw new \Exception('Invalid or expired token.');
+        }
+    }
+
+    public function getUserIdFromUsername(mixed $username)
+    {
+        $query = 'SELECT id FROM users WHERE username = :username LIMIT 1';
+        $statement = $this->db->prepare($query);
+        $statement->bindValue(':username', $username, PDO::PARAM_STR);
+        $statement->execute();
+        return $statement->fetchColumn();
+    }
+
+    public function uploadProfilePicture($uploadedFile): void
+    {
+        $directory = $this->ensureDirectoryExists(PUBLIC_PATH . '/images/user-profile-pictures');
+        $filename = $this->moveUploadedFile($uploadedFile, $directory);
+        $currentProfilePicture = $this->getCurrentProfilePicture();
+        $this->updateProfilePictureInDatabase($filename);
+        $this->deleteOldProfilePicture($currentProfilePicture, $directory);
+    }
+
+    private function ensureDirectoryExists(string $directory): string
+    {
+        if (!is_dir($directory)) {
+            mkdir($directory, 0755, true);
+        }
+        return $directory;
+    }
+
+    private function moveUploadedFile($uploadedFile, string $directory): string
+    {
+        $filename = Uuid::uuid4() . '.' . pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
+        $uploadedFile->moveTo($directory . DIRECTORY_SEPARATOR . $filename);
+        return $filename;
+    }
+
+    private function getCurrentProfilePicture(): ?string
+    {
+        $query = 'SELECT profile_picture FROM users WHERE id = :id';
+        $statement = $this->db->prepare($query);
+        $statement->bindValue(':id', $_SESSION['user_id'], PDO::PARAM_INT);
+        $statement->execute();
+        return $statement->fetchColumn();
+    }
+
+    private function updateProfilePictureInDatabase(string $filename): void
+    {
+        $query = 'UPDATE users SET profile_picture = :profile_picture WHERE id = :id';
+        $statement = $this->db->prepare($query);
+        $statement->bindValue(':profile_picture', $filename, PDO::PARAM_STR);
+        $statement->bindValue(':id', $_SESSION['user_id'], PDO::PARAM_INT);
+        $statement->execute();
+    }
+
+    private function deleteOldProfilePicture(?string $currentProfilePicture, string $directory): void
+    {
+        if ($currentProfilePicture !== null) {
+            $oldFilePath = $directory . DIRECTORY_SEPARATOR . $currentProfilePicture;
+            if (file_exists($oldFilePath)) {
+                unlink($oldFilePath);
+            }
         }
     }
 

@@ -7,20 +7,29 @@ class PublicUserViewModel
 
     private string $username;
     private string $profilePictureUri;
-
     private int $id;
+
+    private string $created_at;
 
     /**
      * @param string $username
      * @param string $profilePictureUri
-     * @param string $id
+     * @param int $id
+     * @param string $created_at
      */
-    public function __construct(string $username, string $profilePictureUri, string $id)
+    public function __construct(string $username, string $profilePictureUri, int $id, string $created_at)
     {
         $this->username = $username;
         $this->profilePictureUri = $profilePictureUri;
         $this->id = $id;
+        $this->created_at = $created_at;
     }
+
+    public function getCreatedAt(): string
+    {
+        return $this->created_at;
+    }
+
 
     public function getUsername(): string
     {
@@ -33,7 +42,7 @@ class PublicUserViewModel
             return 'https://via.placeholder.com/150';
         }
 
-        return $this->profilePictureUri;
+        return '/images/user-profile-pictures/' . $this->profilePictureUri;
     }
 
     public function getId(): string

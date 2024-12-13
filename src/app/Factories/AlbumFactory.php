@@ -15,6 +15,51 @@ class AlbumFactory
         $this->db = $db;
     }
 
+
+    public function getAlbumById(int $id): ?Album
+    {
+        $query = '
+    SELECT 
+        albums.id, 
+        albums.album_art, 
+        albums.name AS album_name, 
+        artists.name AS artist_name, 
+        albums.genre, 
+        albums.record_label, 
+        albums.average_user_rating, 
+        albums.journalist_rating, 
+        albums.release_date
+    FROM albums
+    INNER JOIN artists ON albums.artist_id = artists.id
+    WHERE albums.id = :album_id
+';
+        $statement = $this->db->prepare($query);
+        $statement->bindValue(':album_id', $id, PDO::PARAM_INT);
+        $statement->execute();
+
+        $albumData = $statement->fetch(PDO::FETCH_ASSOC);
+
+        if ($albumData === false) {
+            return null;
+        }
+
+        return new Album(
+            $albumData['id'],
+            $albumData['album_art'],
+            $albumData['album_name'],
+            $albumData['artist_name'],
+            $albumData['genre'],
+            $albumData['record_label'],
+            $albumData['average_user_rating'],
+            $albumData['journalist_rating'],
+            $albumData['release_date'],
+            [new Song("1", "Example", '2:11')] //We don't need the songs but the constructor requires it
+        );
+
+
+    }
+
+
     public function getAlbumByName(string $name, string $artistName): ?Album
     {
         $query = '
