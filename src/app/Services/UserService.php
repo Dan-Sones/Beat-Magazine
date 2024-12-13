@@ -177,12 +177,10 @@ class UserService
         $filename = Uuid::uuid4() . '.' . pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
         $uploadedFile->moveTo($directory . DIRECTORY_SEPARATOR . $filename);
 
-        // Save the relative path
-        $relativePath = '/images/user-profile-pictures/' . $filename;
 
         $query = 'UPDATE users SET profile_picture = :profile_picture WHERE id = :id';
         $statement = $this->db->prepare($query);
-        $statement->bindValue(':profile_picture', $relativePath, PDO::PARAM_STR);
+        $statement->bindValue(':profile_picture', $filename, PDO::PARAM_STR);
         $statement->bindValue(':id', $_SESSION['user_id'], PDO::PARAM_INT);
         $statement->execute();
     }

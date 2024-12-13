@@ -42,7 +42,7 @@ class PublicUserViewModel
             return 'https://via.placeholder.com/150';
         }
 
-        return $this->profilePictureUri;
+        return '/images/user-profile-pictures/' . $this->profilePictureUri;
     }
 
     public function getId(): string
