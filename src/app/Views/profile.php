@@ -117,11 +117,12 @@
                                         <?php foreach ($userReviews as $userReview): ?>
                                             <div class="row gx-5 d-flex align-items-center pb-5"
                                                  data-aos="fade-<?php echo $i % 2 == 0 ? 'right' : 'left'; ?>"
-                                                 data-aos-duration="3000">
+                                                 data-aos-duration="1000">
                                                 <div class="col-md-6 col-12 order-0 order-md-<?php echo $i % 2 == 0 ? '1' : '0'; ?> justify-content-center pb-sm-3">
                                                     <div class="album-art pb-3">
                                                         <img src="<?= $albumDetailsMap[$userReview->getAlbumId()]->getAlbumArt() ?>"
                                                              class="img-fluid shadow album-art"
+                                                             onclick="window.location.href = '/artist/<?= $albumDetailsMap[$userReview->getAlbumId()]->getArtistName() ?>/<?= $albumDetailsMap[$userReview->getAlbumId()]->getAlbumName() ?>'"
                                                              alt="Album Art for <?= $albumDetailsMap[$userReview->getAlbumId()]->getAlbumName() ?>"/>
                                                     </div>
                                                 </div>
