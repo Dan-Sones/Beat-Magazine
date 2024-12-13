@@ -10,7 +10,10 @@
                             <label for="email" class="form-label">Email Address</label>
                             <input type="text" class="form-control" id="email"
                                    placeholder="Enter username" required>
+                            <a class="disabled" id="passwordResetLink" onclick="handleRequestPasswordReset()">Forgot
+                                Password?</a>
                         </div>
+
                         <div class="mb-3">
                             <label for="password" class="form-label">Password</label>
                             <input type="password" class="form-control" id="password"
@@ -95,6 +98,34 @@
                             });
                         };
 
+                        const handleRequestPasswordReset = async () => {
+                            const email = emailInput.value;
+                            const data = {
+                                email: email
+                            };
+                            return await fetch('/api/password-reset-request', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(data)
+                            }).then(response => {
+                                if (response.status === 200) {
+                                    alert('Password reset email sent');
+                                } else {
+                                    alert('Unable to send password reset email');
+                                }
+                            });
+                        };
+
+                        emailInput.addEventListener('input', () => {
+                            document.getElementById('passwordResetLink').disabled = !isEmailValid()
+                        });
+
+
+                        const isEmailValid = () => {
+                            return emailInput.value.match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/);
+                        };
 
                     </script>
 
