@@ -1,15 +1,14 @@
 <?php include 'includes/header.php'; ?>
 
-    <main class="register-wrapper d-flex justify-content-center align-items-center min-vh-100">
-        <div class="container">
-            <div class="row justify-content-ce
-            nter">
-                <div class="col-12 col-md-8 col-lg-6">
+    <main class="d-flex justify-content-center align-items-center min-vh-100">
+        <div class="container d-flex justify-content-center align-items-center">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-12 col-lg-12">
                     <div class="card shadow p-4">
                         <h2 class="mb-4 text-center">Reset Password</h2>
 
                         <p class="fw-bold">Passwords Must:</p>
-                        <ul class="list-unstyled mb-4A" id="password-status">
+                        <ul class="list-unstyled mb-4" id="password-status">
                             <li class="d-flex justify-content-between align-items-center">
                                 <span>Contain at least 3 numbers:</span>
                                 <div id="confirmNumbersStatus">
@@ -24,7 +23,7 @@
                             </li>
                             <li class="d-flex justify-content-between align-items-center">
                                 <span>Contain at least 1 piece of punctuation:</span>
-                                <div id="confirmPunctuationStatus">
+                                <div class="ps-5" id="confirmPunctuationStatus">
                                     <div class="spinner-border" role="status"></div>
                                 </div>
                             </li>
@@ -57,10 +56,7 @@
             </div>
         </div>
 
-
         <script>
-
-
             // on page load disable the submit button
             document.getElementById('submit').disabled = true;
 
@@ -88,14 +84,12 @@
 
             }
 
-
             // When the user enters the textbox
             document.getElementById('new_password').addEventListener('input', () => {
                 document.getElementById('confirmNumbersStatus').innerHTML = '';
                 document.getElementById('confirmCapitalStatus').innerHTML = '';
                 document.getElementById('confirmPunctuationStatus').innerHTML = '';
                 document.getElementById('confirmLengthStatus').innerHTML = '';
-
 
                 document.getElementById('confirmNumbersStatus').innerHTML = '<div class="spinner-border" role="status"></div>';
                 document.getElementById('confirmCapitalStatus').innerHTML = '<div class="spinner-border" role="status"></div>';
@@ -105,14 +99,11 @@
 
             document.getElementById('new_password').addEventListener('blur', checkPassword)
 
-
             document.getElementById('new_password').addEventListener('blur', () => {
                 document.getElementById('new_password').classList.remove('is-invalid')
             })
 
-
             const submitResetPassword = async (event) => {
-
                 event.preventDefault();
 
                 const newPassword = document.getElementById('new_password').value;
@@ -124,7 +115,6 @@
                     alert('Passwords do not match');
                     return;
                 }
-
 
                 // We technically don't need to check this again, but it's good practice
 
@@ -142,34 +132,27 @@
 
                 document.getElementById('new_password').classList.remove('is-invalid')
 
-
-                await
-                    fetch('/api/password-reset', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            new_password: newPassword,
-                            token: new URLSearchParams(window.location.search).get('token')
-                        })
-                    }).then(response => {
-                        if (response.status === 200) {
-                            alert('Password reset successfully');
-                            window.location.href = '/login';
-                        } else {
-                            alert('Unable to reset password');
-                        }
-                    });
-
+                await fetch('/api/password-reset', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        new_password: newPassword,
+                        token: new URLSearchParams(window.location.search).get('token')
+                    })
+                }).then(response => {
+                    if (response.status === 200) {
+                        alert('Password reset successfully');
+                        window.location.href = '/login';
+                    } else {
+                        alert('Unable to reset password');
+                    }
+                });
             }
-
-
         </script>
 
-
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
     </main>
 
 <?php include 'includes/footer.php'; ?>
