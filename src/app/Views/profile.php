@@ -14,12 +14,12 @@
             <div class="row justify-content-center">
                 <div class="col-xl-8 col-lg-10 col-md-10 col-sm-12">
                     <div class="profile-container shadow d-flex justify-content-center pb-3 pt-3">
-
+                        <?php if (isset($user)) : ?>
                         <div class="content justify-content-center">
                             <div class="row">
                                 <div class="col-12 justify-content-center d-flex">
                                     <!--TODO: Allow editing if logged in-->
-                                    <img src="https://preview.redd.it/fan-theory-is-philip-j-fry-the-messiah-v0-uzlu3cobnpea1.jpg?width=3200&format=pjpg&auto=webp&s=19cd72a211cf9fe16378153333e914643a828ed2"
+                                    <img src="<?= $user->getProfilePictureUri() ?>"
                                          class="img-fluid rounded-circle p-2"
                                          style="width: 250px; height: 250px; object-fit: cover"
                                          alt="Profile Picture"/>
@@ -32,26 +32,26 @@
                                 <div class="col-12">
                                     <div class="userInfo pt-2">
                                         <!--TODO:Allow editing if logged in-->
-                                        <h1 class="text-center">Philip J. Fry</h1>
+                                        <h1 class="text-center"><?= $user->getUsername() ?></h1>
                                     </div>
                                 </div>
                             </div>
                             <div class="pt-2 row justify-content-center">
-                                <div class="col-4 text-center">
-                                    <h5>Total Likes</h5>
-                                </div>
-                             
-                                <div class="col-4 text-center">
+                                <!--                                <div class="col-4 text-center">-->
+                                <!--                                    <h5>Total Likes</h5>-->
+                                <!--                                </div>-->
+
+                                <div class="col-12 text-center">
                                     <h5>User Since</h5>
                                 </div>
                             </div>
                             <div class="row justify-content-center">
-                                <div class="col-4 text-center">
-                                    <p>21</p>
-                                </div>
+                                <!--                                <div class="col-4 text-center">-->
+                                <!--                                    <p></p>-->
+                                <!--                                </div>-->
 
-                                <div class="col-4 text-center">
-                                    <p>21/01/02</p>
+                                <div class="col-12 text-center">
+                                    <p><?= $user->getCreatedAt() ?></p>
                                 </div>
                             </div>
                         </div>
@@ -84,7 +84,7 @@
                                                         <h5>George Clanton</h5>
                                                     </div>
                                                     <div class="card-body">
-                                                        <p>100% Electronica is not just an album; it’s a fully-realized
+                                                        <p>100% Electronica is not just an album; it is a fully-realized
                                                             experience. George Clanton has created a work that feels
                                                             timeless and forward-thinking, perfectly capturing the
                                                             emotional resonance of nostalgia without becoming trapped in
@@ -100,9 +100,17 @@
                                 </div>
 
 
+                                <?php else: ?>
+                                    <div class="row justify-content-center">
+                                        <div class="col-12">
+                                            <h1 class="text-center">User not found</h1>
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
+
                             </div>
                         </div>
-                    </div>
+    </main>
 
 
     </main>

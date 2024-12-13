@@ -2,6 +2,7 @@
 
 namespace S246109\BeatMagazine\Factories;
 
+use DateTime;
 use PDO;
 use S246109\BeatMagazine\Models\Album;
 use S246109\BeatMagazine\Models\PublicUserViewModel;
@@ -20,7 +21,7 @@ class UserFactory
 
     public function getPublicUserByUsername(string $username): ?PublicUserViewModel
     {
-        $query = 'SELECT profile_picture, id FROM users WHERE username = :username LIMIT 1';
+        $query = 'SELECT profile_picture, id, created_at FROM users WHERE username = :username LIMIT 1';
         $statement = $this->db->prepare($query);
         $statement->bindValue(':username', $username, PDO::PARAM_STR);
         $statement->execute();
@@ -34,8 +35,15 @@ class UserFactory
         return new PublicUserViewModel(
             $username,
             $userInfo['profile_picture'] ?? '',
-            (int)$userInfo['id']
+            (int)$userInfo['id'],
+            $this->formatDateToDDMMYYYY($userInfo['created_at'])
         );
+    }
+
+    private function formatDateToDDMMYYYY($timestamp)
+    {
+        $date = new DateTime($timestamp); // Create a DateTime object from the timestamp
+        return $date->format('d/m/Y');    // Format it as dd/mm/yyyy
     }
 
     public function getPublicUserByUserId(int $id): ?PublicUserViewModel
@@ -54,7 +62,8 @@ class UserFactory
         return new PublicUserViewModel(
             $userInfo['username'],
             $userInfo['profile_picture'] ?? '',
-            $id
+            $id,
+            $this->formatDateToDDMMYYYY($userInfo['created_at'])
         );
 
     }
@@ -104,5 +113,6 @@ class UserFactory
             $userInfo['password']
         );
     }
+
 
 }
