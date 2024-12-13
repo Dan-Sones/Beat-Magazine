@@ -1,16 +1,7 @@
 <?php include 'includes/loadHeader.php'; ?>
 
-    <!-- AOS CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
-
-    <!-- AOS JS -->
-    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-    <script>
-        AOS.init();
-    </script>
-
     <main class="album-wrapper">
-        <div class="container-fluid">
+        <div class="container-fluid overflow-x-hidden">
             <div class="row justify-content-center">
                 <div class="col-xl-8 col-lg-10 col-md-10 col-sm-12">
                     <div class="profile-container shadow d-flex justify-content-center pb-3 pt-3">
@@ -18,13 +9,13 @@
                         <div class="content justify-content-center">
                             <div class="row">
                                 <div class="col-12 justify-content-center d-flex">
-                                    <?php if ($_SESSION['authenticated'] && isset($idForUser) && $_SESSION['user_id'] === $idForUser): ?>
+                                    <?php if (isset($_SESSION['authenticated']) && $_SESSION['authenticated'] && isset($idForUser) && $_SESSION['user_id'] === $idForUser): ?>
                                         <form id="uploadForm"
                                               enctype="multipart/form-data" style="position: relative;">
                                             <input type="file" name="profile_picture" id="profilePictureInput"
                                                    style="display: none;">
                                             <div id="profilePicture" style="cursor: pointer; position: relative;">
-                                                <img src="<?= $user->getProfilePictureUri() ?>" alt="Profile Picture"
+                                                <img src="<?= $user->getProfilePictureUri() ?>" alt="Profile Picture" ∂
                                                      class="img-fluid rounded-circle"
                                                      style="width: 200px; height: 200px; object-fit: cover">
                                                 <div id="uploadOverlay" class="rounded-circle">
@@ -171,8 +162,10 @@
                         </div>
     </main>
 
-
-    </main>
-
+    <!-- AOS JS -->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
 
 <?php include 'includes/footer.php'; ?>
