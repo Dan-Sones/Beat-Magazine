@@ -35,4 +35,20 @@ class AlbumsController
         return $response;
     }
 
+    public function search(Request $request, Response $response, array $args): Response
+    {
+        $search = $request->getQueryParams()['search'] ?? '';
+        if (!is_string($search)) {
+            $response->getBody()->write(json_encode([]));
+            return $response;
+        }
+
+        $search = $request->getQueryParams()['search'] ?? '';
+        $albums = $this->albumFactory->searchAlbums($search);
+
+        $response->getBody()->write(json_encode($albums));
+        return $response;
+    }
+
+
 }

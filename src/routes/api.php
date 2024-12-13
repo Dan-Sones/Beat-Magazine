@@ -1,6 +1,7 @@
 <?php
 
 use S246109\BeatMagazine\Controllers\AlbumController;
+use S246109\BeatMagazine\Controllers\AlbumsController;
 use S246109\BeatMagazine\Controllers\HeaderController;
 use S246109\BeatMagazine\Controllers\LoginController;
 use S246109\BeatMagazine\Controllers\PasswordResetController;
@@ -27,10 +28,9 @@ return function (App $app) {
         $group->post('/password-reset', [PasswordResetController::class, 'resetPassword']);
         $group->post('/upload-profile-picture', [ProfileController::class, 'uploadProfilePicture']);
 
-
-        $group->get('/albums', [AlbumController::class, 'index']);
-
+        
         $group->group('/albums', function (RouteCollectorProxy $albumGroup) {
+            $albumGroup->get('', [AlbumsController::class, 'search']);
             $albumGroup->group('/{albumId}', function (RouteCollectorProxy $albumIdGroup) {
                 $albumIdGroup->get('', [AlbumController::class, 'show']);
                 $albumIdGroup->group('/reviews', function (RouteCollectorProxy $reviewGroup) {

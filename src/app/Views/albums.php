@@ -9,9 +9,6 @@
                         <input class="form-control me-2" type="search"
                                placeholder="Search by album or artist name"
                                aria-label="Search" id="search">
-                        <button class="btn btn-outline-primary rounded-circle" type="submit">
-                            <i class="bi bi-search"></i>
-                        </button>
                     </form>
                 </div>
             </div>
