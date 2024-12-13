@@ -6,6 +6,7 @@ use PDO;
 use S246109\BeatMagazine\Models\Album;
 use S246109\BeatMagazine\Models\Journalist;
 use S246109\BeatMagazine\Models\JournalistReview;
+use S246109\BeatMagazine\Models\PublicUserViewModel;
 use S246109\BeatMagazine\Models\Song;
 use S246109\BeatMagazine\Models\UserReview;
 
@@ -53,6 +54,34 @@ class UserReviewFactory
 
         return $userReviews;
 
+    }
+
+    public function getAllUsersReviews(PublicUserViewModel $user): array
+    {
+        $userId = $user->getId();
+
+        $query = '
+            SELECT 
+                user_reviews.id, 
+                user_reviews.album_id, 
+                user_reviews.user_id, 
+                user_reviews.review_text, 
+                user_reviews.rating
+            FROM user_reviews
+            WHERE user_reviews.user_id = :user_id';
+        $statement = $this->db->prepare($query);
+        $statement->bindValue(':user_id', $userId, PDO::PARAM_STR);
+        $statement->execute();
+
+        $userReviews = [];
+
+        while ($userReviewData = $statement->fetch(PDO::FETCH_ASSOC)) {
+            $review = new UserReview($userReviewData['id'], $userReviewData['album_id'], $user, $userReviewData['review_text'], $userReviewData['rating']);
+            $userReviews[] = $review;
+        }
+
+        return $userReviews;
+        
     }
 
 }

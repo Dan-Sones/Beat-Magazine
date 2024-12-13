@@ -67,35 +67,50 @@
                                 </div>
 
                                 <div class="col-12">
-                                    <?php for ($i = 0; $i < 10; $i++) { ?>
-                                        <div class="row gx-5 d-flex align-items-center pb-5"
-                                             data-aos="fade-<?php echo $i % 2 == 0 ? 'right' : 'left'; ?>"
-                                             data-aos-duration="3000">
-                                            <div class="col-md-6 col-12 order-0 order-md-<?php echo $i % 2 == 0 ? '1' : '0'; ?> justify-content-center pb-sm-3">
-                                                <div class="album-art pb-3">
-                                                    <img src="/images/100%25-Electronica.jpg"
-                                                         class="img-fluid shadow album-art" alt="Album Art"/>
+
+                                    <?php if (isset($userReviews) && count($userReviews) > 0 && isset($albumDetailsMap)): ?>
+                                        <?php $i = 0; ?>
+
+                                        <?php foreach ($userReviews as $userReview): ?>
+                                            <div class="row gx-5 d-flex align-items-center pb-5"
+                                                 data-aos="fade-<?php echo $i % 2 == 0 ? 'right' : 'left'; ?>"
+                                                 data-aos-duration="3000">
+                                                <div class="col-md-6 col-12 order-0 order-md-<?php echo $i % 2 == 0 ? '1' : '0'; ?> justify-content-center pb-sm-3">
+                                                    <div class="album-art pb-3">
+                                                        <img src="<?= $albumDetailsMap[$userReview->getAlbumId()]->getAlbumArt() ?>"
+                                                             class="img-fluid shadow album-art"
+                                                             alt="Album Art for <?= $albumDetailsMap[$userReview->getAlbumId()]->getAlbumName() ?>"/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-12 order-1 order-md-<?php echo $i % 2 == 0 ? '0' : '1'; ?> justify-content-center">
+                                                    <div class="review card">
+                                                        <div class="card-header">
+                                                            <h4><?= $albumDetailsMap[$userReview->getAlbumId()]->getAlbumName() ?></h4>
+                                                            <h5><?= $albumDetailsMap[$userReview->getAlbumId()]->getArtistName() ?></h5>
+                                                        </div>
+                                                        <div class="card-body container d-flex flex-column flex-md-row align-items-center">
+                                                            <div class="col-12 col-md-4 text-center text-md-start mb-3 mb-md-0">
+                                                                <h2 class="rating-display"><?= $userReview->getRating() . "/10" ?>
+                                                                </h2>
+                                                            </div>
+                                                            <div class="col-12 col-md-8">
+                                                                <p class="review-text"><?= $userReview->getReview() ?></p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6 col-12 order-1 order-md-<?php echo $i % 2 == 0 ? '0' : '1'; ?> justify-content-center">
-                                                <div class="review card">
-                                                    <div class="card-header">
-                                                        <h4>100% Electronica</h4>
-                                                        <h5>George Clanton</h5>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <p>100% Electronica is not just an album; it is a fully-realized
-                                                            experience. George Clanton has created a work that feels
-                                                            timeless and forward-thinking, perfectly capturing the
-                                                            emotional resonance of nostalgia without becoming trapped in
-                                                            it. Whether you’re a vaporwave enthusiast or new to the
-                                                            genre, this album is a must-listen for anyone who craves
-                                                            music that stirs the soul while making your head bob.</p>
-                                                    </div>
-                                                </div>
+                                            <?php $i++; ?>
+                                        <?php endforeach; ?>
+
+                                    <?php else: ?>
+                                        <div class="row justify-content-center">
+                                            <div class="col-12">
+                                                <p class="text-center"><?= $user->getUsername() ?> has not left any
+                                                    reviews!</p>
                                             </div>
                                         </div>
-                                    <?php } ?>
+                                    <?php endif; ?>
 
                                 </div>
 
