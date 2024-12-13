@@ -68,11 +68,24 @@ class UserService
 
     public function handlePasswordResetRequest(string $email): bool
     {
+
+        // Delete any existing password reset tokens for this email
+        $stmt = $this->db->prepare('DELETE FROM password_resets WHERE email = :email');
+        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+        $stmt->execute();
+
+
         $token = bin2hex(random_bytes(16));
         $expires = date('Y-m-d H:i:s', time() + 1800); // 30 minutes from now
 
         $stmt = $this->db->prepare('INSERT INTO password_resets (email, token, expires_at) VALUES (:email, :token, :expires)');
-        $stmt->execute(['email' => $email, 'token' => $token, 'expires' => $expires]);
+        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+        $stmt->bindValue(':token', hash('sha256', $token), PDO::PARAM_STR);
+        $stmt->bindValue(':expires', $expires, PDO::PARAM_STR);
+
+        if (!$stmt->execute()) {
+            return false;
+        }
 
         $this->sendPasswordResetEmail($email, $token);
 
@@ -81,9 +94,10 @@ class UserService
 
     private function sendPasswordResetEmail(string $email, string $token): void
     {
-        $reset_link = "http://localhost:8000/?token=$token";
+        $reset_link = "http://localhost:8000/reset-password?token=$token";
         if (getenv('APP_ENV') === 'production') {
-            $reset_link = "http://s246109.uosweb.co.uk/?token=$token";
+            //TODO: Update to HTTPs when the site uses it
+            $reset_link = "http://s246109.uosweb.co.uk/reset-password?token=$token";
         }
 
         $mail = new PHPMailer();
@@ -100,17 +114,49 @@ class UserService
         $mail->Subject = 'Password Reset Request';
         $mail->Body = 'To reset your password, click the following link: ' . $reset_link;
 
-        if ($mail->send()) {
-            error_log("Email sent to $email");
-        } else {
-            error_log("Failed to send email: " . $mail->ErrorInfo);
-            echo "Failed to send email. Please try again later.";
+        if (!$mail->send()) {
+            error_log('Failed to send password reset email to ' . $email . ': ' . $mail->ErrorInfo);
         }
+    }
+
+    public function checkIfValidResetToken(string $token): bool
+    {
+        $hashedToken = hash('sha256', $token);
+
+        $stmt = $this->db->prepare('SELECT email FROM password_resets WHERE token = :token AND expires_at > NOW()');
+        $stmt->bindValue(':token', $hashedToken, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetchColumn() !== false;
     }
 
     public function getUserID(): ?int
     {
         return $_SESSION['user_id'] ?? null;
+    }
+
+    public function resetPassword(string $token, string $password): bool
+    {
+        $hashedToken = hash('sha256', $token);
+
+        $stmt = $this->db->prepare('SELECT email FROM password_resets WHERE token = :token AND expires_at > NOW()');
+        $stmt->bindValue(':token', $hashedToken, PDO::PARAM_STR);
+        $stmt->execute();
+        $email = $stmt->fetchColumn();
+
+        if ($email) {
+            $stmt = $this->db->prepare('UPDATE users SET password = :password WHERE email = :email');
+            $stmt->bindValue(':password', password_hash($password, PASSWORD_DEFAULT), PDO::PARAM_STR);
+            $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+            $stmt->execute();
+
+            $stmt = $this->db->prepare('DELETE FROM password_resets WHERE token = :token');
+            $stmt->bindValue(':token', $hashedToken, PDO::PARAM_STR);
+            $stmt->execute();
+
+            return true;
+        } else {
+            throw new \Exception('Invalid or expired token.');
+        }
     }
 
 }

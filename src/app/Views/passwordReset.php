@@ -143,22 +143,24 @@
                 document.getElementById('new_password').classList.remove('is-invalid')
 
 
-                await fetch('/api/password-reset-request', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        new_password: newPassword,
-                    })
-                }).then(response => {
-                    if (response.status === 200) {
-                        alert('Password reset successfully');
-                        window.location.href = '/login';
-                    } else {
-                        alert('Unable to reset password');
-                    }
-                });
+                await
+                    fetch('/api/password-reset', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            new_password: newPassword,
+                            token: new URLSearchParams(window.location.search).get('token')
+                        })
+                    }).then(response => {
+                        if (response.status === 200) {
+                            alert('Password reset successfully');
+                            window.location.href = '/login';
+                        } else {
+                            alert('Unable to reset password');
+                        }
+                    });
 
             }
 

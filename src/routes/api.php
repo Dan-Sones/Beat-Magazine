@@ -23,6 +23,8 @@ return function (App $app) {
         $group->post('/verify-otp', [LoginController::class, 'verifyOTP']);
         $group->post('/logout', [HeaderController::class, 'logout']);
         $group->post('/password-reset-request', [PasswordResetController::class, 'handleResetRequest']);
+        $group->post('/password-reset', [PasswordResetController::class, 'resetPassword']);
+
 
         $group->get('/albums', [AlbumController::class, 'index']);
 
