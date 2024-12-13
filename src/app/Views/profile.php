@@ -65,7 +65,7 @@
                                     if (response.ok) {
                                         window.location.reload();
                                     } else {
-                                        console.error('Upload failed');
+                                        alert('Failed to upload profile picture. Make sure you are using a valid image file.');
                                     }
                                 };
                             </script>
