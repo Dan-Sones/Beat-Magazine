@@ -53,7 +53,7 @@ class JournalistReviewController
         }
 
 
-        $success = $this->journalistReviewService->createJournalistReviewForAlbum($args['albumId'], $userId, $data['review'], $data['rating']);
+        $success = $this->journalistReviewService->createJournalistReviewForAlbum($args['albumId'], $userId, $data['review'], $data['rating'], $data['abstract']);
 
         if (!$success) {
             return $response->withStatus(500);

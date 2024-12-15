@@ -16,6 +16,22 @@ class JournalistService extends UserService
         $statement->execute();
     }
 
+
+    public function getJournalistIDByUserID(string $userID): string|null
+    {
+        $query = 'SELECT id FROM journalists WHERE user_id = :user_id';
+        $statement = $this->db->prepare($query);
+        $statement->bindValue(':user_id', $userID, PDO::PARAM_STR);
+        $statement->execute();
+
+        if ($journalistID = $statement->fetchColumn()) {
+            return $journalistID;
+        }
+        return null;
+
+    }
+
+
     public function validateUpgradePassword(string $input): bool
     {
         $password = $_ENV['UPGRADE_PASSWORD'];

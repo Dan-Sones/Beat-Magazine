@@ -56,7 +56,7 @@ return function (ContainerBuilder $containerBuilder) {
             return new JournalistService($c->get(PDO::class));
         },
         JournalistReviewService::class => function (ContainerInterface $c) {
-            return new JournalistReviewService($c->get(PDO::class));
+            return new JournalistReviewService($c->get(PDO::class), $c->get(JournalistService::class));
         },
 
     ]);

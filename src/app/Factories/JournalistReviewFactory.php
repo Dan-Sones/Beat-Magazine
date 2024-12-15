@@ -24,11 +24,12 @@ class JournalistReviewFactory
         journalist_reviews.rating AS review_rating,
         journalist_reviews.abstract AS review_abstract,
         journalist_reviews.full_review AS review_text,
-        CONCAT(journalists.first_name, " ", journalists.last_name) AS journalist_full_name,
-        journalists.profile_picture AS journalist_profile_picture,
+        CONCAT(users.first_name, " ", users.last_name) AS journalist_full_name,
+        users.profile_picture AS journalist_profile_picture,
         journalists.bio AS journalist_bio
     FROM journalist_reviews
     INNER JOIN journalists ON journalist_reviews.journalist_id = journalists.id
+    INNER JOIN users ON users.id = journalists.user_id
     WHERE journalist_reviews.album_id = :album_id LIMIT 1
 ';
 
