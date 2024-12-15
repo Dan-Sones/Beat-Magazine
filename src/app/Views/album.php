@@ -1,8 +1,9 @@
 <?php include 'includes/header.php'; ?>
 
+<?php if (isset($album) && $album): ?>
     <div class="modal fade" id="reviewEditor" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
-            <form>
+            <form onsubmit="submitJournalistReview(event)">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="exampleModalLabel">Review Editor</h1>
@@ -64,6 +65,35 @@
                                         preview.innerHTML = reviewText.value;
                                     });
                                 });
+
+                                const submitJournalistReview = async () => {
+                                    event.preventDefault();
+
+                                    const rating = document.getElementById('reviewRating').value;
+                                    const abstract = document.getElementById('abstractText').value;
+                                    const review = document.getElementById('reviewText').value;
+                                    const albumId = <?= $album->getAlbumID() ?>;
+
+                                    return await fetch(`/api/albums/${albumId}/journalist-reviews`, {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify({
+                                            rating: rating,
+                                            abstract: abstract,
+                                            review: review
+                                        })
+                                    }).then(response => {
+                                        if (response.status === 201) {
+                                            alert('Review submitted successfully');
+                                            location.reload();
+                                        } else {
+                                            alert('An error occurred while submitting your review');
+                                        }
+                                    });
+                                }
+
                             </script>
                         </div>
                     </div>
@@ -83,7 +113,6 @@
                 <div class="col-xl-8 col-lg-10 col-md-10 col-sm-12">
                     <div class="album-container shadow-sm bg-body-secondary">
 
-                        <?php if (isset($album) && $album): ?>
 
                         <div class="row album-content">
                             <div class="col-12 col-lg-4 order-1 order-lg-1 align-content-center">
@@ -568,34 +597,16 @@
                         document.getElementById("reviewButton").addEventListener("click", handleShowReviews);
                     </script>
 
-                    <?php else: ?>
-                        <p>404: Album not Found</p>
-                    <?php endif; ?>
 
-                </div>
-            </div>
-        </div>
-
-
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Modal Title</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        Modal body content here.
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
                 </div>
             </div>
         </div>
 
     </main>
+
+<?php else: ?>
+    <p>404: Album not Found</p>
+<?php endif; ?>
 
 
 <?php include 'includes/footer.php'; ?>

@@ -3,6 +3,7 @@
 use S246109\BeatMagazine\Controllers\AlbumController;
 use S246109\BeatMagazine\Controllers\AlbumsController;
 use S246109\BeatMagazine\Controllers\HeaderController;
+use S246109\BeatMagazine\Controllers\JournalistReviewController;
 use S246109\BeatMagazine\Controllers\LoginController;
 use S246109\BeatMagazine\Controllers\PasswordResetController;
 use S246109\BeatMagazine\Controllers\ProfileController;
@@ -36,6 +37,11 @@ return function (App $app) {
             $albumGroup->get('', [AlbumsController::class, 'search']);
             $albumGroup->group('/{albumId}', function (RouteCollectorProxy $albumIdGroup) {
                 $albumIdGroup->get('', [AlbumController::class, 'show']);
+                $albumIdGroup->group('/journalist-reviews', function (RouteCollectorProxy $journalistReviewGroup) {
+                    $journalistReviewGroup->post('', [JournalistReviewController::class, 'create']);
+//                    $journalistReviewGroup->put('', [AlbumController::class, 'updateJournalistReview']);
+//                    $journalistReviewGroup->delete('', [AlbumController::class, 'deleteJournalistReview']);
+                });
                 $albumIdGroup->group('/reviews', function (RouteCollectorProxy $reviewGroup) {
                     $reviewGroup->get('', [UserReviewController::class, 'index']);
                     $reviewGroup->post('', [UserReviewController::class, 'create']);
