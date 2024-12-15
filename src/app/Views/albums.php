@@ -98,7 +98,7 @@
                 </div>
             </div>
         `).join('')
-                    : '<p>No albums found for this search term.</p>';
+                    : '<p class="text-center">No albums found for this search term.</p>';
             }
 
 
