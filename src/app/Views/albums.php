@@ -72,15 +72,15 @@
                             return response.json();
                         } else {
                             console.error('Failed to fetch albums');
+                            return null;
                         }
                     })
                     .then(albums => {
-                        if (albums) {
-                            updateAlbumsGrid(albums);
-                        }
+                        updateAlbumsGrid(albums || []);
                     })
                     .catch(error => {
                         console.error('Error:', error);
+                        updateAlbumsGrid([]);
                     });
             }
 
