@@ -8,6 +8,7 @@ use S246109\BeatMagazine\Controllers\LoginController;
 use S246109\BeatMagazine\Controllers\PasswordResetController;
 use S246109\BeatMagazine\Controllers\ProfileController;
 use S246109\BeatMagazine\Controllers\RegisterController;
+use S246109\BeatMagazine\Controllers\UpgradeController;
 use Slim\App;
 
 return function (App $app) {
@@ -24,6 +25,8 @@ return function (App $app) {
     $app->get('/artist/{artistName}/{albumName}', AlbumController::class . ':show');
 
     $app->get('/user/{username}', ProfileController::class . ':show');
+
+    $app->get('/upgrade', UpgradeController::class . ':index');
 
     $app->get('/reset-password', PasswordResetController::class . ':index');
 };
