@@ -54,17 +54,10 @@ class LoginController
             session_start();
         }
 
+        // TODO: We should probably not set these here before the user has verified their OTP
         $_SESSION['username'] = $user->getUsername();
-//        $_SESSION['firstName'] = $user->getFirstName();
-//        $_SESSION['lastName'] = $user->getLastName();
-//        $_SESSION['email'] = $user->getEmail();
-//
-//        //TODO: Come up with a better format for this and get it from the DB rather than hardcoding
-//        $_SESSION['role'] = 'COMMUNITY-USER';
-
+        $_SESSION['role'] = $user->getRole();
         $_SESSION['user_id'] = $user->getId();
-
-
         $_SESSION['otp_pending'] = true;
 
         return $response->withHeader('Content-Type', 'application/json')->withStatus(200);

@@ -7,6 +7,7 @@ use S246109\BeatMagazine\Controllers\LoginController;
 use S246109\BeatMagazine\Controllers\PasswordResetController;
 use S246109\BeatMagazine\Controllers\ProfileController;
 use S246109\BeatMagazine\Controllers\RegisterController;
+use S246109\BeatMagazine\Controllers\UpgradeController;
 use S246109\BeatMagazine\Controllers\UserReviewController;
 use S246109\BeatMagazine\Middleware\RestrictUserReviewsMiddleware;
 use Slim\App;
@@ -21,6 +22,8 @@ return function (App $app) {
             $registerGroup->post('', [RegisterController::class, 'submit']);
         });
 
+        $group->post('/upgrade', [UpgradeController::class, 'upgrade']);
+
         $group->post('/login', [LoginController::class, 'login']);
         $group->post('/verify-otp', [LoginController::class, 'verifyOTP']);
         $group->post('/logout', [HeaderController::class, 'logout']);
@@ -28,7 +31,7 @@ return function (App $app) {
         $group->post('/password-reset', [PasswordResetController::class, 'resetPassword']);
         $group->post('/upload-profile-picture', [ProfileController::class, 'uploadProfilePicture']);
 
-        
+
         $group->group('/albums', function (RouteCollectorProxy $albumGroup) {
             $albumGroup->get('', [AlbumsController::class, 'search']);
             $albumGroup->group('/{albumId}', function (RouteCollectorProxy $albumIdGroup) {

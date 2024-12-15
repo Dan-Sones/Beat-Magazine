@@ -90,7 +90,8 @@ class UserFactory
             $userInfo['username'],
             $userInfo['first_name'],
             $userInfo['last_name'],
-            $userInfo['password']
+            $userInfo['password'],
+            $userInfo['role']
         );
     }
 
@@ -113,7 +114,8 @@ class UserFactory
             $userInfo['username'],
             $userInfo['first_name'],
             $userInfo['last_name'],
-            $userInfo['password']
+            $userInfo['password'],
+            $userInfo['role']
         );
     }
 

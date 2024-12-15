@@ -20,9 +20,18 @@
 
                     <script>
 
-                        const submitUpgradeForm = (event) => {
+                        const submitUpgradeForm = async (event) => {
                             event.preventDefault();
-                            console.log("Upgraded babyyyy")
+
+                            await fetch('/api/upgrade', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                    password: document.getElementById('password').value,
+                                }),
+                            });
                         }
 
 

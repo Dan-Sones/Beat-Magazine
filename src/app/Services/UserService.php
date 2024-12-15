@@ -9,7 +9,7 @@ use Ramsey\Uuid\Uuid;
 
 class UserService
 {
-    private PDO $db;
+    protected PDO $db;
 
     /**
      * @param PDO $db
