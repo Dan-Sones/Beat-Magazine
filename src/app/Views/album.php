@@ -1,5 +1,82 @@
 <?php include 'includes/header.php'; ?>
 
+    <div class="modal fade" id="reviewEditor" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+            <form>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Review Editor</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-6 justify-content-center align-items-center d-flex ps-0 ">
+                                    <div class="mb-3 w-100">
+                                        <label for="reviewRating" class="form-label">Rating</label>
+                                        <select class="form-select" id="reviewRating" required>
+                                            <option>Select a rating</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-3">
+                                        <label for="abstractText" class="form-label">Abstract</label>
+                                        <textarea class="form-control" id="abstractText" rows="5"
+                                                  placeholder="Write your abstract here" required></textarea>
+                                    </div>
+                                </div>
+                                <hr/>
+                                <div class="row">
+                                    <div class="col-6" id="editor">
+                                        <div class="mb-3">
+                                            <label for="reviewText" class="form-label">Review Text</label>
+                                            <textarea class="form-control" id="reviewText" rows="15"
+                                                      placeholder="Write your review here using HTML5 and see a live preview to the right"
+                                                      required></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-6" id="preview">
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', () => {
+                                    const reviewText = document.getElementById('reviewText');
+                                    const preview = document.getElementById('preview');
+
+                                    reviewText.addEventListener('input', () => {
+                                        preview.innerHTML = reviewText.value;
+                                    });
+                                });
+                            </script>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button id="submitReview" type="submit"
+                                class="btn btn-primary">Publish Review
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
     <main class="album-wrapper">
         <div class="container-fluid">
             <div class="row justify-content-center">
@@ -88,7 +165,20 @@
                         </div>
 
                         <?php else: ?>
-                            <p>There is currently not a review present for this album</p>
+                            <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'journalist'): ?>
+                                <p class="text-center d-flex justify-content-center align-items-center mb-0">
+                                    Hi <?= $_SESSION['username'] ?> ready to publish your review
+                                    of <?= $album->getAlbumName() ?>? </p>
+                                <button class="btn btn-primary mt-2" data-bs-toggle="modal"
+                                        data-bs-target="#reviewEditor">Open review editor
+                                </button>
+                            <?php else: ?>
+                                <p class="text-center d-flex justify-content-center align-items-center mb-0">No review
+                                    has
+                                    been published for this album. Check back soon to see our take
+                                    on <?= $album->getAlbumName() ?>, or leave your own review below! 🙃</p>
+
+                            <?php endif; ?>
                         <?php endif; ?>
                     </div>
                 </div>
