@@ -201,5 +201,52 @@ class AlbumFactory
         return $albums;
     }
 
+    public function searchAlbums(string $search): array|null
+    {
+        $query = '
+        SELECT
+            albums.id,
+            albums.album_art,
+            albums.name AS album_name,
+            artists.name AS artist_name,
+            albums.genre,
+            albums.record_label,
+            albums.average_user_rating,
+            albums.journalist_rating,
+            albums.release_date
+        FROM albums
+        INNER JOIN artists ON albums.artist_id = artists.id
+        WHERE albums.name LIKE :searchOne OR artists.name LIKE :searchTwo
+    ';
+
+        $statement = $this->db->prepare($query);
+
+        $statement->bindValue(':searchOne', '%' . $search . '%', PDO::PARAM_STR);
+        $statement->bindValue(':searchTwo', '%' . $search . '%', PDO::PARAM_STR);
+
+        $statement->execute();
+
+        if ($statement->rowCount() === 0) {
+            return null;
+        }
+
+        $albums = [];
+        while ($albumData = $statement->fetch(PDO::FETCH_ASSOC)) {
+            $albums[] = new Album(
+                $albumData['id'],
+                $albumData['album_art'],
+                $albumData['album_name'],
+                $albumData['artist_name'],
+                $albumData['genre'],
+                $albumData['record_label'],
+                $albumData['average_user_rating'],
+                $albumData['journalist_rating'],
+                $albumData['release_date'],
+                [new Song("1", "Example", '2:11')]
+            );
+        }
+
+        return $albums;
+    }
 
 }

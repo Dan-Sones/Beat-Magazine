@@ -2,7 +2,7 @@
 
 namespace S246109\BeatMagazine\Models;
 
-class Album
+class Album implements \JsonSerializable
 {
     private int $albumID;
     private string $albumArt;
@@ -93,4 +93,19 @@ class Album
     }
 
 
+    public function jsonSerialize(): mixed
+    {
+        return [
+            'albumID' => $this->albumID,
+            'albumArt' => $this->albumArt,
+            'albumName' => $this->albumName,
+            'artistName' => $this->artistName,
+            'genre' => $this->genre,
+            'label' => $this->label,
+            'averageUserRating' => $this->averageUserRating,
+            'journalistRating' => $this->journalistRating,
+            'releaseDate' => $this->releaseDate,
+            'songs' => $this->songs
+        ];
+    }
 }

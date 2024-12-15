@@ -92,7 +92,7 @@
 
                     </div>
 
-                    <div class="reviews-container container d-flex justify-content-center pb-3 pt-3">
+                    <div id="reviews-container" class="container d-flex justify-content-center pb-3 pt-3">
                         <div class="container">
                             <div class="row gx-5">
                                 <div class="col-12">
@@ -106,22 +106,22 @@
                                         <?php $i = 0; ?>
 
                                         <?php foreach ($userReviews as $userReview): ?>
-                                            <div class="row gx-5 d-flex align-items-center pb-5"
+                                            <div class="row gx-5 d-flex align-items-center pb-5 album-review"
                                                  data-aos="fade-<?php echo $i % 2 == 0 ? 'right' : 'left'; ?>"
-                                                 data-aos-duration="1000">
+                                                 data-aos-duration="1000" id="album-review">
                                                 <div class="col-md-6 col-12 order-0 order-md-<?php echo $i % 2 == 0 ? '1' : '0'; ?> justify-content-center pb-sm-3">
                                                     <div class="album-art pb-3">
                                                         <img src="<?= $albumDetailsMap[$userReview->getAlbumId()]->getAlbumArt() ?>"
                                                              class="img-fluid shadow album-art"
-                                                             onclick="window.location.href = '/artist/<?= $albumDetailsMap[$userReview->getAlbumId()]->getArtistName() ?>/<?= $albumDetailsMap[$userReview->getAlbumId()]->getAlbumName() ?>'"
+                                                             id="album-art"
                                                              alt="Album Art for <?= $albumDetailsMap[$userReview->getAlbumId()]->getAlbumName() ?>"/>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 col-12 order-1 order-md-<?php echo $i % 2 == 0 ? '0' : '1'; ?> justify-content-center">
                                                     <div class="review card">
                                                         <div class="card-header">
-                                                            <h4><?= $albumDetailsMap[$userReview->getAlbumId()]->getAlbumName() ?></h4>
-                                                            <h5><?= $albumDetailsMap[$userReview->getAlbumId()]->getArtistName() ?></h5>
+                                                            <h4 id="album-title"><?= $albumDetailsMap[$userReview->getAlbumId()]->getAlbumName() ?></h4>
+                                                            <h5 id="album-artist"><?= $albumDetailsMap[$userReview->getAlbumId()]->getArtistName() ?></h5>
                                                         </div>
                                                         <div class="card-body container d-flex flex-column flex-md-row align-items-center">
                                                             <div class="col-12 col-md-4 text-center text-md-start mb-3 mb-md-0">
@@ -160,6 +160,23 @@
 
                             </div>
                         </div>
+
+                        <script>
+                            const container = document.getElementById('reviews-container');
+
+                            container.addEventListener('click', (event) => {
+                                const card = event.target.closest('.album-review');
+                                if (card) {
+                                    const artist = card.querySelector('#album-artist').textContent;
+                                    const title = card.querySelector('#album-title').textContent;
+                                    const encodedArtist = encodeURIComponent(artist).replace(/%20/g, '+');
+                                    const encodedTitle = encodeURIComponent(title).replace(/%20/g, '+');
+                                    window.location.href = `/artist/${encodedArtist}/${encodedTitle}`;
+                                } else {
+                                }
+                            });
+
+                        </script>
     </main>
 
     <!-- AOS JS -->
