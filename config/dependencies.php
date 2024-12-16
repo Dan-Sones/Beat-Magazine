@@ -7,6 +7,7 @@ use S246109\BeatMagazine\Factories\ArtistFactory;
 use S246109\BeatMagazine\Factories\JournalistReviewFactory;
 use S246109\BeatMagazine\Factories\UserFactory;
 use S246109\BeatMagazine\Factories\UserReviewFactory;
+use S246109\BeatMagazine\Services\AlbumService;
 use S246109\BeatMagazine\Services\JournalistReviewService;
 use S246109\BeatMagazine\Services\JournalistService;
 use S246109\BeatMagazine\Services\UserReviewService;
@@ -33,6 +34,9 @@ return function (ContainerBuilder $containerBuilder) {
         },
         AlbumFactory::class => function (ContainerInterface $c) {
             return new AlbumFactory($c->get(PDO::class));
+        },
+        AlbumService::class => function (ContainerInterface $c) {
+            return new AlbumService($c->get(PDO::class));
         },
         ArtistFactory::class => function (ContainerInterface $c) {
             return new ArtistFactory($c->get(PDO::class));

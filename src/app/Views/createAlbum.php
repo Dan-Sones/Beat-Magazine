@@ -204,8 +204,8 @@
         const artist = document.getElementById('artist').value;
 
         const formData = new FormData();
-        formData.append('albumCover', albumCover);
-        formData.append('albumTitle', albumTitle);
+        formData.append('albumArt', albumCover);
+        formData.append('albumName', albumTitle);
         formData.append('releaseDate', releaseDate);
         formData.append('genre', genre);
         formData.append('label', label);
@@ -213,6 +213,7 @@
 
         await fetch('/api/albums', {
             method: 'POST',
+            contentType: 'multipart/form-data',
             body: formData
         }).then(response => {
             if (response.ok) {

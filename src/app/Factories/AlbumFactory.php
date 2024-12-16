@@ -50,8 +50,6 @@ class AlbumFactory
             $albumData['artist_name'],
             $albumData['genre'],
             $albumData['record_label'],
-            $albumData['average_user_rating'],
-            $albumData['journalist_rating'],
             $albumData['release_date'],
             [new Song("1", "Example", '2:11')] //We don't need the songs but the constructor requires it
         );
@@ -109,8 +107,6 @@ class AlbumFactory
             $albumData['artist_name'],
             $albumData['genre'],
             $albumData['record_label'],
-            $albumData['average_user_rating'],
-            $albumData['journalist_rating'],
             $albumData['release_date'],
             $songs
         );
@@ -148,8 +144,6 @@ class AlbumFactory
                 $albumData['artist_name'],
                 $albumData['genre'],
                 $albumData['record_label'],
-                $albumData['average_user_rating'],
-                $albumData['journalist_rating'],
                 $albumData['release_date'],
                 [new Song("1", "Example", '2:11')] //We don't need the songs but the constructor requires it
             );
@@ -191,8 +185,6 @@ class AlbumFactory
                 $albumData['artist_name'],
                 $albumData['genre'],
                 $albumData['record_label'],
-                $albumData['average_user_rating'],
-                $albumData['journalist_rating'],
                 $albumData['release_date'],
                 [new Song("1", "Example", '2:11')]
             );
@@ -239,8 +231,6 @@ class AlbumFactory
                 $albumData['artist_name'],
                 $albumData['genre'],
                 $albumData['record_label'],
-                $albumData['average_user_rating'],
-                $albumData['journalist_rating'],
                 $albumData['release_date'],
                 [new Song("1", "Example", '2:11')]
             );
