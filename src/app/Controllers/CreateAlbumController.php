@@ -24,6 +24,15 @@ class CreateAlbumController
 
     public function index(Request $request, Response $response, array $args): Response
     {
+
+        if (!isset($_SESSION['authenticated']) || !$_SESSION['authenticated']) {
+            return $response->withStatus(302)->withHeader('Location', '/login');
+        }
+
+        if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'journalist') {
+            return $response->withStatus(302)->withHeader('Location', '/albums');
+        }
+
         ob_start();
         include PRIVATE_PATH . '/src/app/Views/createAlbum.php';
         $output = ob_get_clean();
