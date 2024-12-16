@@ -16,6 +16,28 @@ class ArtistFactory
         $this->db = $db;
     }
 
+    public function searchArtists(string $searchTerm): array
+    {
+        $query = '
+        SELECT
+            artists.id,
+            artists.name
+        FROM artists
+        WHERE artists.name LIKE :searchTerm
+    ';
+
+        $statement = $this->db->prepare($query);
+        $statement->bindValue(':searchTerm', '%' . $searchTerm . '%', PDO::PARAM_STR);
+        $statement->execute();
+
+        $artists = [];
+        while ($artistData = $statement->fetch(PDO::FETCH_ASSOC)) {
+            $artists[$artistData['name']] = $artistData['id'];
+        }
+
+        return $artists;
+    }
+
 
     public function getArtistByName(string $name): ?Artist
     {
@@ -43,6 +65,24 @@ class ArtistFactory
             $artistData['artist_genre'],
             $artistData['artist_bio']
         );
+
+    }
+
+    public function createArtist(string $artistName, string $artistBio, string $artistGenre): string
+    {
+        // create an artist and return the id
+        $query = '
+        INSERT INTO artists (name, bio, genre) VALUES (:name, :bio, :genre)
+    ';
+
+        $statement = $this->db->prepare($query);
+        $statement->bindValue(':name', $artistName, PDO::PARAM_STR);
+        $statement->bindValue(':bio', $artistBio, PDO::PARAM_STR);
+        $statement->bindValue(':genre', $artistGenre, PDO::PARAM_STR);
+        $statement->execute();
+
+        return $this->db->lastInsertId();
+
 
     }
 }

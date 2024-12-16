@@ -2,6 +2,7 @@
 
 use S246109\BeatMagazine\Controllers\AlbumController;
 use S246109\BeatMagazine\Controllers\AlbumsController;
+use S246109\BeatMagazine\Controllers\ArtistController;
 use S246109\BeatMagazine\Controllers\HeaderController;
 use S246109\BeatMagazine\Controllers\JournalistReviewController;
 use S246109\BeatMagazine\Controllers\LoginController;
@@ -33,6 +34,11 @@ return function (App $app) {
         $group->post('/password-reset', [PasswordResetController::class, 'resetPassword']);
         $group->post('/upload-profile-picture', [ProfileController::class, 'uploadProfilePicture']);
 
+
+        $group->group('/artists', function (RouteCollectorProxy $artistGroup) {
+            $artistGroup->get('', [ArtistController::class, 'search']);
+            $artistGroup->post('', [ArtistController::class, 'create']);
+        });
 
         $group->group('/albums', function (RouteCollectorProxy $albumGroup) {
             $albumGroup->get('', [AlbumsController::class, 'search']);
