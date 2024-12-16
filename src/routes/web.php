@@ -3,6 +3,7 @@
 use S246109\BeatMagazine\Controllers\AlbumController;
 use S246109\BeatMagazine\Controllers\AlbumsController;
 use S246109\BeatMagazine\Controllers\ArtistController;
+use S246109\BeatMagazine\Controllers\CreateAlbumController;
 use S246109\BeatMagazine\Controllers\HomeController;
 use S246109\BeatMagazine\Controllers\LoginController;
 use S246109\BeatMagazine\Controllers\PasswordResetController;
@@ -20,6 +21,8 @@ return function (App $app) {
 
     $app->get('/albums', AlbumsController::class . ':index');
 
+    $app->get('/create-album', CreateAlbumController::class . ':index');
+
     $app->get('/artist/{artistName}', ArtistController::class . ':show');
 
     $app->get('/artist/{artistName}/{albumName}', AlbumController::class . ':show');
@@ -29,4 +32,6 @@ return function (App $app) {
     $app->get('/upgrade', UpgradeController::class . ':index');
 
     $app->get('/reset-password', PasswordResetController::class . ':index');
+
+
 };
