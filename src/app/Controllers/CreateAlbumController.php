@@ -59,11 +59,11 @@ class CreateAlbumController
 
         }
 
-        if (!isset($data['albumName']) || !isset($data['artistID']) || !isset($data['releaseDate']) || !isset($data['genre']) || !isset($data['label'])) {
+        if (!isset($data['albumName']) || !isset($data['artistID']) || !isset($data['releaseDate']) || !isset($data['genre']) || !isset($data['label']) || !isset($data['songs'])) {
             return $response->withStatus(400);
         }
 
-        $success = $this->albumService->createAlbum($data['albumName'], $data['artistID'], $data['genre'], $data['label'], $data['releaseDate'], $albumArt);
+        $success = $this->albumService->createAlbum($data['albumName'], $data['artistID'], $data['genre'], $data['label'], $data['releaseDate'], json_decode($data['songs'], true), $albumArt);
 
         if (!$success) {
             return $response->withStatus(500);

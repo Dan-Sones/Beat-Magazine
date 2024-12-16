@@ -261,6 +261,20 @@
     }
 
 
+    const getSongsArray = () => {
+        const rows = document.querySelectorAll('#songsList .row');
+        const songs = [];
+        rows.forEach(row => {
+            const songName = row.querySelector('input[name="songName[]"]').value;
+            const songLength = row.querySelector('input[name="songLength[]"]').value;
+            songs.push({
+                name: songName,
+                length: songLength
+            });
+        });
+        return songs;
+    };
+
     const submitCreateAlbumForm = async (event) => {
         event.preventDefault();
         const albumCover = document.getElementById('albumCover').files[0];
@@ -277,6 +291,7 @@
         formData.append('genre', genre);
         formData.append('label', label);
         formData.append('artistID', artistID);
+        formData.append('songs', JSON.stringify(getSongsArray()));
 
         await fetch('/api/albums', {
             method: 'POST',

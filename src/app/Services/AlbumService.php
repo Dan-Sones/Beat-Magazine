@@ -19,7 +19,7 @@ class AlbumService
         $this->db = $db;
     }
 
-    public function createAlbum(string $name, string $artistID, string $genre, string $label, string $releaseDate, $albumArt): bool
+    public function createAlbum(string $name, string $artistID, string $genre, string $label, string $releaseDate, array $songs, $albumArt): bool
     {
 
         $query = '
@@ -36,7 +36,35 @@ class AlbumService
         $statement->bindValue(':record_label', $label, PDO::PARAM_STR);
         $statement->bindValue(':album_art', $albumArt, PDO::PARAM_STR);
         $statement->bindValue(':release_date', $releaseDate, PDO::PARAM_STR);
-        return $statement->execute();
+        $albumSuccess = $statement->execute();
+
+        if (!$albumSuccess) {
+            return false;
+        }
+
+
+        $albumID = $this->db->lastInsertId();
+
+        $query = '
+            INSERT INTO songs (album_id, name, length)
+            VALUES (:album_id, :name, :length)
+                
+        ';
+        $statement = $this->db->prepare($query);
+        $statement->bindValue(':album_id', $albumID, PDO::PARAM_INT);
+
+        foreach ($songs as $song) {
+            $statement->bindValue(':name', $song['name'], PDO::PARAM_STR);
+            $statement->bindValue(':length', $song['length'], PDO::PARAM_STR);
+            $songSuccess = $statement->execute();
+
+            if (!$songSuccess) {
+                return false;
+            }
+        }
+
+        return true;
+
     }
 
     private function uploadAlbumArt($uploadedFile): string
