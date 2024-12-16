@@ -189,7 +189,8 @@
 
                             <div class="row align-items-center">
                                 <div class="col-md-3 d-flex flex-column align-items-center">
-                                    <img src="<?= $journalistReview->getJournalist()->getProfilePictureUri() ?>"
+                                    <img alt="profilePicture for <?= $journalistReview->getJournalist()->getFullName() ?>"
+                                         src="<?= $journalistReview->getJournalist()->getProfilePictureUri() ?>"
                                          class="img-fluid rounded-circle p-2"
                                          style="width: 130px; height: 130px; object-fit: cover">
                                     <h5 class="mt-2"><?= $journalistReview->getJournalist()->getFullName() ?></h5>
@@ -311,15 +312,13 @@
 
                         const animateHeight = (element, action) => {
                             if (action === 'expand') {
-                                const fullHeight = element.scrollHeight + 'px';
-                                element.style.height = fullHeight;
+                                element.style.height = element.scrollHeight + 'px';
 
                                 element.addEventListener('transitionend', () => {
                                     element.style.height = 'auto';
                                 }, {once: true});
                             } else if (action === 'collapse') {
-                                const currentHeight = element.scrollHeight + 'px';
-                                element.style.height = currentHeight;
+                                element.style.height = element.scrollHeight + 'px';
 
                                 element.offsetHeight;
                                 element.style.height = '0';
@@ -480,7 +479,8 @@
                                                     <div class="col-12 d-flex align-items-center d-md-none order-1 pb-3">
                                                         <img src="<?= $userReview->getUser()->getProfilePictureUri() ?>"
                                                              class="img-fluid rounded-circle"
-                                                             style="width: 60px; height: 60px; object-fit: cover">
+                                                             style="width: 60px; height: 60px; object-fit: cover"
+                                                             alt="profilePicture for <?= $userReview->getUser()->getUsername() ?>">
                                                         <div class="ms-2">
                                                             <a href="/user/<?= $userReview->getUser()->getUsername() ?>"
                                                                class="text-center pt-1"><?= $userReview->getUser()->getUsername() ?></a>
@@ -493,7 +493,9 @@
                                                     <div class="col-12 col-md-3 d-none d-md-flex flex-column align-items-center order-md-1 d-flex justify-content-center">
                                                         <img src="<?= $userReview->getUser()->getProfilePictureUri() ?>"
                                                              class="img-fluid rounded-circle"
-                                                             style="width: 120px; height: 120px; object-fit: cover">
+                                                             style="width: 120px; height: 120px; object-fit: cover"
+                                                             alt="profilePicture
+                                                             for <?= $userReview->getUser()->getUsername() ?>">
                                                         <a href="/user/<?= $userReview->getUser()->getUsername() ?>"
                                                            class="text-center pt-3"><?= $userReview->getUser()->getUsername() ?></a>
                                                     </div>
@@ -508,7 +510,7 @@
                                                               style="display: none"
                                                               onsubmit="handleSubmitEditReview(event, <?= $userReview->getId() ?>)">
                                                             <div class="mb-3">
-                                                                <label for="reviewRating"
+                                                                <label for="updateReviewRating"
                                                                        class="form-label">Updated Rating</label>
                                                                 <select class="form-select"
                                                                         id="updateReviewRating-<?= $userReview->getId() ?>">
@@ -545,7 +547,7 @@
                                                                 </select>
                                                             </div>
                                                             <div class="mb-3">
-                                                                <label for="UpdatedReviewText"
+                                                                <label for="updatedReviewText"
                                                                        class="form-label">Updated Review</label>
                                                                 <textarea class="form-control"
                                                                           id="updatedReviewText-<?= $userReview->getId() ?>"
