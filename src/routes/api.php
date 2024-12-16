@@ -10,6 +10,7 @@ use S246109\BeatMagazine\Controllers\ProfileController;
 use S246109\BeatMagazine\Controllers\RegisterController;
 use S246109\BeatMagazine\Controllers\UpgradeController;
 use S246109\BeatMagazine\Controllers\UserReviewController;
+use S246109\BeatMagazine\Middleware\RestrictJournalistReviewsMiddleware;
 use S246109\BeatMagazine\Middleware\RestrictUserReviewsMiddleware;
 use Slim\App;
 use Slim\Routing\RouteCollectorProxy;
@@ -41,7 +42,7 @@ return function (App $app) {
                     $journalistReviewGroup->post('', [JournalistReviewController::class, 'create']);
                     $journalistReviewGroup->put('', [JournalistReviewController::class, 'update']);
                     $journalistReviewGroup->delete('', [JournalistReviewController::class, 'delete']);
-                });
+                })->add(new RestrictJournalistReviewsMiddleware());
                 $albumIdGroup->group('/reviews', function (RouteCollectorProxy $reviewGroup) {
                     $reviewGroup->get('', [UserReviewController::class, 'index']);
                     $reviewGroup->post('', [UserReviewController::class, 'create']);
