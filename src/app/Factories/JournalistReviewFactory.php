@@ -61,6 +61,7 @@ class JournalistReviewFactory
 
 
         return new JournalistReview(
+            $journalistReviewData['review_id'],
             $journalistReviewData['review_rating'],
             $journalistReviewData['review_abstract'],
             $journalistReviewData['review_text'],

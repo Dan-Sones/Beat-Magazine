@@ -1,7 +1,7 @@
 <?php include 'includes/header.php'; ?>
 
 <?php if (isset($album) && $album): ?>
-    <div class="modal fade" id="reviewEditor" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="reviewEditor" tabindex="-1" aria-labelledby="reviewEditorModal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
             <form onsubmit="submitJournalistReview(event)">
                 <div class="modal-content">
@@ -33,7 +33,7 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="mb-3">
-                                        <label for="abstractText" class="form-label">Abstract</label>
+                                        <label for="journalistAbstractText" class="form-label">Abstract</label>
                                         <textarea class="form-control" id="journalistAbstractText" rows="5"
                                                   placeholder="Write your abstract here" required></textarea>
                                     </div>
@@ -42,7 +42,7 @@
                                 <div class="row">
                                     <div class="col-6" id="editor">
                                         <div class="mb-3">
-                                            <label for="reviewText" class="form-label">Review Text</label>
+                                            <label for="journalistReviewText" class="form-label">Review Text</label>
                                             <textarea class="form-control" id="journalistReviewText" rows="15"
                                                       placeholder="Write your review here using HTML5 and see a live preview to the right"
                                                       required></textarea>
@@ -58,13 +58,46 @@
 
                             <script>
                                 document.addEventListener('DOMContentLoaded', () => {
-                                    const reviewText = document.getElementById('reviewText');
+                                    const reviewText = document.getElementById('journalistReviewText');
                                     const preview = document.getElementById('preview');
 
                                     reviewText.addEventListener('input', () => {
                                         preview.innerHTML = reviewText.value;
                                     });
                                 });
+
+                                const editJournalistReview = async () => {
+                                    event.preventDefault();
+
+                                    const rating = document.getElementById('journalistReviewRating').value;
+                                    const abstract = document.getElementById('journalistAbstractText').value;
+                                    const review = document.getElementById('journalistReviewText').value;
+
+                                    const albumId = <?= $album->getAlbumID() ?>;
+
+                                    await fetch(`/api/albums/${albumId}/journalist-reviews`, {
+                                        method: 'PUT',
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify({
+                                            rating: rating,
+                                            abstract: abstract,
+                                            review: review
+                                        })
+                                    }).then(response => {
+                                        if (response.status === 200) {
+                                            alert('Review edited successfully');
+                                            location.reload();
+                                        } else {
+                                            alert('An error occurred while editing your review');
+                                        }
+                                    });
+
+                                    // reset the default onSubmit
+                                    document.querySelector('form').onsubmit = submitJournalistReview;
+
+                                }
 
                                 const submitJournalistReview = async () => {
                                     event.preventDefault();
@@ -178,6 +211,64 @@
                                     </p>
                                 </div>
                             </div>
+                            <?php if (isset($userID) && (int)$userID === (int)$journalistReview->getJournalist()->getId()): ?>
+                                <div class="col-1 d-flex justify-content-center align-items-center order-4 order-md-4">
+                                    <button class="btn btn-link text-muted mb-0"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="bi bi-three-dots"></i>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <li><a class="dropdown-item text-danger"
+                                               onclick="handleDeleteJournalistReview()">Delete
+                                                Review</a></li>
+                                        <li><a class="dropdown-item"
+                                               onclick="handleEditJournalistReview()">Edit
+                                                Review</a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <script>
+
+                                    const handleEditJournalistReview = () => {
+                                        const reviewRating = <?= json_encode($journalistReview->getRating()) ?>;
+                                        const reviewAbstract = <?= json_encode($journalistReview->getAbstract()) ?>;
+                                        const reviewText = <?= json_encode($journalistReview->getReview()) ?>;
+
+                                        document.getElementById('journalistReviewRating').value = reviewRating;
+                                        document.getElementById('journalistAbstractText').value = reviewAbstract;
+                                        document.getElementById('journalistReviewText').value = reviewText;
+                                        document.getElementById('preview').innerHTML = reviewText;
+
+                                        // set the onSubmit
+                                        document.querySelector('form').onsubmit = editJournalistReview;
+
+
+                                        // Open the modal
+                                        const reviewEditorModal = new bootstrap.Modal(document.getElementById('reviewEditor'));
+                                        reviewEditorModal.show();
+                                    }
+
+                                    const handleDeleteJournalistReview = async () => {
+
+                                        const albumId = <?= $album->getAlbumID() ?>;
+
+                                        await fetch(`/api/albums/${albumId}/journalist-reviews`, {
+                                            method: 'DELETE'
+                                        }).then(response => {
+                                            if (response.status === 200) {
+                                                alert('Review successfully deleted.');
+                                                location.reload();
+                                            } else {
+                                                alert('An error occurred whilst deleting your review');
+                                            }
+                                        });
+
+
+                                    }
+
+                                </script>
+                            <?php endif; ?>
 
                             <div class="row align-items-center review-full-container"
                                  style="overflow: hidden; height: 0;">

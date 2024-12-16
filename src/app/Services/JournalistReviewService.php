@@ -22,6 +22,18 @@ class JournalistReviewService
     }
 
 
+    public function getJournalistIdForReview(string $albumId): string
+    {
+
+        $query = 'SELECT users.id FROM journalist_reviews INNER JOIN journalists ON journalist_reviews.journalist_id = journalists.id INNER JOIN users ON journalists.user_id = users.id WHERE album_id = :album_id ';
+        $statement = $this->db->prepare($query);
+        $statement->bindValue(':album_id', $albumId, PDO::PARAM_STR);
+        $statement->execute();
+
+
+        return $statement->fetchColumn();
+    }
+
     public function hasJournalistReviewForAlbum(string $albumId): bool
     {
         $query = 'SELECT COUNT(*) FROM journalist_reviews WHERE album_id = :album_id';
@@ -49,6 +61,25 @@ class JournalistReviewService
 
         return $statement->execute();
 
+    }
+
+    public function deleteJournalistReviewForAlbum(string $albumId): bool
+    {
+        $query = 'DELETE FROM journalist_reviews WHERE album_id = :album_id';
+        $statement = $this->db->prepare($query);
+        $statement->bindValue(':album_id', $albumId, PDO::PARAM_STR);
+        return $statement->execute();
+    }
+
+    public function updateJournalistReviewForAlbum(string $albumId, string $review, string $rating, string $abstract): bool
+    {
+        $query = 'UPDATE journalist_reviews SET abstract = :abstract, full_review = :full_review, rating = :rating WHERE album_id = :album_id';
+        $statement = $this->db->prepare($query);
+        $statement->bindValue(':album_id', $albumId, PDO::PARAM_STR);
+        $statement->bindValue(':abstract', $abstract, PDO::PARAM_STR);
+        $statement->bindValue(':full_review', $review, PDO::PARAM_STR);
+        $statement->bindValue(':rating', $rating, PDO::PARAM_STR);
+        return $statement->execute();
     }
 
 
