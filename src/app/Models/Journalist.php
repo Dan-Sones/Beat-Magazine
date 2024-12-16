@@ -2,40 +2,47 @@
 
 namespace S246109\BeatMagazine\Models;
 
-class Journalist
+class Journalist extends PublicUserViewModel
 {
-    private string $name;
-    private string $profilePicture;
     private string $bio;
+
+    private string $firstName;
+    private string $lastName;
 
     /**
      * @param string $name
-     * @param string $profilePicture
      * @param string $bio
+     * @param string $username
+     * @param string $profilePictureUri
+     * @param int $id
+     * @param string $created_at
      */
-    public function __construct(string $name, string $profilePicture, string $bio)
+    public function __construct(string $firstName, string $lastName, string $bio, string $username, string $profilePictureUri, int $id, string $created_at)
     {
-        $this->name = $name;
-        $this->profilePicture = $profilePicture;
+        parent::__construct($username, $profilePictureUri, $id, $created_at);
         $this->bio = $bio;
+        $this->firstName = $firstName;
+        $this->lastName = $lastName;
+
     }
 
-    public function getName(): string
+    public function getFirstName(): string
     {
-        return $this->name;
+        return $this->firstName;
     }
-    // TODO: This property wil need to be added back in when we have profile pages
-//    private string $username;
 
-    public function getProfilePicture(): string
+    public function getLastName(): string
     {
-        return $this->profilePicture;
+        return $this->lastName;
+    }
+
+    public function getFullName(): string
+    {
+        return $this->firstName . ' ' . $this->lastName;
     }
 
     public function getBio(): string
     {
         return $this->bio;
     }
-
-
 }

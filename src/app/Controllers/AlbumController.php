@@ -7,9 +7,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use S246109\BeatMagazine\Factories\AlbumFactory;
 use S246109\BeatMagazine\Factories\JournalistReviewFactory;
 use S246109\BeatMagazine\Factories\UserReviewFactory;
-use S246109\BeatMagazine\Models\User;
 use S246109\BeatMagazine\Services\UserReviewService;
-use S246109\BeatMagazine\Services\UserService;
 
 class AlbumController
 {
@@ -52,7 +50,7 @@ class AlbumController
         if (isset($_SESSION['user_id'])) {
             $userID = $_SESSION['user_id'];
         }
-        
+
         ob_start();
         include PRIVATE_PATH . '/src/app/Views/album.php';
         $output = ob_get_clean();

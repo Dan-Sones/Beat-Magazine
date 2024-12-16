@@ -1,12 +1,151 @@
 <?php include 'includes/header.php'; ?>
 
+<?php if (isset($album) && $album): ?>
+    <div class="modal fade" id="reviewEditor" tabindex="-1" aria-labelledby="reviewEditorModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+            <form onsubmit="submitJournalistReview(event)">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Review Editor</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-6 justify-content-center align-items-center d-flex ps-0 ">
+                                    <div class="mb-3 w-100">
+                                        <label for="journalistReviewRating" class="form-label">Rating</label>
+                                        <select class="form-select" id="journalistReviewRating" required>
+                                            <option>Select a rating</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-3">
+                                        <label for="journalistAbstractText" class="form-label">Abstract</label>
+                                        <textarea class="form-control" id="journalistAbstractText" rows="5"
+                                                  placeholder="Write your abstract here" required></textarea>
+                                    </div>
+                                </div>
+                                <hr/>
+                                <div class="row">
+                                    <div class="col-6" id="editor">
+                                        <div class="mb-3">
+                                            <label for="journalistReviewText" class="form-label">Review Text</label>
+                                            <textarea class="form-control" id="journalistReviewText" rows="15"
+                                                      placeholder="Write your review here using HTML5 and see a live preview to the right"
+                                                      required></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-6" id="preview">
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', () => {
+                                    const reviewText = document.getElementById('journalistReviewText');
+                                    const preview = document.getElementById('preview');
+
+                                    reviewText.addEventListener('input', () => {
+                                        preview.innerHTML = reviewText.value;
+                                    });
+                                });
+
+                                const editJournalistReview = async () => {
+                                    event.preventDefault();
+
+                                    const rating = document.getElementById('journalistReviewRating').value;
+                                    const abstract = document.getElementById('journalistAbstractText').value;
+                                    const review = document.getElementById('journalistReviewText').value;
+
+                                    const albumId = <?= $album->getAlbumID() ?>;
+
+                                    await fetch(`/api/albums/${albumId}/journalist-reviews`, {
+                                        method: 'PUT',
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify({
+                                            rating: rating,
+                                            abstract: abstract,
+                                            review: review
+                                        })
+                                    }).then(response => {
+                                        if (response.status === 200) {
+                                            alert('Review edited successfully');
+                                            location.reload();
+                                        } else {
+                                            alert('An error occurred while editing your review');
+                                        }
+                                    });
+
+                                    // reset the default onSubmit
+                                    document.querySelector('form').onsubmit = submitJournalistReview;
+
+                                }
+
+                                const submitJournalistReview = async () => {
+                                    event.preventDefault();
+
+                                    const rating = document.getElementById('journalistReviewRating').value;
+                                    const abstract = document.getElementById('journalistAbstractText').value;
+                                    const review = document.getElementById('journalistReviewText').value;
+                                    const albumId = <?= $album->getAlbumID() ?>;
+
+                                    return await fetch(`/api/albums/${albumId}/journalist-reviews`, {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify({
+                                            rating: rating,
+                                            abstract: abstract,
+                                            review: review
+                                        })
+                                    }).then(response => {
+                                        if (response.status === 201) {
+                                            alert('Review submitted successfully');
+                                            location.reload();
+                                        } else {
+                                            alert('An error occurred while submitting your review');
+                                        }
+                                    });
+                                }
+
+                            </script>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button id="submitReview" type="submit"
+                                class="btn btn-primary">Publish Review
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
     <main class="album-wrapper">
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-xl-8 col-lg-10 col-md-10 col-sm-12">
                     <div class="album-container shadow-sm bg-body-secondary">
 
-                        <?php if (isset($album) && $album): ?>
 
                         <div class="row album-content">
                             <div class="col-12 col-lg-4 order-1 order-lg-1 align-content-center">
@@ -50,10 +189,11 @@
 
                             <div class="row align-items-center">
                                 <div class="col-md-3 d-flex flex-column align-items-center">
-                                    <img src="<?= $journalistReview->getJournalist()->getProfilePicture() ?>"
+                                    <img alt="profilePicture for <?= $journalistReview->getJournalist()->getFullName() ?>"
+                                         src="<?= $journalistReview->getJournalist()->getProfilePictureUri() ?>"
                                          class="img-fluid rounded-circle p-2"
                                          style="width: 130px; height: 130px; object-fit: cover">
-                                    <h5 class="mt-2"><?= $journalistReview->getJournalist()->getName() ?></h5>
+                                    <h5 class="mt-2"><?= $journalistReview->getJournalist()->getFullName() ?></h5>
                                     <p class="text-muted text-center">
                                         <?= $journalistReview->getJournalist()->getBio() ?>
                                     </p>
@@ -72,6 +212,64 @@
                                     </p>
                                 </div>
                             </div>
+                            <?php if (isset($userID) && (int)$userID === (int)$journalistReview->getJournalist()->getId()): ?>
+                                <div class="col-1 d-flex justify-content-center align-items-center order-4 order-md-4">
+                                    <button class="btn btn-link text-muted mb-0"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="bi bi-three-dots"></i>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <li><a class="dropdown-item text-danger"
+                                               onclick="handleDeleteJournalistReview()">Delete
+                                                Review</a></li>
+                                        <li><a class="dropdown-item"
+                                               onclick="handleEditJournalistReview()">Edit
+                                                Review</a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <script>
+
+                                    const handleEditJournalistReview = () => {
+                                        const reviewRating = <?= json_encode($journalistReview->getRating()) ?>;
+                                        const reviewAbstract = <?= json_encode($journalistReview->getAbstract()) ?>;
+                                        const reviewText = <?= json_encode($journalistReview->getReview()) ?>;
+
+                                        document.getElementById('journalistReviewRating').value = reviewRating;
+                                        document.getElementById('journalistAbstractText').value = reviewAbstract;
+                                        document.getElementById('journalistReviewText').value = reviewText;
+                                        document.getElementById('preview').innerHTML = reviewText;
+
+                                        // set the onSubmit
+                                        document.querySelector('form').onsubmit = editJournalistReview;
+
+
+                                        // Open the modal
+                                        const reviewEditorModal = new bootstrap.Modal(document.getElementById('reviewEditor'));
+                                        reviewEditorModal.show();
+                                    }
+
+                                    const handleDeleteJournalistReview = async () => {
+
+                                        const albumId = <?= $album->getAlbumID() ?>;
+
+                                        await fetch(`/api/albums/${albumId}/journalist-reviews`, {
+                                            method: 'DELETE'
+                                        }).then(response => {
+                                            if (response.status === 200) {
+                                                alert('Review successfully deleted.');
+                                                location.reload();
+                                            } else {
+                                                alert('An error occurred whilst deleting your review');
+                                            }
+                                        });
+
+
+                                    }
+
+                                </script>
+                            <?php endif; ?>
 
                             <div class="row align-items-center review-full-container"
                                  style="overflow: hidden; height: 0;">
@@ -88,7 +286,20 @@
                         </div>
 
                         <?php else: ?>
-                            <p>There is currently not a review present for this album</p>
+                            <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'journalist'): ?>
+                                <p class="text-center d-flex justify-content-center align-items-center mb-0">
+                                    Hi <?= $_SESSION['username'] ?> ready to publish your review
+                                    of <?= $album->getAlbumName() ?>? </p>
+                                <button class="btn btn-primary mt-2" data-bs-toggle="modal"
+                                        data-bs-target="#reviewEditor">Open review editor
+                                </button>
+                            <?php else: ?>
+                                <p class="text-center d-flex justify-content-center align-items-center mb-0">No review
+                                    has
+                                    been published for this album. Check back soon to see our take
+                                    on <?= $album->getAlbumName() ?>, or leave your own review below! 🙃</p>
+
+                            <?php endif; ?>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -101,15 +312,13 @@
 
                         const animateHeight = (element, action) => {
                             if (action === 'expand') {
-                                const fullHeight = element.scrollHeight + 'px';
-                                element.style.height = fullHeight;
+                                element.style.height = element.scrollHeight + 'px';
 
                                 element.addEventListener('transitionend', () => {
                                     element.style.height = 'auto';
                                 }, {once: true});
                             } else if (action === 'collapse') {
-                                const currentHeight = element.scrollHeight + 'px';
-                                element.style.height = currentHeight;
+                                element.style.height = element.scrollHeight + 'px';
 
                                 element.offsetHeight;
                                 element.style.height = '0';
@@ -230,6 +439,11 @@
                                     const rating = document.getElementById('reviewRating').value;
                                     const review = document.getElementById('reviewText').value;
 
+                                    if (rating === 'Select a rating') {
+                                        alert('Please select a valid rating.');
+                                        return;
+                                    }
+
                                     const albumId = <?= $album->getAlbumID() ?>;
 
                                     return await fetch(`/api/albums/${albumId}/reviews`, {
@@ -265,7 +479,8 @@
                                                     <div class="col-12 d-flex align-items-center d-md-none order-1 pb-3">
                                                         <img src="<?= $userReview->getUser()->getProfilePictureUri() ?>"
                                                              class="img-fluid rounded-circle"
-                                                             style="width: 60px; height: 60px; object-fit: cover">
+                                                             style="width: 60px; height: 60px; object-fit: cover"
+                                                             alt="profilePicture for <?= $userReview->getUser()->getUsername() ?>">
                                                         <div class="ms-2">
                                                             <a href="/user/<?= $userReview->getUser()->getUsername() ?>"
                                                                class="text-center pt-1"><?= $userReview->getUser()->getUsername() ?></a>
@@ -278,7 +493,9 @@
                                                     <div class="col-12 col-md-3 d-none d-md-flex flex-column align-items-center order-md-1 d-flex justify-content-center">
                                                         <img src="<?= $userReview->getUser()->getProfilePictureUri() ?>"
                                                              class="img-fluid rounded-circle"
-                                                             style="width: 120px; height: 120px; object-fit: cover">
+                                                             style="width: 120px; height: 120px; object-fit: cover"
+                                                             alt="profilePicture
+                                                             for <?= $userReview->getUser()->getUsername() ?>">
                                                         <a href="/user/<?= $userReview->getUser()->getUsername() ?>"
                                                            class="text-center pt-3"><?= $userReview->getUser()->getUsername() ?></a>
                                                     </div>
@@ -293,7 +510,7 @@
                                                               style="display: none"
                                                               onsubmit="handleSubmitEditReview(event, <?= $userReview->getId() ?>)">
                                                             <div class="mb-3">
-                                                                <label for="reviewRating"
+                                                                <label for="updateReviewRating"
                                                                        class="form-label">Updated Rating</label>
                                                                 <select class="form-select"
                                                                         id="updateReviewRating-<?= $userReview->getId() ?>">
@@ -330,7 +547,7 @@
                                                                 </select>
                                                             </div>
                                                             <div class="mb-3">
-                                                                <label for="UpdatedReviewText"
+                                                                <label for="updatedReviewText"
                                                                        class="form-label">Updated Review</label>
                                                                 <textarea class="form-control"
                                                                           id="updatedReviewText-<?= $userReview->getId() ?>"
@@ -478,34 +695,16 @@
                         document.getElementById("reviewButton").addEventListener("click", handleShowReviews);
                     </script>
 
-                    <?php else: ?>
-                        <p>404: Album not Found</p>
-                    <?php endif; ?>
 
-                </div>
-            </div>
-        </div>
-
-
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Modal Title</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        Modal body content here.
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
                 </div>
             </div>
         </div>
 
     </main>
+
+<?php else: ?>
+    <p>404: Album not Found</p>
+<?php endif; ?>
 
 
 <?php include 'includes/footer.php'; ?>

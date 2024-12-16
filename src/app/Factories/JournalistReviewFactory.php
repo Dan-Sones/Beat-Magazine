@@ -3,10 +3,8 @@
 namespace S246109\BeatMagazine\Factories;
 
 use PDO;
-use S246109\BeatMagazine\Models\Album;
 use S246109\BeatMagazine\Models\Journalist;
 use S246109\BeatMagazine\Models\JournalistReview;
-use S246109\BeatMagazine\Models\Song;
 
 class JournalistReviewFactory
 {
@@ -26,11 +24,17 @@ class JournalistReviewFactory
         journalist_reviews.rating AS review_rating,
         journalist_reviews.abstract AS review_abstract,
         journalist_reviews.full_review AS review_text,
-        CONCAT(journalists.first_name, " ", journalists.last_name) AS journalist_full_name,
-        journalists.profile_picture AS journalist_profile_picture,
-        journalists.bio AS journalist_bio
+        users.first_name AS journalist_first_name,
+        users.last_name AS journalist_last_name,
+        users.profile_picture AS journalist_profile_picture,
+        journalists.bio AS journalist_bio,
+         journalists.id AS journalist_id,
+        users.created_at,
+         users.id AS user_id,
+         users.username
     FROM journalist_reviews
     INNER JOIN journalists ON journalist_reviews.journalist_id = journalists.id
+    INNER JOIN users ON users.id = journalists.user_id
     WHERE journalist_reviews.album_id = :album_id LIMIT 1
 ';
 
@@ -41,14 +45,23 @@ class JournalistReviewFactory
         $journalistReviewData = $statement->fetch(PDO::FETCH_ASSOC);
 
 
+        if ($journalistReviewData === false) {
+            return null;
+        }
+
         $journalist = new Journalist(
-            $journalistReviewData['journalist_full_name'],
+            $journalistReviewData['journalist_first_name'],
+            $journalistReviewData['journalist_last_name'],
+            $journalistReviewData['journalist_bio'],
+            $journalistReviewData['username'],
             $journalistReviewData['journalist_profile_picture'],
-            $journalistReviewData['journalist_bio']
+            $journalistReviewData['user_id'],
+            $journalistReviewData['created_at']
         );
 
 
         return new JournalistReview(
+            $journalistReviewData['review_id'],
             $journalistReviewData['review_rating'],
             $journalistReviewData['review_abstract'],
             $journalistReviewData['review_text'],
