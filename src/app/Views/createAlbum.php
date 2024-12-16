@@ -3,7 +3,7 @@
     <div class="container">
         <div class="row justify-content-center align-items-center">
             <div class="col-xl-8 col-lg-10 col-md-10 col-sm-12">
-                <div class="card shadow-lg">
+                <div class="card shadow-lg p-3 m-4">
                     <div class="create-album-wrapper p-3">
                         <h1 class="text-center">Create Album</h1>
                         <form onsubmit="submitCreateAlbumForm(event)">
@@ -46,6 +46,32 @@
                                 <label for="label" class="form-label">Label</label>
                                 <input type="text" class="form-control" id="label" name="label" required>
                             </div>
+                            <div class="mb-3">
+                                <label class="form-label mb-2">Songs</label>
+                                <div id="songsList" class="mb-3">
+                                    <div class="row mb-3">
+                                        <div class="col-12 col-md-5 mb-2 mb-md-0">
+                                            <input type="text" class="form-control" name="songName[]"
+                                                   placeholder="Song Name" required>
+                                        </div>
+                                        <div class="col-12 col-md-5 mb-2 mb-md-0">
+                                            <input type="text" class="form-control" name="songLength[]"
+                                                   placeholder="Song Length (e.g., 3:45)" required>
+                                        </div>
+                                        <div class="col-12 col-md-2 d-flex align-items-center justify-content-center justify-content-md-start mt-2 mt-md-0">
+                                            <button type="button" class="btn btn-danger w-100 w-md-auto"
+                                                    onclick="removeSongRow(this)">Remove
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="button" class="btn btn-outline-primary" onclick="addSongRow()">+ Add
+                                        Song
+                                    </button>
+                                </div>
+                            </div>
+                            <hr/>
                             <div class="d-grid">
                                 <button type="submit" class="btn btn-primary">Upload Album</button>
                             </div>
@@ -107,6 +133,28 @@
         }
     });
 
+    const removeSongRow = (button) => {
+        const row = button.parentElement.parentElement;
+        row.remove();
+        updateRemoveButtons();
+    };
+
+    const updateRemoveButtons = () => {
+        // hide the remove button for the first row - Sadly quite a convoluted and bulky way to do this
+        const rows = document.querySelectorAll('#songsList .row');
+        rows.forEach((row, index) => {
+            const removeButton = row.querySelector('.btn-danger');
+            if (index === 0) {
+                removeButton.style.display = 'none';
+            } else {
+                removeButton.style.display = 'block';
+            }
+        });
+    };
+
+    document.addEventListener('DOMContentLoaded', updateRemoveButtons);
+
+
     let debounceTimeout;
     document.getElementById('artist').addEventListener('input', function (event) {
         clearTimeout(debounceTimeout);
@@ -145,6 +193,25 @@
             }
         }, 300);
     })
+
+    const addSongRow = () => {
+        const songsList = document.getElementById('songsList');
+        const newRow = document.createElement('div');
+        newRow.classList.add('row', 'mb-3');
+        newRow.innerHTML = `
+        <div class="col-12 col-md-5 mb-2 mb-md-0">
+            <input type="text" class="form-control" name="songName[]" placeholder="Song Name" required>
+        </div>
+        <div class="col-12 col-md-5 mb-2 mb-md-0">
+            <input type="text" class="form-control" name="songLength[]" placeholder="Song Length (e.g 3:45)" required>
+        </div>
+        <div class="col-12 col-md-2 d-flex align-items-center justify-content-center justify-content-md-start mt-2 mt-md-0 ">
+            <button type="button" class="btn btn-danger w-100 w-md-auto" onclick="removeSongRow(this)">Remove</button>
+        </div>
+    `;
+        songsList.appendChild(newRow);
+        updateRemoveButtons();
+    };
 
 
     const submitCreateArtist = async (event) => {
