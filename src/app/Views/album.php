@@ -14,8 +14,8 @@
                             <div class="row">
                                 <div class="col-6 justify-content-center align-items-center d-flex ps-0 ">
                                     <div class="mb-3 w-100">
-                                        <label for="reviewRating" class="form-label">Rating</label>
-                                        <select class="form-select" id="reviewRating" required>
+                                        <label for="journalistReviewRating" class="form-label">Rating</label>
+                                        <select class="form-select" id="journalistReviewRating" required>
                                             <option>Select a rating</option>
                                             <option value="1">1</option>
                                             <option value="2">2</option>
@@ -34,7 +34,7 @@
                                 <div class="col-6">
                                     <div class="mb-3">
                                         <label for="abstractText" class="form-label">Abstract</label>
-                                        <textarea class="form-control" id="abstractText" rows="5"
+                                        <textarea class="form-control" id="journalistAbstractText" rows="5"
                                                   placeholder="Write your abstract here" required></textarea>
                                     </div>
                                 </div>
@@ -43,7 +43,7 @@
                                     <div class="col-6" id="editor">
                                         <div class="mb-3">
                                             <label for="reviewText" class="form-label">Review Text</label>
-                                            <textarea class="form-control" id="reviewText" rows="15"
+                                            <textarea class="form-control" id="journalistReviewText" rows="15"
                                                       placeholder="Write your review here using HTML5 and see a live preview to the right"
                                                       required></textarea>
                                         </div>
@@ -69,9 +69,9 @@
                                 const submitJournalistReview = async () => {
                                     event.preventDefault();
 
-                                    const rating = document.getElementById('reviewRating').value;
-                                    const abstract = document.getElementById('abstractText').value;
-                                    const review = document.getElementById('reviewText').value;
+                                    const rating = document.getElementById('journalistReviewRating').value;
+                                    const abstract = document.getElementById('journalistAbstractText').value;
+                                    const review = document.getElementById('journalistReviewText').value;
                                     const albumId = <?= $album->getAlbumID() ?>;
 
                                     return await fetch(`/api/albums/${albumId}/journalist-reviews`, {
@@ -156,10 +156,10 @@
 
                             <div class="row align-items-center">
                                 <div class="col-md-3 d-flex flex-column align-items-center">
-                                    <img src="<?= $journalistReview->getJournalist()->getProfilePicture() ?>"
+                                    <img src="<?= $journalistReview->getJournalist()->getProfilePictureUri() ?>"
                                          class="img-fluid rounded-circle p-2"
                                          style="width: 130px; height: 130px; object-fit: cover">
-                                    <h5 class="mt-2"><?= $journalistReview->getJournalist()->getName() ?></h5>
+                                    <h5 class="mt-2"><?= $journalistReview->getJournalist()->getFullName() ?></h5>
                                     <p class="text-muted text-center">
                                         <?= $journalistReview->getJournalist()->getBio() ?>
                                     </p>
@@ -348,6 +348,11 @@
                                     event.preventDefault();
                                     const rating = document.getElementById('reviewRating').value;
                                     const review = document.getElementById('reviewText').value;
+
+                                    if (rating === 'Select a rating') {
+                                        alert('Please select a valid rating.');
+                                        return;
+                                    }
 
                                     const albumId = <?= $album->getAlbumID() ?>;
 

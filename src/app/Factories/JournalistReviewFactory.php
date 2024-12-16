@@ -24,9 +24,14 @@ class JournalistReviewFactory
         journalist_reviews.rating AS review_rating,
         journalist_reviews.abstract AS review_abstract,
         journalist_reviews.full_review AS review_text,
-        CONCAT(users.first_name, " ", users.last_name) AS journalist_full_name,
+        users.first_name AS journalist_first_name,
+        users.last_name AS journalist_last_name,
         users.profile_picture AS journalist_profile_picture,
-        journalists.bio AS journalist_bio
+        journalists.bio AS journalist_bio,
+         journalists.id AS journalist_id,
+        users.created_at,
+         users.id AS user_id,
+         users.username
     FROM journalist_reviews
     INNER JOIN journalists ON journalist_reviews.journalist_id = journalists.id
     INNER JOIN users ON users.id = journalists.user_id
@@ -45,9 +50,13 @@ class JournalistReviewFactory
         }
 
         $journalist = new Journalist(
-            $journalistReviewData['journalist_full_name'],
+            $journalistReviewData['journalist_first_name'],
+            $journalistReviewData['journalist_last_name'],
+            $journalistReviewData['journalist_bio'],
+            $journalistReviewData['username'],
             $journalistReviewData['journalist_profile_picture'],
-            $journalistReviewData['journalist_bio']
+            $journalistReviewData['user_id'],
+            $journalistReviewData['created_at']
         );
 
 
