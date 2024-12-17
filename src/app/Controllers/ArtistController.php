@@ -6,6 +6,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use S246109\BeatMagazine\Factories\AlbumFactory;
 use S246109\BeatMagazine\Factories\ArtistFactory;
+use S246109\BeatMagazine\Factories\JournalistReviewFactory;
 
 class ArtistController
 {
@@ -14,15 +15,20 @@ class ArtistController
 
     private AlbumFactory $albumFactory;
 
+    private JournalistReviewFactory $journalistReviewFactory;
+
     /**
      * @param ArtistFactory $artistFactory
      * @param AlbumFactory $albumFactory
+     * @param JournalistReviewFactory $journalistReviewFactory
      */
-    public function __construct(ArtistFactory $artistFactory, AlbumFactory $albumFactory)
+    public function __construct(ArtistFactory $artistFactory, AlbumFactory $albumFactory, JournalistReviewFactory $journalistReviewFactory)
     {
         $this->artistFactory = $artistFactory;
         $this->albumFactory = $albumFactory;
+        $this->journalistReviewFactory = $journalistReviewFactory;
     }
+
 
     public function search(Request $request, Response $response, array $args): Response
     {
@@ -75,6 +81,14 @@ class ArtistController
 
         $artist = $this->artistFactory->getArtistByName($artistName);
         $albums = $this->albumFactory->getAlbumsByArtistName($artistName);
+
+        $journalistReviews = [];
+
+        foreach ($albums as $album) {
+            $journalistReviews[$album->getAlbumID()] = $this->journalistReviewFactory->getJournalistReviewForAlbum($album->getAlbumID());
+        }
+
+        error_log(print_r($journalistReviews, true));
 
         ob_start();
         include PRIVATE_PATH . '/src/app/Views/artist.php';
