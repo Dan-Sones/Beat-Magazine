@@ -168,16 +168,17 @@
                                     <p><strong>Genre</strong>: <?= $album->getGenre() ?></p>
                                     <p><strong>Label:</strong> <?= $album->getLabel() ?></p>
                                 </div>
-                                <div class="row d-flex align-items-center">
-                                    <div class="col-6 d-flex align-content-center-center">
-                                        <p><strong>Average User
-                                                Rating:</strong> <?= $album->getAverageUserRating() ?></p>
-                                    </div>
-                                    <div class="col-6 d-flex align-content-center">
-                                        <p><strong>Journalist Rating:</strong> <?= $album->getJournalistRating() ?>
-                                        </p>
-                                    </div>
-                                </div>
+                                <!--                                <div class="row d-flex align-items-center">-->
+                                <!--                                    <div class="col-6 d-flex align-content-center-center">-->
+                                <!--                                        <p><strong>Average User-->
+                                <!--                                                Rating:</strong> -->
+                                <?php //= $album->getAverageUserRating() ?><!--</p>-->
+                                <!--                                    </div>-->
+                                <!--                                    <div class="col-6 d-flex align-content-center">-->
+                                <!--                                        <p><strong>Journalist Rating:</strong> --><?php //= $album->getJournalistRating() ?>
+                                <!--                                        </p>-->
+                                <!--                                    </div>-->
+                                <!--                                </div>-->
                             </div>
                         </div>
 

@@ -22,12 +22,10 @@ class Album implements \JsonSerializable
      * @param string $artistName
      * @param string $genre
      * @param string $label
-     * @param string $averageUserRating
-     * @param string $journalistRating
      * @param string $releaseDate
      * @param array $songs
      */
-    public function __construct(int $albumID, string $albumArt, string $albumName, string $artistName, string $genre, string $label, string $averageUserRating, string $journalistRating, string $releaseDate, array $songs)
+    public function __construct(int $albumID, string $albumArt, string $albumName, string $artistName, string $genre, string $label, string $releaseDate, array $songs)
     {
         $this->albumID = $albumID;
         $this->albumArt = $albumArt;
@@ -35,8 +33,6 @@ class Album implements \JsonSerializable
         $this->artistName = $artistName;
         $this->genre = $genre;
         $this->label = $label;
-        $this->averageUserRating = $averageUserRating;
-        $this->journalistRating = $journalistRating;
         $this->releaseDate = $releaseDate;
         $this->songs = $songs;
     }
@@ -49,7 +45,11 @@ class Album implements \JsonSerializable
 
     public function getAlbumArt(): string
     {
-        return $this->albumArt;
+        if ($this->albumArt === '') {
+            return 'https://via.placeholder.com/150';
+        }
+
+        return '/images/album-art/' . $this->albumArt;
     }
 
     public function getAlbumName(): string
@@ -72,16 +72,6 @@ class Album implements \JsonSerializable
         return $this->label;
     }
 
-    public function getAverageUserRating(): string
-    {
-        return $this->averageUserRating;
-    }
-
-    public function getJournalistRating(): string
-    {
-        return $this->journalistRating;
-    }
-
     public function getReleaseDate(): string
     {
         return $this->releaseDate;
@@ -102,8 +92,6 @@ class Album implements \JsonSerializable
             'artistName' => $this->artistName,
             'genre' => $this->genre,
             'label' => $this->label,
-            'averageUserRating' => $this->averageUserRating,
-            'journalistRating' => $this->journalistRating,
             'releaseDate' => $this->releaseDate,
             'songs' => $this->songs
         ];
