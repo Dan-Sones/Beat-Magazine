@@ -1,0 +1,27 @@
+.artist-wrapper {
+  width: 100%;
+  justify-content: center;
+}
+
+#artist-info-card {
+  margin-bottom: 2rem;
+}
+
+.album-card {
+  transition: transform 0.3s ease-in-out;
+}
+
+.album-card:hover {
+  transform: scale(1.05);
+  cursor: grab;
+}
+
+.album-title, .album-artist {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.container-fluid {
+  max-width: 2000px;
+}

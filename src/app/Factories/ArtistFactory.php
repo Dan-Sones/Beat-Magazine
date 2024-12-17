@@ -41,14 +41,20 @@ class ArtistFactory
 
     public function getArtistByName(string $name): ?Artist
     {
+
         $query = '
-       SELECT 
-           artists.name AS artist_name,
-           artists.bio AS artist_bio,
-           artists.genre AS artist_genre
-         FROM artists
-       WHERE artists.name = :name LIMIT 1
+    SELECT
+        artists.name AS artist_name,
+        artists.genre AS artist_genre,
+        artists.bio AS artist_bio,
+        CAST(AVG(journalist_reviews.rating) AS UNSIGNED) AS average_journalist_rating
+    FROM artists
+    LEFT JOIN albums ON artists.id = albums.artist_id
+    LEFT JOIN journalist_reviews ON albums.id = journalist_reviews.album_id
+    WHERE artists.name = :name
+    GROUP BY artists.id
     ';
+
 
         $statement = $this->db->prepare($query);
         $statement->bindParam(':name', $name, PDO::PARAM_STR);
@@ -63,7 +69,8 @@ class ArtistFactory
         return new Artist(
             $artistData['artist_name'],
             $artistData['artist_genre'],
-            $artistData['artist_bio']
+            $artistData['artist_bio'],
+            $artistData['average_journalist_rating']
         );
 
     }
