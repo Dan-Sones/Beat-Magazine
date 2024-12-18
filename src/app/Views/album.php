@@ -97,5 +97,11 @@
     <p>404: Album not Found</p>
 <?php endif; ?>
 
+    <script>
+        const albumIdGlobal = <?= $album->getAlbumID() ?>;
+    </script>
+
+    <script src="/js/review_card.js"></script>
+
 
 <?php include 'includes/footer.php'; ?>
