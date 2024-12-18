@@ -176,7 +176,6 @@
                                 artistID = artistId;
                             });
                             suggestions.appendChild(item);
-
                         }
                         const createNewItem = document.createElement('a');
                         createNewItem.classList.add('list-group-item', 'list-group-item-action', 'text-primary');

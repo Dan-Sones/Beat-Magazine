@@ -25,7 +25,7 @@
                     </div>
                 </div>
 
-                <div class="row px-5 gy-5 pb-4">
+                <div class="row px-5 gy-5 pb-4" id="albums-container">
                     <?php if (isset($albums) && is_array($albums)): ?>
                         <?php foreach ($albums as $album): ?>
                             <div class=" col-12 col-md-6">
@@ -64,7 +64,22 @@
             <?php else: ?>
                 <p class="text-center">Artist Not Found</p>
             <?php endif; ?>
+            <script>
+                const container = document.querySelector('.albums-container .container-fluid');
+
+                container.addEventListener('click', (event) => {
+                    const card = event.target.closest('.album-card');
+                    if (card) {
+                        const artist = card.querySelector('.album-artist').textContent;
+                        const title = card.querySelector('.album-title').textContent;
+                        const encodedArtist = encodeURIComponent(artist).replace(/%20/g, '+');
+                        const encodedTitle = encodeURIComponent(title).replace(/%20/g, '+');
+                        window.location.href = `/artist/${encodedArtist}/${encodedTitle}`;
+                    }
+                });
+            </script>
         </div>
+
     </main>
 
 <?php include 'includes/footer.php'; ?>

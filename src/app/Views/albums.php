@@ -71,7 +71,6 @@
                         if (response.ok) {
                             return response.json();
                         } else {
-                            console.error('Failed to fetch albums');
                             return null;
                         }
                     })
@@ -79,7 +78,6 @@
                         updateAlbumsGrid(albums || []);
                     })
                     .catch(error => {
-                        console.error('Error:', error);
                         updateAlbumsGrid([]);
                     });
             }
