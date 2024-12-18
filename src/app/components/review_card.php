@@ -116,4 +116,9 @@
             </div>
         </div>
     </div>
+    <script>
+        const albumIdGlobal = <?= $album->getAlbumID() ?>;
+    </script>
+
+    <script src="/js/review_card.js"></script>
 </div>
