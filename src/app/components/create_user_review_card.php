@@ -1,4 +1,5 @@
-<div class="row gy-3">
+<?php if (isset($album)): ?>
+    <div class="row gy-3">
     <div class="col-12">
         <!--                        If the user is logged in-->
         <div class="card shadow-sm">
@@ -93,6 +94,5 @@
                 }
             });
         };
-
-
     </script>
+<?php endif; ?>
