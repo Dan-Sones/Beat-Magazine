@@ -6,12 +6,9 @@
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-xl-8 col-lg-10 col-md-10 col-sm-12">
-
                     <?php include PRIVATE_PATH . '/src/app/components/album_info.php'; ?>
 
-
                     <?php include PRIVATE_PATH . '/src/app/components/journalist_review.php'; ?>
-
                     <div class="container mt-3 mb-5">
                         <div class="text-center mb-3">
                             <button id="tracklistButton" class="btn btn-primary">Tracklist</button>
@@ -41,9 +38,7 @@
 
 
                         <div class="container" id="user-reviews-container" style="display: none">
-
                             <?php include PRIVATE_PATH . '/src/app/components/create_user_review_card.php'; ?>
-
                             <?php if (isset($userReviews) && is_array($userReviews)): ?>
                                 <?php foreach ($userReviews as $userReview): ?>
                                     <?php include PRIVATE_PATH . '/src/app/components/review_card.php'; ?>
