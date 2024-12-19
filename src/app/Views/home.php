@@ -18,12 +18,15 @@
                             <div class="card-body p-4">
                                 <h5 class="card-title"><?= $album->getAlbumName() ?> -
                                     <em><?= $album->getArtistName() ?></em></h5>
-                                <p class="card-text big-card"><?= $rev->getAbstract() ?>
+                                <div class="card-text">
 
-                                </p>
-                                <a class="btn btn-link read-more-btn" type="link"
-                                   onclick="UrlForAlbum('<?= addslashes($album->getArtistName()) ?>', '<?= addslashes($album->getAlbumName()) ?>')">Read
-                                    More</a>
+                                    <p class="big-card mb-1 read-review-link"><?= $rev->getAbstract() ?>
+
+                                    </p>
+                                    <a class="link-opacity-100" type="link"
+                                       onclick="UrlForAlbum('<?= addslashes($album->getArtistName()) ?>', '<?= addslashes($album->getAlbumName()) ?>')">Read
+                                        More</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -38,11 +41,13 @@
                                         <div class="card-body">
                                             <h5 class="card-title"><?= $album->getAlbumName() ?> -
                                                 <em><?= $album->getArtistName() ?></em></h5>
-                                            <p class="card-text small-card">100%
-                                                <?= $rev->getAbstract() ?></p>
-                                            <a class="btn btn-link read-more-btn" type="link"
-                                               onclick="UrlForAlbum('<?= addslashes($album->getArtistName()) ?>', '<?= addslashes($album->getAlbumName()) ?>')">Read
-                                                More</a>
+                                            <div class="card-text">
+                                                <p class="small-card mb-1">100%
+                                                    <?= $rev->getAbstract() ?></p>
+                                                <a class="link-opacity-100 read-review-link" type="link"
+                                                   onclick="UrlForAlbum('<?= addslashes($album->getArtistName()) ?>', '<?= addslashes($album->getAlbumName()) ?>')">Read
+                                                    More</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -64,6 +69,7 @@
             const encodedTitle = encodeURIComponent(title).replace(/%20/g, '+');
             window.location.href = `/artist/${encodedArtist}/${encodedTitle}`;
         }
+
     </script>
 
 <?php include 'includes/footer.php'; ?>
