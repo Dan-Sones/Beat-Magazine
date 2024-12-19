@@ -16,7 +16,7 @@
 <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
 <div class="wrapper">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">Beat Magazine</a>
+        <a class="navbar-brand" href="/">Beat Magazine</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -24,13 +24,10 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item active">
-                    <a class="nav-link text-light">Home</a>
+                    <a class="nav-link text-light" href="/">Home</a>
                 </li>
                 <li class="nav-item">
                     <a href="/albums" class="nav-link text-light">Albums</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-light">Artists</a>
                 </li>
                 <li class="nav-item">
                     <a href="javascript:void(0);" onclick="window.location.href = getProfileHref();"

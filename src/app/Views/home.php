@@ -1,8 +1,76 @@
 <?php include 'includes/header.php'; ?>
+    <div class="d-flex justify-content-center align-items-center h-100">
 
-    <main class="container my-5">
-        <h1 class="text-primary">Welcome to MyBrand</h1>
-        <p class="text-secondary">This is the home page with a consistent navbar and footer.</p>
-    </main>
+        <?php if (isset($reviews) && is_array($reviews)): ?>
+            <div class="container mt-5 latest-reviews">
+                <div class="row">
+                    <?php $index = 0; ?>
+                    <?php foreach ($reviews
+
+                    as $review): ?>
+                    <?php $album = $review['album']; ?>
+                    <?php $rev = $review['review']; ?>
+                    <?php if ($index == 0): ?>
+
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100 shadow">
+                            <img src="<?= $album->getAlbumArt() ?>" class="card-img-top"
+                                 alt="Album art for <?= htmlspecialchars($album->getAlbumName()) ?>">
+                            <div class="card-body p-4">
+                                <h5 class="card-title"><?= $album->getAlbumName() ?> -
+                                    <em><?= $album->getArtistName() ?></em></h5>
+                                <div class="card-text">
+
+                                    <p class="big-card mb-1 read-review-link"><?= $rev->getAbstract() ?>
+
+                                    </p>
+                                    <a class="link-opacity-100" type="link"
+                                       onclick="UrlForAlbum('<?= addslashes($album->getArtistName()) ?>', '<?= addslashes($album->getAlbumName()) ?>')">Read
+                                        More</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+
+                        <div class="row h-100">
+                            <?php else: ?>
+                                <div class="col-lg-6 mb-4">
+                                    <div class="card h-100 shadow">
+                                        <img src="<?= $album->getAlbumArt() ?>" class="card-img-top"
+                                             alt="Album art for <?= htmlspecialchars($album->getAlbumName()) ?>">
+                                        <div class="card-body">
+                                            <h5 class="card-title"><?= $album->getAlbumName() ?> -
+                                                <em><?= $album->getArtistName() ?></em></h5>
+                                            <div class="card-text">
+                                                <p class="small-card mb-1">100%
+                                                    <?= $rev->getAbstract() ?></p>
+                                                <a class="link-opacity-100 read-review-link" type="link"
+                                                   onclick="UrlForAlbum('<?= addslashes($album->getArtistName()) ?>', '<?= addslashes($album->getAlbumName()) ?>')">Read
+                                                    More</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            <?php endif; ?>
+                            <?php $index++; ?>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
+    </div>
+
+    <script>
+        const UrlForAlbum = (artist, title) => {
+            const encodedArtist = encodeURIComponent(artist).replace(/%20/g, '+');
+            const encodedTitle = encodeURIComponent(title).replace(/%20/g, '+');
+            window.location.href = `/artist/${encodedArtist}/${encodedTitle}`;
+        }
+
+    </script>
 
 <?php include 'includes/footer.php'; ?>

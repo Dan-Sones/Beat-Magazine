@@ -239,4 +239,52 @@ class AlbumFactory
         return $albums;
     }
 
+    public function getAlbumsByIdsMappedByIds(array $albumIds): array
+    {
+        $query = '
+    SELECT 
+        albums.id, 
+        albums.album_art, 
+        albums.name AS album_name, 
+        artists.name AS artist_name, 
+        albums.genre, 
+        albums.record_label, 
+        albums.average_user_rating, 
+        albums.journalist_rating, 
+        albums.release_date
+    FROM albums
+    INNER JOIN artists ON albums.artist_id = artists.id
+    WHERE albums.id = :album_id
+';
+
+        $albums = [];
+
+        foreach ($albumIds as $albumId) {
+            $statement = $this->db->prepare($query);
+            $statement->bindValue(':album_id', $albumId, PDO::PARAM_INT);
+            $statement->execute();
+
+            $albumData = $statement->fetch(PDO::FETCH_ASSOC);
+
+            if ($albumData === false) {
+                continue;
+            }
+
+            $albums[$albumId] = new Album(
+                $albumData['id'],
+                $albumData['album_art'],
+                $albumData['album_name'],
+                $albumData['artist_name'],
+                $albumData['genre'],
+                $albumData['record_label'],
+                $albumData['release_date'],
+                [new Song("1", "Example", '2:11')]
+            );
+        }
+
+        return $albums;
+
+
+    }
+
 }
