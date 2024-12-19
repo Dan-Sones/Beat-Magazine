@@ -21,10 +21,10 @@
                                     <em><?= $album->getArtistName() ?></em></h5>
                                 <div class="card-text">
 
-                                    <p class="big-card mb-1 read-review-link"><?= $rev->getAbstract() ?>
+                                    <p class="big-card mb-1"><?= $rev->getAbstract() ?>
 
                                     </p>
-                                    <a class="link-opacity-100" type="link"
+                                    <a class="link-opacity-100 read-review-link" type="link"
                                        onclick="UrlForAlbum('<?= addslashes($album->getArtistName()) ?>', '<?= addslashes($album->getAlbumName()) ?>')">Read
                                         More</a>
                                 </div>
