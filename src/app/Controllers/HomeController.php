@@ -10,7 +10,10 @@ class HomeController
 {
     public function index(Request $request, Response $response, array $args): Response
     {
-        // Redirect to albums
-        return $response->withHeader('Location', '/albums')->withStatus(302);
+        ob_start();
+        include PRIVATE_PATH . '/src/app/Views/home.php';
+        $output = ob_get_clean();
+        $response->getBody()->write($output);
+        return $response;
     }
 }
