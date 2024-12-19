@@ -1,0 +1,14 @@
+.latest-reviews .small-card,
+.latest-reviews .big-card {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+}
+
+@media (min-width: 768px) {
+  .latest-reviews .big-card {
+    -webkit-line-clamp: unset; /* Remove the line clamp on larger screens */
+  }
+}
