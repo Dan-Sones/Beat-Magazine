@@ -6,18 +6,18 @@ class PublicUserViewModel
 {
 
     private string $username;
-    private string $profilePictureUri;
+    private string|null $profilePictureUri;
     private int $id;
 
     private string $created_at;
 
     /**
      * @param string $username
-     * @param string $profilePictureUri
+     * @param string | null $profilePictureUri
      * @param int $id
      * @param string $created_at
      */
-    public function __construct(string $username, string $profilePictureUri, int $id, string $created_at)
+    public function __construct(string $username, string|null $profilePictureUri, int $id, string $created_at)
     {
         $this->username = $username;
         $this->profilePictureUri = $profilePictureUri;
@@ -38,7 +38,7 @@ class PublicUserViewModel
 
     public function getProfilePictureUri(): string
     {
-        if ($this->profilePictureUri === '') {
+        if ($this->profilePictureUri === null || $this->profilePictureUri === '') {
             return 'https://via.placeholder.com/150';
         }
 
