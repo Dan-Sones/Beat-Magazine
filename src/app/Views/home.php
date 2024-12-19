@@ -14,7 +14,8 @@
 
                     <div class="col-md-6 mb-4">
                         <div class="card h-100 shadow">
-                            <img src="<?= $album->getAlbumArt() ?>" class="card-img-top" alt="Review 1">
+                            <img src="<?= $album->getAlbumArt() ?>" class="card-img-top"
+                                 alt="Album art for <?= htmlspecialchars($album->getAlbumName()) ?>">
                             <div class="card-body p-4">
                                 <h5 class="card-title"><?= $album->getAlbumName() ?> -
                                     <em><?= $album->getArtistName() ?></em></h5>
@@ -37,7 +38,7 @@
                                 <div class="col-lg-6 mb-4">
                                     <div class="card h-100 shadow">
                                         <img src="<?= $album->getAlbumArt() ?>" class="card-img-top"
-                                             alt="Review 4">
+                                             alt="Album art for <?= htmlspecialchars($album->getAlbumName()) ?>">
                                         <div class="card-body">
                                             <h5 class="card-title"><?= $album->getAlbumName() ?> -
                                                 <em><?= $album->getArtistName() ?></em></h5>
