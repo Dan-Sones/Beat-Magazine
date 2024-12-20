@@ -85,10 +85,14 @@ class ArtistController
         $journalistReviews = [];
 
         foreach ($albums as $album) {
-            $journalistReviews[$album->getAlbumID()] = $this->journalistReviewFactory->getJournalistReviewForAlbum($album->getAlbumID());
+            $reviewForAlbum = $this->journalistReviewFactory->getJournalistReviewForAlbum($album->getAlbumID());
+            if ($reviewForAlbum) {
+                $journalistReviews[$album->getAlbumID()] = $reviewForAlbum;
+            }
         }
 
-        error_log(print_r($journalistReviews, true));
+//        error_log(print_r($journalistReviews, true));
+
 
         ob_start();
         include PRIVATE_PATH . '/src/app/Views/artist.php';

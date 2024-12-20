@@ -77,6 +77,14 @@
   text-decoration: none;
 }
 
+.artist-name {
+  cursor: pointer;
+}
+
+.artist-name:hover {
+  text-decoration: underline;
+}
+
 
 .debug-border-red {
   border: 1px solid red;

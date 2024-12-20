@@ -14,7 +14,10 @@
                         <h2><?= $album->getAlbumName() ?> </h2>
                     </div>
                     <div class="row">
-                        <h5><?= $album->getArtistName() ?></h5>
+                        <h5 class="artist-name"
+                            onclick="UrlForAlbum('<?= addslashes($album->getArtistName()) ?>')">
+                            <?= $album->getArtistName() ?>
+                        </h5>
                     </div>
                 </div>
                 <div class="row info d-flex align-items-center">
@@ -37,4 +40,10 @@
         </div>
 
     </div>
+    <script>
+        const UrlForAlbum = (artist) => {
+            const encodedArtist = encodeURIComponent(artist).replace(/%20/g, '+');
+            window.location.href = `/artist/${encodedArtist}`;
+        }
+    </script>
 <?php endif; ?>

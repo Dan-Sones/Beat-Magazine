@@ -37,13 +37,11 @@
                                         </div>
                                         <div class="col-md-8">
                                             <div class="card-body">
-                                                <?php if (isset($journalistReviews[(string)$album->getAlbumID()])): ?>
-                                                    <div class="">
-                                                        <h4 class="card-title album-title"><?= $album->getAlbumName() ?></h4>
-                                                        <p class="mb-0"><?= $album->getArtistName() ?>
-                                                            <br/> <em> <?= $album->getLabel() ?> </em></p>
-                                                    </div>
-                                                <?php endif; ?>
+                                                <div class="">
+                                                    <h4 class="card-title album-title"><?= $album->getAlbumName() ?></h4>
+                                                    <p class="mb-0"><?= $album->getArtistName() ?>
+                                                        <br/> <em> <?= $album->getLabel() ?> </em></p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -52,6 +50,10 @@
                                             <p class="card-text album-review-abstract"><?= $journalistReviews[(string)$album->getAlbumID()]->getAbstract() ?>
                                                 - <?= $journalistReviews[(string)$album->getAlbumID()]->getJournalist()->getFullName() ?>
                                             </p>
+                                        </div>
+                                    <?php else: ?>
+                                        <div class="card-footer">
+                                            <p class="card-text album-review-abstract">No review available</p>
                                         </div>
                                     <?php endif; ?>
                                 </div>

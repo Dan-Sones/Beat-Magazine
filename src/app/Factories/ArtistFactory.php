@@ -70,7 +70,7 @@ class ArtistFactory
             $artistData['artist_name'],
             $artistData['artist_genre'],
             $artistData['artist_bio'],
-            $artistData['average_journalist_rating']
+            $artistData['average_journalist_rating'] ?? ''
         );
 
     }
