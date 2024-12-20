@@ -20,7 +20,7 @@
                             <?php foreach ($albums as $album): ?>
                                 <div class="col-md-6 col-lg-4 mb-4">
                                     <div class="card shadow h-100 album-card"
-                                         onclick="UrlForAlbum('<?= addslashes($album->getArtistName()) ?>', '<?= addslashes($album->getAlbumName()) ?>')">
+                                         onclick="navigateToAlbum('<?= addslashes($album->getArtistName()) ?>', '<?= addslashes($album->getAlbumName()) ?>')">
                                         <img src="<?= htmlspecialchars($album->getAlbumArt()) ?>"
                                              class="card-img-top"
                                              alt="<?= $album->getAlbumName() ?>"/>
