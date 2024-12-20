@@ -11,13 +11,6 @@
 
 }
 
-.album-info {
-  //padding-top: 2%;
-  //padding-bottom: 2%;
-  //padding-top: 1rem;
-  //padding-bottom: 1rem;
-}
-
 .album-container {
   margin-top: 4vh;
   padding: 2vh 2rem;
@@ -75,6 +68,14 @@
 
 .read-more-btn:hover {
   text-decoration: none;
+}
+
+.artist-name {
+  cursor: pointer;
+}
+
+.artist-name:hover {
+  text-decoration: underline;
 }
 
 

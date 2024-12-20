@@ -1,70 +1,72 @@
-<?php include 'includes/header.php'; ?>
-
-    <main class="album-wrapper">
-        <div class="container-fluid">
-            <div class="row justify-content-center">
-
-                <?php if (isset($artist) && $artist): ?>
-
-                <div class="col-xl-8 col-lg-10 col-md-10 col-sm-12">
-                    <h2><?= $artist->getName() ?></h2>
-                    <p><?= $artist->getBio() ?></p>
-
+<?php include 'includes/loadHeader.php'; ?>
+    <main class="artist-page-wrapper">
+        <div class="container">
+            <!-- Artist Header Section -->
+            <?php if (isset($artist) && $artist): ?>
+                <div class="artist-header text-center bg-light py-4 mb-4 rounded shadow">
+                    <h1><?= $artist->getName() ?></h1>
+                    <div class="artist-details">
+                        <span class="d-block"><?= $artist->getGenre() ?></span>
+                        <span class="d-block">Average Journalist Rating: <?= $artist->getAverageJournalistRating() ?></span>
+                    </div>
+                    <p class="artist-bio mt-3"><?= $artist->getBio() ?></p>
                 </div>
-            </div>
+
+                <!-- Albums Section -->
+                <div class="albums-container mt-4 mb-4">
+                    <h2 class="section-title text-center mb-4">Albums by <?= $artist->getName() ?></h2>
+                    <div class="row justify-content-center">
+                        <?php if (isset($albums) && is_array($albums)): ?>
+                            <?php foreach ($albums as $album): ?>
+                                <div class="col-md-6 col-lg-4 mb-4">
+                                    <div class="card shadow h-100 album-card"
+                                         onclick="navigateToAlbum('<?= addslashes($album->getArtistName()) ?>', '<?= addslashes($album->getAlbumName()) ?>')">
+                                        <img src="<?= htmlspecialchars($album->getAlbumArt()) ?>"
+                                             class="card-img-top"
+                                             alt="<?= $album->getAlbumName() ?>"/>
+                                        <div class="card-body d-flex flex-column justify-content-center text-center">
+                                            <h4 class="card-title"><?= $album->getAlbumName() ?></h4>
+                                            <p class="card-text">
+                                                <?= $album->getArtistName() ?> | <em><?= $album->getLabel() ?></em>
+                                            </p>
+                                            <div class="align-items-center d-flex text-center flex-grow-1">
+                                                <?php if (isset($journalistReviews[(string)$album->getAlbumID()])): ?>
+                                                    <p class="card-text small text-center m-auto">
+                                                        <?= $journalistReviews[(string)$album->getAlbumID()]->getAbstract() ?>
+                                                        - <?= $journalistReviews[(string)$album->getAlbumID()]->getJournalist()->getFullName() ?>
+                                                    </p>
+                                                <?php else: ?>
+                                                    <p class="card-text small text-muted m-auto">No review available</p>
+                                                <?php endif; ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+
+                        <?php else: ?>
+                            <p class="text-center">No albums available for this artist.</p>
+                        <?php endif; ?>
+                    </div>
+                </div>
             <?php else: ?>
-                <p>No artist available.</p>
+                <p class="text-center text-muted">Artist Not Found</p>
             <?php endif; ?>
-
-            <div class="text-center mb-3">
-                <button id="reviewViewButton" class="btn btn-primary">Review View</button>
-                <button id="albumGridViewButton" class="btn btn-secondary">Grid View</button>
-            </div>
-
-            <div id="albumGridView" style="display: none;">grid</div>
-            <div id="reviewView" style="display: none;">reviews</div>
-
-            <script>
-                const handleShowReviewView = () => {
-                    // Show the review view and hide the grid view
-                    document.getElementById("reviewView").style.display = "block";
-                    document.getElementById("albumGridView").style.display = "none";
-
-                    // Update button styles
-                    document.getElementById("reviewViewButton").classList.remove("btn-secondary");
-                    document.getElementById("reviewViewButton").classList.add("btn-primary");
-
-                    document.getElementById("albumGridViewButton").classList.remove("btn-primary");
-                    document.getElementById("albumGridViewButton").classList.add("btn-secondary");
-                };
-
-                const handleShowAlbumGrid = () => {
-                    // Show the grid view and hide the review view
-                    document.getElementById("reviewView").style.display = "none";
-                    document.getElementById("albumGridView").style.display = "block";
-
-                    // Update button styles
-                    document.getElementById("reviewViewButton").classList.remove("btn-primary");
-                    document.getElementById("reviewViewButton").classList.add("btn-secondary");
-
-                    document.getElementById("albumGridViewButton").classList.remove("btn-secondary");
-                    document.getElementById("albumGridViewButton").classList.add("btn-primary");
-                };
-
-                // On load, show the review view
-                document.addEventListener("DOMContentLoaded", function () {
-                    handleShowReviewView();
-                });
-
-                // Add event listeners to the buttons
-                document.getElementById("reviewViewButton").addEventListener("click", handleShowReviewView);
-                document.getElementById("albumGridViewButton").addEventListener("click", handleShowAlbumGrid);
-            </script>
-
         </div>
-
-
     </main>
 
+    <script>
+        const navigateToAlbum = (artist, title) => {
+            const encodedArtist = encodeURIComponent(artist).replace(/%20/g, '+');
+            const encodedTitle = encodeURIComponent(title).replace(/%20/g, '+');
+            window.location.href = `/artist/${encodedArtist}/${encodedTitle}`;
+        }
+        //TODO: Implement this when we have journlaist pages
+        // const navigateToJournalist = (journalistName) => {
+        //     const encodedJournalist = encodeURIComponent(journalistName).replace(/%20/g, '+');
+        //     window.location.href = `/journalist/${encodedJournalist}`;
+        // }
 
+
+    </script>
 <?php include 'includes/footer.php'; ?>

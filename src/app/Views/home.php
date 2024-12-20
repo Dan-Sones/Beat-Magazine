@@ -18,13 +18,14 @@
                                  alt="Album art for <?= htmlspecialchars($album->getAlbumName()) ?>">
                             <div class="card-body p-4">
                                 <h5 class="card-title"><?= $album->getAlbumName() ?> -
-                                    <em><?= $album->getArtistName() ?></em></h5>
+                                    <em onclick="UrlForArtist('<?= addslashes($album->getArtistName()) ?>')"
+                                        class="artist-link"><?= $album->getArtistName() ?></em></h5>
                                 <div class="card-text">
 
-                                    <p class="big-card mb-1 read-review-link"><?= $rev->getAbstract() ?>
+                                    <p class="big-card mb-1"><?= $rev->getAbstract() ?>
 
                                     </p>
-                                    <a class="link-opacity-100" type="link"
+                                    <a class="link-opacity-100 read-review-link" type="link"
                                        onclick="UrlForAlbum('<?= addslashes($album->getArtistName()) ?>', '<?= addslashes($album->getAlbumName()) ?>')">Read
                                         More</a>
                                 </div>
@@ -41,7 +42,9 @@
                                              alt="Album art for <?= htmlspecialchars($album->getAlbumName()) ?>">
                                         <div class="card-body">
                                             <h5 class="card-title"><?= $album->getAlbumName() ?> -
-                                                <em><?= $album->getArtistName() ?></em></h5>
+                                                <em class="artist-link"
+                                                    onclick="UrlForArtist('<?= addslashes($album->getArtistName()) ?>')"><?= $album->getArtistName() ?></em>
+                                            </h5>
                                             <div class="card-text">
                                                 <p class="small-card mb-1">100%
                                                     <?= $rev->getAbstract() ?></p>
@@ -69,6 +72,11 @@
             const encodedArtist = encodeURIComponent(artist).replace(/%20/g, '+');
             const encodedTitle = encodeURIComponent(title).replace(/%20/g, '+');
             window.location.href = `/artist/${encodedArtist}/${encodedTitle}`;
+        }
+
+        const UrlForArtist = (artist) => {
+            const encodedArtist = encodeURIComponent(artist).replace(/%20/g, '+');
+            window.location.href = `/artist/${encodedArtist}`;
         }
 
     </script>

@@ -106,7 +106,7 @@ class JournalistReviewFactory
         if ($journalistReviewData === false) {
             return null;
         }
-
+        
         $journalist = new Journalist(
             $journalistReviewData['journalist_first_name'],
             $journalistReviewData['journalist_last_name'],
