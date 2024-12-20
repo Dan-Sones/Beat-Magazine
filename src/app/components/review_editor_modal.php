@@ -14,7 +14,7 @@
                                     <div class="mb-3 w-100">
                                         <label for="journalistReviewRating" class="form-label">Rating</label>
                                         <select class="form-select" id="journalistReviewRating" required>
-                                            <option>Select a rating</option>
+                                            <option value="">Select a rating</option>
                                             <option value="1">1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
