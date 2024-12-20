@@ -19,7 +19,8 @@
                         <?php if (isset($albums) && is_array($albums)): ?>
                             <?php foreach ($albums as $album): ?>
                                 <div class="col-md-6 col-lg-4 mb-4">
-                                    <div class="card shadow h-100 album-card">
+                                    <div class="card shadow h-100 album-card"
+                                         onclick="UrlForAlbum('<?= addslashes($album->getArtistName()) ?>', '<?= addslashes($album->getAlbumName()) ?>')">
                                         <img src="<?= htmlspecialchars($album->getAlbumArt()) ?>"
                                              class="card-img-top"
                                              alt="<?= $album->getAlbumName() ?>"/>
@@ -42,7 +43,7 @@
                                     </div>
                                 </div>
                             <?php endforeach; ?>
-                        
+
                         <?php else: ?>
                             <p class="text-center">No albums available for this artist.</p>
                         <?php endif; ?>
@@ -53,4 +54,19 @@
             <?php endif; ?>
         </div>
     </main>
+
+    <script>
+        const navigateToAlbum = (artist, title) => {
+            const encodedArtist = encodeURIComponent(artist).replace(/%20/g, '+');
+            const encodedTitle = encodeURIComponent(title).replace(/%20/g, '+');
+            window.location.href = `/artist/${encodedArtist}/${encodedTitle}`;
+        }
+        //TODO: Implement this when we have journlaist pages
+        // const navigateToJournalist = (journalistName) => {
+        //     const encodedJournalist = encodeURIComponent(journalistName).replace(/%20/g, '+');
+        //     window.location.href = `/journalist/${encodedJournalist}`;
+        // }
+
+
+    </script>
 <?php include 'includes/footer.php'; ?>
