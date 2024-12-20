@@ -7,7 +7,7 @@
                         <h1 class="modal-title fs-5" id="exampleModalLabel">Review Editor</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body review-modal-body">
                         <div class="container">
                             <div class="row">
                                 <div class="col-6 justify-content-center align-items-center d-flex ps-0 ">
@@ -46,7 +46,7 @@
                                                       required></textarea>
                                         </div>
                                     </div>
-                                    <div class="col-6" id="preview">
+                                    <div class="col-6 review-modal-review-preview" id="preview">
 
                                     </div>
                                 </div>
