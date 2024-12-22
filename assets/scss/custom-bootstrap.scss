@@ -32,36 +32,6 @@ $success: #28a745;
   color: $error;
 }
 
-:root {
-  interpolate-size: allow-keywords; /* 👈 */
-}
-
-
-html, body {
-  margin: 0; /* Remove default margins */
-  padding: 0; /* Remove default padding */
-  min-height: 100%; /* Ensure the page fills the viewport height */
-  display: flex;
-  flex-direction: column; /* Stack elements vertically */
-}
-
-.wrapper {
-  flex: 1; /* Let the wrapper grow to fill available space */
-  display: flex;
-  flex-direction: column; /* Allow for nested flex layouts if needed */
-}
-
-footer {
-  flex-shrink: 0; /* Prevent shrinking when content overflows */
-}
-
-main {
-  flex: 1; /* Allows the main content to grow and push the footer down */
-}
-
-footer {
-  flex-shrink: 0; /* Prevent footer from shrinking */
-}
 
 @import "base/_base";
 @import "pages/_albums";
