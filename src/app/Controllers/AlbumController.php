@@ -41,13 +41,27 @@ class AlbumController
 
     public function delete(Request $request, Response $response, array $args): Response
     {
+
+        if (!isset($_SESSION['authenticated']) || !$_SESSION['authenticated']) {
+            return $response->withStatus(401);
+        }
+
+        if (!isset($_SESSION['user_id'])) {
+            return $response->withStatus(401);
+        }
+
+        if ($_SESSION['role'] !== 'journalist') {
+            return $response->withStatus(403);
+        }
+
+
         $albumID = $args['albumId'];
         $success = $this->albumService->deleteAlbum($albumID);
 
         if (!$success) {
             return $response->withStatus(500);
         }
-        
+
         return $response->withStatus(204);
     }
 
