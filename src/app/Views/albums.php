@@ -31,6 +31,16 @@
                     <p>No albums available.</p>
                 <?php endif; ?>
             </div>
+            <?php if (isset($isJournalist) && $isJournalist) : ?>
+
+                <div class="row p-5">
+                    <div class="col-12 text-center">
+                        <button class="btn btn-primary" onclick="window.location.href = '/create-album'">Create an
+                            album
+                        </button>
+                    </div>
+                </div>
+            <?php endif; ?>
         </div>
 
         <script>
@@ -106,7 +116,15 @@
                 </div>
             </div>
         `).join('')
-                    : '<p class="text-center">No albums found for this search term.</p>';
+                    : getNoAlbumsText();
+            }
+
+            const getNoAlbumsText = () => {
+                const isJournalist = <?= json_encode($isJournalist) ?>;
+                if (isJournalist) {
+                    return '<p class="text-center">No albums found for this search term. <a href="/create-album">Create an album</a></p>';
+                }
+                return '<p class="text-center">No albums found for this search term</p>';
             }
         </script>
     </main>

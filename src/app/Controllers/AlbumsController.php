@@ -5,8 +5,7 @@ namespace S246109\BeatMagazine\Controllers;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use S246109\BeatMagazine\Factories\AlbumFactory;
-use S246109\BeatMagazine\Models\Album;
-use S246109\BeatMagazine\Models\Song;
+
 
 class AlbumsController
 {
@@ -25,6 +24,12 @@ class AlbumsController
     public function index(Request $request, Response $response): Response
     {
         $albums = $this->albumFactory->getAllAlbums();
+
+        if (isset($_SESSION['role'])) {
+            $isJournalist = $_SESSION['role'] === 'journalist';
+        } else {
+            $isJournalist = false;
+        }
 
         ob_start();
         include PRIVATE_PATH . '/src/app/Views/albums.php';
