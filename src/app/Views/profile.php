@@ -98,17 +98,18 @@
                                 <div class="row justify-content-center">
                                     <h2 class="text-center pt-3 pb-3">BeatMagazine Reviews</h2>
                                     <?php foreach ($journalistReviews as $journalistReview): ?>
+                                        <?php $album = $albumDetailsMap[$journalistReview->getAlbumId()]; ?>
                                         <div class="col-md-4 col-sm-6 mb-4 d-flex flex-column justify-content-center text-center">
                                             <div class="card shadow h-100">
-                                                <img src="<?= $albumDetailsMap[$journalistReview->getAlbumId()]->getAlbumArt() ?>"
+                                                <img src="<?= $album->getAlbumArt() ?>"
                                                      class="card-img-top" alt="Album Art">
                                                 <div class="card-body">
-                                                    <h5 class="card-title"><?= $albumDetailsMap[$journalistReview->getAlbumId()]->getAlbumName() ?></h5>
+                                                    <h5 class="card-title"><?= $album->getAlbumName() ?></h5>
                                                     <p class="card-text">
                                                         <em class="artist-name"
-                                                            onclick="UrlForArtist('<?= addslashes($albumDetailsMap[$journalistReview->getAlbumId()]->getArtistName()) ?>')"> <?= $albumDetailsMap[$journalistReview->getAlbumId()]->getArtistName() ?></em>
+                                                            onclick="UrlForArtist('<?= addslashes($album->getArtistName()) ?>')"> <?= $album->getArtistName() ?></em>
                                                         |
-                                                        <?= $albumDetailsMap[$journalistReview->getAlbumId()]->getLabel() ?>
+                                                        <?= $album->getLabel() ?>
                                                     </p>
 
                                                     <hr/>
@@ -123,7 +124,7 @@
                                                     </div>
                                                     <p class="card-text"><?= $journalistReview->getAbstract() ?> <a
                                                                 class="link-opacity-100 read-review-link" type="link"
-                                                                onclick="UrlForAlbum('<?= addslashes($albumDetailsMap[$journalistReview->getAlbumId()]->getArtistName()) ?>', '<?= addslashes($albumDetailsMap[$journalistReview->getAlbumId()]->getAlbumName()) ?>')">Read
+                                                                onclick="UrlForAlbum('<?= addslashes($album->getArtistName()) ?>', '<?= addslashes($album->getAlbumName()) ?>')">Read
                                                             More</a></p>
                                                 </div>
                                             </div>
@@ -162,24 +163,25 @@
                                         <?php $i = 0; ?>
 
                                         <?php foreach ($userReviews as $userReview): ?>
+                                            <?php $album = $albumDetailsMap[$userReview->getAlbumId()]; ?>
                                             <div class="row gx-5 d-flex align-items-center pb-5 album-review"
                                                  data-aos="fade-<?php echo $i % 2 == 0 ? 'right' : 'left'; ?>"
                                                  data-aos-duration="1000" id="album-review">
                                                 <div class="col-md-6 col-12 order-0 order-md-<?php echo $i % 2 == 0 ? '1' : '0'; ?> justify-content-center pb-sm-3">
                                                     <div class="album-art pb-3">
-                                                        <img src="<?= $albumDetailsMap[$userReview->getAlbumId()]->getAlbumArt() ?>"
+                                                        <img src="<?= $album->getAlbumArt() ?>"
                                                              class="img-fluid shadow album-art"
                                                              id="album-art"
-                                                             alt="Album Art for <?= $albumDetailsMap[$userReview->getAlbumId()]->getAlbumName() ?>"/>
+                                                             alt="Album Art for <?= $album->getAlbumName() ?>"/>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 col-12 order-1 order-md-<?php echo $i % 2 == 0 ? '0' : '1'; ?> justify-content-center">
                                                     <div class="review card mb-4 shadow">
                                                         <div class="card-header">
                                                             <h4 id="album-title"
-                                                                class="mb-0"><?= $albumDetailsMap[$userReview->getAlbumId()]->getAlbumName() ?></h4>
+                                                                class="mb-0"><?= $album->getAlbumName() ?></h4>
                                                             <h5 id="album-artist"
-                                                                class="fw-light"><?= $albumDetailsMap[$userReview->getAlbumId()]->getArtistName() ?></h5>
+                                                                class="fw-light"><?= $album->getArtistName() ?></h5>
                                                         </div>
                                                         <div class="card-body d-flex flex-column flex-md-row align-items-center">
                                                             <div class="col-12 col-md-4 text-center text-md-start mb-3 mb-md-0">
@@ -187,7 +189,7 @@
                                                                     <div class="row justify-content-center">
                                                                         <div class="col-auto">
                                                                             <div class="rating-container rounded d-flex justify-content-center align-items-center p-2 border">
-                                                                                <h4 class="rating-display  mb-0"><?= $journalistReview->getRating() . "/10" ?></h4>
+                                                                                <h4 class="rating-display  mb-0"><?= $userReview->getRating() . "/10" ?></h4>
                                                                             </div>
                                                                         </div>
                                                                     </div>
