@@ -20,6 +20,7 @@ class HeaderController
 
     public function logout(Request $request, Response $response, array $args): Response
     {
+        [$_SESSION['authenticated'], $_SESSION['username'], $_SESSION['role']] = [false, null, null];
         session_destroy();
         return $response->withStatus(200);
     }

@@ -106,7 +106,15 @@
                 </div>
             </div>
         `).join('')
-                    : '<p class="text-center">No albums found for this search term.</p>';
+                    : getNoAlbumsText();
+            }
+
+            const getNoAlbumsText = () => {
+                const isJournalist = <?= json_encode($isJournalist) ?>;
+                if (isJournalist) {
+                    return '<p class="text-center">No albums found for this search term. <a href="/create-album">Create an album</a></p>';
+                }
+                return '<p class="text-center">No albums found for this search term</p>';
             }
         </script>
     </main>
