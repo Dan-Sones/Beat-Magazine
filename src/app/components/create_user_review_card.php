@@ -6,8 +6,8 @@
             <form class="p-4 shadow-sm rounded" onsubmit="handleReviewSubmission(event)">
                 <div class="mb-3">
                     <label for="reviewRating" class="form-label">Rating</label>
-                    <select class="form-select" id="reviewRating">
-                        <option selected>Select a rating</option>
+                    <select class="form-select" id="reviewRating" required>
+                        <option value="">Select a rating</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -49,7 +49,6 @@
 
             } else if (activeSession) {
                 const leftReview = <?= isset($hasUserLeftReview) && $hasUserLeftReview ? 'true' : 'false' ?>;
-
                 if (leftReview) {
                     submitReviewButton.disabled = true;
                     submitReviewWrapper.title = 'You have already left a review for this album';
