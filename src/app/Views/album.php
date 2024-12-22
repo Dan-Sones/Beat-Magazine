@@ -97,6 +97,10 @@
 
     <script>
         const albumIdGlobal = <?= htmlspecialchars($album->getAlbumID(), ENT_QUOTES, 'UTF-8') ?>;
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
     </script>
 
     <script src="/js/review_card.js"></script>

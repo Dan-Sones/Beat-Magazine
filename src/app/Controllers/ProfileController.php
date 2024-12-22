@@ -47,10 +47,12 @@ class ProfileController
             return $response->withStatus(404);
         }
 
+        $isJournalist = $user->getRole() === 'journalist';
 
         $userReviews = $this->userReviewFactory->getAllUsersReviews($user);
         $albumIds = array_map(fn($review) => $review->getAlbumId(), $userReviews);
         $albumDetailsMap = [];
+
 
         foreach ($albumIds as $albumId) {
             $album = $this->albumFactory->getAlbumById($albumId);

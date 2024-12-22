@@ -66,7 +66,14 @@
                                 <div class="col-12">
                                     <div class="userInfo pt-2">
                                         <!--TODO:Allow editing if logged in-->
-                                        <h1 class="text-center"><?= $user->getUsername() ?></h1>
+                                        <?php if (isset($isJournalist) && $isJournalist): ?>
+                                            <h1 class="text-center" data-bs-toggle="tooltip" data-bs-placement="right"
+                                                title="This User is a Journalist for BeatMagazine.com"><?= $user->getUsername() ?>
+                                                📝</h1>
+                                        <?php else: ?>
+                                            <h1 class="text-center"><?= $user->getUsername() ?> </h1>
+                                        <?php endif; ?>
+
                                     </div>
                                 </div>
                             </div>
@@ -170,6 +177,11 @@
 
 
         <script>
+            const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+
+            const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
+
             const container = document.getElementById('reviews-container');
 
             container.addEventListener('click', (event) => {

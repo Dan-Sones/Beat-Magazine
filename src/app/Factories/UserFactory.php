@@ -21,7 +21,7 @@ class UserFactory
 
     public function getPublicUserByUsername(string $username): ?PublicUserViewModel
     {
-        $query = 'SELECT profile_picture, id, created_at FROM users WHERE username = :username LIMIT 1';
+        $query = 'SELECT profile_picture, id, created_at, role FROM users WHERE username = :username LIMIT 1';
         $statement = $this->db->prepare($query);
         $statement->bindValue(':username', $username, PDO::PARAM_STR);
         $statement->execute();
@@ -36,6 +36,7 @@ class UserFactory
             $username,
             $userInfo['profile_picture'] ?? '',
             (int)$userInfo['id'],
+            $userInfo['role'],
             $this->formatDateToDDMMYYYY($userInfo['created_at'])
         );
     }
@@ -51,7 +52,7 @@ class UserFactory
 
     public function getPublicUserByUserId(int $id): ?PublicUserViewModel
     {
-        $query = 'SELECT profile_picture, username, created_at FROM users WHERE id = :id LIMIT 1';
+        $query = 'SELECT profile_picture, username, created_at, role FROM users WHERE id = :id LIMIT 1';
         $statement = $this->db->prepare($query);
         $statement->bindValue(':id', $id, PDO::PARAM_STR);
         $statement->execute();
@@ -66,6 +67,7 @@ class UserFactory
             $userInfo['username'],
             $userInfo['profile_picture'] ?? '',
             $id,
+            $userInfo['role'],
             $this->formatDateToDDMMYYYY($userInfo['created_at'])
         );
 
