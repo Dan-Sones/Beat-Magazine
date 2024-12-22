@@ -22,7 +22,6 @@ class AlbumsController
     }
 
 
-    //TODO: We can use args here to do sorting eventually
     public function index(Request $request, Response $response): Response
     {
         $albums = $this->albumFactory->getAllAlbums();

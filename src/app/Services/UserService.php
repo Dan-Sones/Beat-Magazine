@@ -98,8 +98,7 @@ class UserService
     {
         $reset_link = "http://localhost:8000/reset-password?token=$token";
         if ($_ENV('APP_ENV') === 'production') {
-            //TODO: Update to HTTPs when the site uses it
-            $reset_link = "http://s246109.uosweb.co.uk/reset-password?token=$token";
+            $reset_link = "https://s246109.uosweb.co.uk/reset-password?token=$token";
         }
 
         $mail = new PHPMailer();

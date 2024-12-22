@@ -6,3 +6,11 @@
   transform: scale(1.05);
   cursor: grab;
 }
+
+.journalist-name {
+  cursor: pointer;
+}
+
+.journalist-name:hover {
+  text-decoration: underline;
+}

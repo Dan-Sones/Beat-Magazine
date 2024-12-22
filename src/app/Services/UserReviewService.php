@@ -90,7 +90,7 @@ class UserReviewService
         $statement->execute();
 
         $result = $statement->fetchColumn();
-        
+
         return $result > 0;
     }
 

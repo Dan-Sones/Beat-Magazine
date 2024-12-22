@@ -60,9 +60,6 @@
         });
 
 
-        // TODO: Check if the user has already submitted a review for this album before allowing them to submit another
-        // This should also be checked on the backend in the event the user manually removes the disabled attribute
-
         const handleReviewSubmission = async (event) => {
             event.preventDefault();
             const rating = document.getElementById('reviewRating').value;
