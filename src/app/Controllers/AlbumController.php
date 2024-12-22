@@ -7,6 +7,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use S246109\BeatMagazine\Factories\AlbumFactory;
 use S246109\BeatMagazine\Factories\JournalistReviewFactory;
 use S246109\BeatMagazine\Factories\UserReviewFactory;
+use S246109\BeatMagazine\Services\AlbumService;
 use S246109\BeatMagazine\Services\UserReviewService;
 
 class AlbumController
@@ -20,18 +21,48 @@ class AlbumController
 
     private UserReviewService $userReviewService;
 
+    private AlbumService $albumService;
+
     /**
      * @param AlbumFactory $albumFactory
      * @param JournalistReviewFactory $journalistReviewFactory
      * @param UserReviewFactory $userReviewFactory
      * @param UserReviewService $userReviewService
+     * @param AlbumService $albumService
      */
-    public function __construct(AlbumFactory $albumFactory, JournalistReviewFactory $journalistReviewFactory, UserReviewFactory $userReviewFactory, UserReviewService $userReviewService)
+    public function __construct(AlbumFactory $albumFactory, JournalistReviewFactory $journalistReviewFactory, UserReviewFactory $userReviewFactory, UserReviewService $userReviewService, AlbumService $albumService)
     {
         $this->albumFactory = $albumFactory;
         $this->journalistReviewFactory = $journalistReviewFactory;
         $this->userReviewFactory = $userReviewFactory;
         $this->userReviewService = $userReviewService;
+        $this->albumService = $albumService;
+    }
+
+    public function delete(Request $request, Response $response, array $args): Response
+    {
+
+        if (!isset($_SESSION['authenticated']) || !$_SESSION['authenticated']) {
+            return $response->withStatus(401);
+        }
+
+        if (!isset($_SESSION['user_id'])) {
+            return $response->withStatus(401);
+        }
+
+        if ($_SESSION['role'] !== 'journalist') {
+            return $response->withStatus(403);
+        }
+
+
+        $albumID = $args['albumId'];
+        $success = $this->albumService->deleteAlbum($albumID);
+
+        if (!$success) {
+            return $response->withStatus(500);
+        }
+
+        return $response->withStatus(204);
     }
 
 

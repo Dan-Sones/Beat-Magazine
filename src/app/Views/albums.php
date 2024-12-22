@@ -98,7 +98,7 @@
                     ? albums.map(album => `
             <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2" role="listitem">
                 <div class="card shadow album-card" style="width: 100%;" tabindex="0">
-                    <img src="${album.albumArt}" class="card-img-top" alt="${album.albumName}">
+                    <img src="/images/album-art/${album.albumArt}" class="card-img-top" alt="${album.albumName}">
                     <div class="card-body">
                         <h4 class="card-title album-title">${album.albumName}</h4>
                         <p class="card-text album-artist">${album.artistName}</p>
