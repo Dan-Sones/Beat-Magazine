@@ -10,7 +10,8 @@
                          src="<?= $journalistReview->getJournalist()->getProfilePictureUri() ?>"
                          class="img-fluid rounded-circle p-2"
                          style="width: 130px; height: 130px; object-fit: cover">
-                    <h5 class="mt-2"><?= $journalistReview->getJournalist()->getFullName() ?></h5>
+                    <h5 class="mt-2 journalist-name"
+                        onclick="URLForJournalist('<?= $journalistReview->getJournalist()->getUsername() ?>')"><?= $journalistReview->getJournalist()->getFullName() ?></h5>
                     <p class="text-muted text-center">
                         <?= $journalistReview->getJournalist()->getBio() ?>
                     </p>
@@ -120,6 +121,13 @@
     </div>
 
     <script>
+
+        const URLForJournalist = (username) => {
+            const encodedUsername = encodeURIComponent(username).replace(/%20/g, '+');
+            window.location.href = `/user/${encodedUsername}`;
+
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             const reviewCard = document.querySelector('.review-card');
             const readMoreBtn = reviewCard.querySelector('.read-more-btn');

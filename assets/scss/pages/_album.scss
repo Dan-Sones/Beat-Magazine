@@ -86,3 +86,11 @@
   max-height: 50vh;
   overflow-y: auto;
 }
+
+.journalist-name {
+  cursor: pointer;
+}
+
+.journalist-name:hover {
+  text-decoration: underline;
+}
