@@ -45,6 +45,7 @@ return function (App $app) {
             $albumGroup->get('', [AlbumsController::class, 'search']);
             $albumGroup->group('/{albumId}', function (RouteCollectorProxy $albumIdGroup) {
                 $albumIdGroup->get('', [AlbumController::class, 'show']);
+                $albumIdGroup->delete('', [AlbumController::class, 'delete']);
                 $albumIdGroup->group('/journalist-reviews', function (RouteCollectorProxy $journalistReviewGroup) {
                     $journalistReviewGroup->post('', [JournalistReviewController::class, 'create']);
                     $journalistReviewGroup->put('', [JournalistReviewController::class, 'update']);

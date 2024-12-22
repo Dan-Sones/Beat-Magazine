@@ -89,4 +89,16 @@ class AlbumService
 
     }
 
+    public function deleteAlbum(string $albumID): bool
+    {
+        $query = '
+            DELETE FROM albums
+            WHERE id = :id
+        ';
+
+        $statement = $this->db->prepare($query);
+        $statement->bindValue(':id', $albumID, PDO::PARAM_INT);
+        return $statement->execute();
+    }
+
 }
