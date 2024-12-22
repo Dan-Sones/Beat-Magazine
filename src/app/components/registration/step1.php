@@ -90,7 +90,6 @@
         };
 
         const validatePassword = () => {
-            const password = passwordInput.value.trim();
             const isValid = checkPassword();
             validateInput(passwordInput, isValid, 'Password does not meet requirements.');
             return isValid;
