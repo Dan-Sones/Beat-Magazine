@@ -54,9 +54,6 @@ class LoginController
             session_start();
         }
 
-        // TODO: We should probably not set these here before the user has verified their OTP
-        $_SESSION['username'] = $user->getUsername();
-        $_SESSION['role'] = $user->getRole();
         $_SESSION['user_id'] = $user->getId();
         $_SESSION['otp_pending'] = true;
 
@@ -95,8 +92,13 @@ class LoginController
             return $response->withStatus(401);
         }
 
+        $user = $this->userFactory->getUserById($_SESSION['user_id']);
+
+
         $_SESSION['otp_pending'] = false;
         $_SESSION['authenticated'] = true;
+        $_SESSION['username'] = $user->getUsername();
+        $_SESSION['role'] = $user->getRole();
 
 
         $response->getBody()->write(json_encode(['valid' => true]));

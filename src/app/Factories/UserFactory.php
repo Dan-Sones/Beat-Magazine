@@ -121,5 +121,29 @@ class UserFactory
         );
     }
 
+    public function getUserById(string $user_id): ?User
+    {
+        $query = 'SELECT * FROM users WHERE id = :id LIMIT 1';
+        $statement = $this->db->prepare($query);
+        $statement->bindValue(':id', $user_id, PDO::PARAM_STR);
+        $statement->execute();
+
+        $userInfo = $statement->fetch();
+
+        if ($userInfo === false) {
+            return null;
+        }
+
+        return new User(
+            $userInfo['id'],
+            $userInfo['email'],
+            $userInfo['username'],
+            $userInfo['first_name'],
+            $userInfo['last_name'],
+            $userInfo['password'],
+            $userInfo['role']
+        );
+    }
+
 
 }
