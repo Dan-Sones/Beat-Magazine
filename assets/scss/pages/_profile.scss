@@ -31,3 +31,11 @@
 #profilePicture:hover #uploadOverlay {
   display: flex;
 }
+
+.artist-name {
+  cursor: pointer;
+}
+
+.artist-name:hover {
+  text-decoration: underline;
+}

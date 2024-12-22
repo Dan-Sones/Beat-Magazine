@@ -98,18 +98,25 @@
                                 <div class="row justify-content-center">
                                     <h2 class="text-center pt-3 pb-3">BeatMagazine Reviews</h2>
                                     <?php foreach ($journalistReviews as $journalistReview): ?>
-                                        <div class="col-md-4 col-sm-6 mb-4">
-                                            <div class="card shadow">
+                                        <div class="col-md-4 col-sm-6 mb-4 d-flex flex-column justify-content-center text-center">
+                                            <div class="card shadow h-100">
                                                 <img src="<?= $albumDetailsMap[$journalistReview->getAlbumId()]->getAlbumArt() ?>"
                                                      class="card-img-top" alt="Album Art">
                                                 <div class="card-body">
                                                     <h5 class="card-title"><?= $albumDetailsMap[$journalistReview->getAlbumId()]->getAlbumName() ?></h5>
+                                                    <p class="card-text">
+                                                        <em class="artist-name"
+                                                            onclick="UrlForArtist('<?= addslashes($albumDetailsMap[$journalistReview->getAlbumId()]->getArtistName()) ?>')"> <?= $albumDetailsMap[$journalistReview->getAlbumId()]->getArtistName() ?></em>
+                                                        |
+                                                        <?= $albumDetailsMap[$journalistReview->getAlbumId()]->getLabel() ?>
+                                                    </p>
 
-                                                    <div class="container mb-2">
+                                                    <hr/>
+                                                    <div class="container mb-3">
                                                         <div class="row justify-content-center">
                                                             <div class="col-auto">
                                                                 <div class="rating-container rounded d-flex justify-content-center align-items-center p-2 border">
-                                                                    <h4 class="rating-display fw-bold mb-0"><?= $journalistReview->getRating() . "/10" ?></h4>
+                                                                    <h4 class="rating-display  mb-0"><?= $journalistReview->getRating() . "/10" ?></h4>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -180,7 +187,7 @@
                                                                     <div class="row justify-content-center">
                                                                         <div class="col-auto">
                                                                             <div class="rating-container rounded d-flex justify-content-center align-items-center p-2 border">
-                                                                                <h4 class="rating-display fw-bold mb-0"><?= $journalistReview->getRating() . "/10" ?></h4>
+                                                                                <h4 class="rating-display  mb-0"><?= $journalistReview->getRating() . "/10" ?></h4>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -248,6 +255,11 @@
                 const encodedArtist = encodeURIComponent(artist).replace(/%20/g, '+');
                 const encodedTitle = encodeURIComponent(title).replace(/%20/g, '+');
                 window.location.href = `/artist/${encodedArtist}/${encodedTitle}`;
+            }
+
+            const UrlForArtist = (artist) => {
+                const encodedArtist = encodeURIComponent(artist).replace(/%20/g, '+');
+                window.location.href = `/artist/${encodedArtist}`;
             }
 
         </script>
