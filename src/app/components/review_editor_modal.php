@@ -130,7 +130,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button id="submitReview" type="submit"
+                        <button id="submitJournalistReview" type="submit"
                                 class="btn btn-primary">Publish Review
                         </button>
                     </div>

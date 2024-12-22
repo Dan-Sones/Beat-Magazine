@@ -49,7 +49,6 @@
 
             } else if (activeSession) {
                 const leftReview = <?= isset($hasUserLeftReview) && $hasUserLeftReview ? 'true' : 'false' ?>;
-
                 if (leftReview) {
                     submitReviewButton.disabled = true;
                     submitReviewWrapper.title = 'You have already left a review for this album';
