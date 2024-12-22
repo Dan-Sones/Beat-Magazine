@@ -20,20 +20,23 @@ class ProfileController
 
     private UserService $userService;
 
+    private JournalistReviewFactory $journalistReviewFactory;
+
     /**
      * @param UserFactory $userFactory
      * @param UserReviewFactory $userReviewFactory
      * @param AlbumFactory $albumFactory
      * @param UserService $userService
+     * @param JournalistReviewFactory $journalistReviewFactory
      */
-    public function __construct(UserFactory $userFactory, UserReviewFactory $userReviewFactory, AlbumFactory $albumFactory, UserService $userService)
+    public function __construct(UserFactory $userFactory, UserReviewFactory $userReviewFactory, AlbumFactory $albumFactory, UserService $userService, JournalistReviewFactory $journalistReviewFactory)
     {
         $this->userFactory = $userFactory;
         $this->userReviewFactory = $userReviewFactory;
         $this->albumFactory = $albumFactory;
         $this->userService = $userService;
+        $this->journalistReviewFactory = $journalistReviewFactory;
     }
-
 
     public function show(Request $request, Response $response, array $args): Response
     {
@@ -47,10 +50,24 @@ class ProfileController
             return $response->withStatus(404);
         }
 
+        $isJournalist = $user->getRole() === 'journalist';
+
+        $journalistReviews = [];
+
+        if ($isJournalist) {
+            $journalistReviews = $this->journalistReviewFactory->getAllJournalistReviewsForJournalist($idForUser);
+        }
 
         $userReviews = $this->userReviewFactory->getAllUsersReviews($user);
         $albumIds = array_map(fn($review) => $review->getAlbumId(), $userReviews);
+
+        if (!empty($journalistReviews)) {
+            $journalistAlbumIds = array_map(fn($review) => $review->getAlbumId(), $journalistReviews);
+            $albumIds = array_merge($albumIds, $journalistAlbumIds);
+        }
+
         $albumDetailsMap = [];
+
 
         foreach ($albumIds as $albumId) {
             $album = $this->albumFactory->getAlbumById($albumId);

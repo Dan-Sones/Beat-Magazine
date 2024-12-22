@@ -19,7 +19,7 @@ class Journalist extends PublicUserViewModel
      */
     public function __construct(string $firstName, string $lastName, string $bio, string $username, string|null $profilePictureUri, int $id, string $created_at)
     {
-        parent::__construct($username, $profilePictureUri, $id, $created_at);
+        parent::__construct($username, $profilePictureUri, $id, 'journalist', $created_at);
         $this->bio = $bio;
         $this->firstName = $firstName;
         $this->lastName = $lastName;

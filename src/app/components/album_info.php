@@ -27,7 +27,7 @@
                     </div>
                     <div class="row">
                         <h5 class="artist-name"
-                            onclick="UrlForAlbum('<?= addslashes($album->getArtistName()) ?>')">
+                            onclick="UrlForArtist('<?= addslashes($album->getArtistName()) ?>')">
                             <?= $album->getArtistName() ?>
                         </h5>
                     </div>
@@ -53,7 +53,7 @@
 
     </div>
     <script>
-        const UrlForAlbum = (artist) => {
+        const UrlForArtist = (artist) => {
             const encodedArtist = encodeURIComponent(artist).replace(/%20/g, '+');
             window.location.href = `/artist/${encodedArtist}`;
         }
@@ -62,6 +62,6 @@
             const modal = new bootstrap.Modal(document.getElementById('deleteAlbumModal'));
             modal.show();
         }
-        
+
     </script>
 <?php endif; ?>

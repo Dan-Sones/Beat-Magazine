@@ -9,21 +9,31 @@ class PublicUserViewModel
     private string|null $profilePictureUri;
     private int $id;
 
+    private string $role;
+
     private string $created_at;
 
     /**
      * @param string $username
-     * @param string | null $profilePictureUri
+     * @param string|null $profilePictureUri
      * @param int $id
+     * @param string $role
      * @param string $created_at
      */
-    public function __construct(string $username, string|null $profilePictureUri, int $id, string $created_at)
+    public function __construct(string $username, ?string $profilePictureUri, int $id, string $role, string $created_at)
     {
         $this->username = $username;
         $this->profilePictureUri = $profilePictureUri;
         $this->id = $id;
+        $this->role = $role;
         $this->created_at = $created_at;
     }
+
+    public function getRole(): string
+    {
+        return $this->role;
+    }
+
 
     public function getCreatedAt(): string
     {
