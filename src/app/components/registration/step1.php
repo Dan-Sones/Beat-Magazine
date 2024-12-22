@@ -75,9 +75,24 @@
         };
 
         const validateUsername = () => {
-            const username = usernameInput.value.trim();
-            const isValid = username.length >= 3;
-            validateInput(usernameInput, isValid, 'Username must be at least 3 characters long.');
+            const username = usernameInput.value;
+            let isValid = true; // Start with valid by default
+
+            if (username.length < 3) {
+                isValid = false;
+            }
+
+            const usernamePattern = /^[a-zA-Z0-9_\.]+$/;
+            if (!usernamePattern.test(username)) {
+                isValid = false;
+            }
+
+            validateInput(
+                usernameInput,
+                isValid,
+                'Username must be at least 3 characters long. Only letters, numbers, underscores, and periods are allowed.'
+            );
+
             return isValid;
         };
 

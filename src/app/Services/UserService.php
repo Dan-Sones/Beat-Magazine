@@ -3,6 +3,7 @@
 namespace S246109\BeatMagazine\Services;
 
 use PDO;
+use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 use Ramsey\Uuid\Uuid;
 
@@ -88,16 +89,14 @@ class UserService
         if (!$stmt->execute()) {
             return false;
         }
-
-        $this->sendPasswordResetEmail($email, $token);
-
-        return true;
+        
+        return $this->sendPasswordResetEmail($email, $token);
     }
 
-    private function sendPasswordResetEmail(string $email, string $token): void
+    private function sendPasswordResetEmail(string $email, string $token): bool
     {
         $reset_link = "http://localhost:8000/reset-password?token=$token";
-        if ($_ENV('APP_ENV') === 'production') {
+        if ($_ENV['APP_ENV'] === 'production') {
             $reset_link = "https://s246109.uosweb.co.uk/reset-password?token=$token";
         }
 
@@ -110,14 +109,32 @@ class UserService
         $mail->SMTPSecure = 'tls';
         $mail->Port = 587;
 
-        $mail->setFrom('password-reset@s246109.uosweb.co.uk', 'Password Reset @ BeatMagazine');
-        $mail->addAddress($email);
+        try {
+            $mail->setFrom('password-reset@s246109.uosweb.co.uk', 'Password Reset @ BeatMagazine');
+        } catch (Exception $e) {
+            error_log('Failed to set from address: ' . $e->getMessage());
+            return false;
+        }
+        try {
+            $mail->addAddress($email);
+        } catch (Exception $e) {
+            error_log('Failed to add recipient: ' . $e->getMessage());
+            return false;
+        }
         $mail->Subject = 'Password Reset Request';
         $mail->Body = 'To reset your password, click the following link: ' . $reset_link;
 
-        if (!$mail->send()) {
-            error_log('Failed to send password reset email to ' . $email . ': ' . $mail->ErrorInfo);
+        try {
+            if (!$mail->send()) {
+                error_log('Failed to send password reset email to ' . $email . ': ' . $mail->ErrorInfo);
+                return false;
+            }
+        } catch (Exception $e) {
+            error_log('Failed to send password reset email to ' . $email . ': ' . $e->getMessage());
+            return false;
+
         }
+        return true;
     }
 
     public function checkIfValidResetToken(string $token): bool
