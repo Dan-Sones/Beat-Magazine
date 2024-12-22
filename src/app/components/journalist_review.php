@@ -58,11 +58,9 @@
                         document.getElementById('journalistReviewText').value = reviewText;
                         document.getElementById('preview').innerHTML = reviewText;
 
-                        // set the onSubmit
                         document.querySelector('form').onsubmit = editJournalistReview;
 
 
-                        // Open the modal
                         const reviewEditorModal = new bootstrap.Modal(document.getElementById('reviewEditor'));
                         reviewEditorModal.show();
                     }

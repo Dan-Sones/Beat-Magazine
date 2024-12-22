@@ -1,7 +1,7 @@
 <?php if (isset($album)) : ?>
     <div class="modal fade" id="reviewEditor" tabindex="-1" aria-labelledby="reviewEditorModal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
-            <form onsubmit="submitJournalistReview(event)">
+            <form>
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="exampleModalLabel">Review Editor</h1>
@@ -54,78 +54,6 @@
 
                             </div>
 
-                            <script>
-                                document.addEventListener('DOMContentLoaded', () => {
-                                    const reviewText = document.getElementById('journalistReviewText');
-                                    const preview = document.getElementById('preview');
-
-                                    reviewText.addEventListener('input', () => {
-                                        preview.innerHTML = reviewText.value;
-                                    });
-                                });
-
-                                const editJournalistReview = async () => {
-                                    event.preventDefault();
-
-                                    const rating = document.getElementById('journalistReviewRating').value;
-                                    const abstract = document.getElementById('journalistAbstractText').value;
-                                    const review = document.getElementById('journalistReviewText').value;
-
-                                    const albumId = <?= $album->getAlbumID() ?>;
-
-                                    await fetch(`/api/albums/${albumId}/journalist-reviews`, {
-                                        method: 'PUT',
-                                        headers: {
-                                            'Content-Type': 'application/json'
-                                        },
-                                        body: JSON.stringify({
-                                            rating: rating,
-                                            abstract: abstract,
-                                            review: review
-                                        })
-                                    }).then(response => {
-                                        if (response.status === 200) {
-                                            alert('Review edited successfully');
-                                            location.reload();
-                                        } else {
-                                            alert('An error occurred while editing your review');
-                                        }
-                                    });
-
-                                    // reset the default onSubmit
-                                    document.querySelector('form').onsubmit = submitJournalistReview;
-
-                                }
-
-                                const submitJournalistReview = async () => {
-                                    event.preventDefault();
-
-                                    const rating = document.getElementById('journalistReviewRating').value;
-                                    const abstract = document.getElementById('journalistAbstractText').value;
-                                    const review = document.getElementById('journalistReviewText').value;
-                                    const albumId = <?= $album->getAlbumID() ?>;
-
-                                    return await fetch(`/api/albums/${albumId}/journalist-reviews`, {
-                                        method: 'POST',
-                                        headers: {
-                                            'Content-Type': 'application/json'
-                                        },
-                                        body: JSON.stringify({
-                                            rating: rating,
-                                            abstract: abstract,
-                                            review: review
-                                        })
-                                    }).then(response => {
-                                        if (response.status === 201) {
-                                            alert('Review submitted successfully');
-                                            location.reload();
-                                        } else {
-                                            alert('An error occurred while submitting your review');
-                                        }
-                                    });
-                                }
-
-                            </script>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -138,4 +66,79 @@
             </form>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const reviewText = document.getElementById('journalistReviewText');
+            const preview = document.getElementById('preview');
+
+            reviewText.addEventListener('input', () => {
+                preview.innerHTML = reviewText.value;
+            });
+
+            const reviewForm = document.querySelector('form');
+            reviewForm.onsubmit = submitJournalistReview;
+        });
+
+
+        const submitJournalistReview = async (event) => {
+            event.preventDefault();
+
+            const rating = document.getElementById('journalistReviewRating').value;
+            const abstract = document.getElementById('journalistAbstractText').value;
+            const review = document.getElementById('journalistReviewText').value;
+            const albumId = <?= $album->getAlbumID() ?>;
+
+            return await fetch(`/api/albums/${albumId}/journalist-reviews`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    rating: rating,
+                    abstract: abstract,
+                    review: review
+                })
+            }).then(response => {
+                if (response.status === 201) {
+                    alert('Review submitted successfully');
+                    location.reload();
+                } else {
+                    alert('An error occurred while submitting your review');
+                }
+            });
+        }
+
+        const editJournalistReview = async (event) => {
+            event.preventDefault();
+
+            const rating = document.getElementById('journalistReviewRating').value;
+            const abstract = document.getElementById('journalistAbstractText').value;
+            const review = document.getElementById('journalistReviewText').value;
+
+            const albumId = <?= $album->getAlbumID() ?>;
+
+            await fetch(`/api/albums/${albumId}/journalist-reviews`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    rating: rating,
+                    abstract: abstract,
+                    review: review
+                })
+            }).then(response => {
+                if (response.status === 200) {
+                    alert('Review edited successfully');
+                    location.reload();
+                } else {
+                    alert('An error occurred while editing your review');
+                }
+            });
+
+            // reset the default onSubmit
+            document.querySelector('form').onsubmit = submitJournalistReview;
+        }
+    </script>
+
 <?php endif; ?>
