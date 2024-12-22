@@ -33,7 +33,10 @@
                                                 <?php if (isset($journalistReviews[(string)$album->getAlbumID()])): ?>
                                                     <p class="card-text small text-center m-auto">
                                                         <?= $journalistReviews[(string)$album->getAlbumID()]->getAbstract() ?>
-                                                        - <?= $journalistReviews[(string)$album->getAlbumID()]->getJournalist()->getFullName() ?>
+                                                        <br>
+                                                        -
+                                                        <em class="journalist-name"
+                                                            onclick="navigateToJournalist(event, '<?= $journalistReviews[(string)$album->getAlbumID()]->getJournalist()->getUsername() ?>')"><?= $journalistReviews[(string)$album->getAlbumID()]->getJournalist()->getFullName() ?></em>
                                                     </p>
                                                 <?php else: ?>
                                                     <p class="card-text small text-muted m-auto">No review available</p>
@@ -61,11 +64,12 @@
             const encodedTitle = encodeURIComponent(title).replace(/%20/g, '+');
             window.location.href = `/artist/${encodedArtist}/${encodedTitle}`;
         }
-        //TODO: Implement this when we have journlaist pages
-        // const navigateToJournalist = (journalistName) => {
-        //     const encodedJournalist = encodeURIComponent(journalistName).replace(/%20/g, '+');
-        //     window.location.href = `/journalist/${encodedJournalist}`;
-        // }
+
+        const navigateToJournalist = (event, journalistUsername) => {
+            event.stopPropagation()
+            const encodedJournalist = encodeURIComponent(journalistUsername).replace(/%20/g, '+');
+            window.location.href = `/user/${encodedJournalist}`;
+        }
 
 
     </script>
