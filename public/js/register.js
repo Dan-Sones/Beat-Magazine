@@ -42,7 +42,7 @@ const isEmailTaken = async (email) => {
 };
 
 
-const handleTaken = async (taken, targetElementID) => {
+const handleTaken = (taken, targetElementID) => {
         if (taken === true) {
             const tooltipContents = `This ${targetElementID === 'emailStatus' ? 'email' : 'username'} is already taken`;
             document.getElementById(targetElementID).innerHTML = `<i data-bs-toggle="tooltip" class="bi bi-slash-circle icon-error"></i>`
@@ -53,11 +53,11 @@ const handleTaken = async (taken, targetElementID) => {
     }
 ;
 
-const handleEmailTaken = async (taken) => {
+const handleEmailTaken = (taken) => {
     handleTaken(taken, 'emailStatus');
 };
 
-const handleUsernameTaken = async (taken) => {
+const handleUsernameTaken = (taken) => {
     handleTaken(taken, 'usernameStatus');
 };
 
