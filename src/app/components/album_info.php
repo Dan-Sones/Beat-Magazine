@@ -19,7 +19,7 @@
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item text-danger"
-                                           onclick="deleteAlbum(<?php echo $album->getAlbumID() ?>)">Delete
+                                           onclick="handleDeleteAlbumIntention()">Delete
                                             Album</a></li>
                                 </ul>
                             <?php endif; ?>
@@ -58,15 +58,10 @@
             window.location.href = `/artist/${encodedArtist}`;
         }
 
-        const deleteAlbum = (albumId) => {
-            fetch(`/api/albums/${albumId}`, {
-                method: 'DELETE',
-            })
-                .then(response => {
-                    if (response.ok) {
-                        window.location.href = '/albums';
-                    }
-                });
+        const handleDeleteAlbumIntention = () => {
+            const modal = new bootstrap.Modal(document.getElementById('deleteAlbumModal'));
+            modal.show();
         }
+        
     </script>
 <?php endif; ?>

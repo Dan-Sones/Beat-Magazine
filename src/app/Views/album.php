@@ -1,5 +1,6 @@
 <?php include 'includes/header.php'; ?>
 <?php include PRIVATE_PATH . '/src/app/components/review_editor_modal.php'; ?>
+<?php include PRIVATE_PATH . '/src/app/components/delete_album_modal.php'; ?>
 
 <?php if (isset($album) && $album): ?>
     <main class="album-wrapper" role="main">
