@@ -100,7 +100,7 @@
                                     <?php foreach ($journalistReviews as $journalistReview): ?>
                                         <?php $album = $albumDetailsMap[$journalistReview->getAlbumId()]; ?>
                                         <div class="col-md-4 col-sm-6 mb-4 d-flex flex-column justify-content-center text-center">
-                                            <div class="card shadow h-100">
+                                            <div class="card shadow h-100 official-review-card">
                                                 <img src="<?= $album->getAlbumArt() ?>"
                                                      class="card-img-top" alt="Album Art">
                                                 <div class="card-body">
