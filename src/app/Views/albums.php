@@ -31,6 +31,16 @@
                     <p>No albums available.</p>
                 <?php endif; ?>
             </div>
+            <?php if (isset($isJournalist) && $isJournalist) : ?>
+
+                <div class="row p-5">
+                    <div class="col-12 text-center">
+                        <button class="btn btn-primary" onclick="window.location.href = '/create-album'">Create an
+                            album
+                        </button>
+                    </div>
+                </div>
+            <?php endif; ?>
         </div>
 
         <script>
