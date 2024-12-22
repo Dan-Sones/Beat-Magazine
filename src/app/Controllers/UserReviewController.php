@@ -41,6 +41,11 @@ class UserReviewController
         }
 
 
+        if ($this->userReviewService->hasUserLeftReviewForAlbum($args['albumId'])) {
+            return $response->withStatus(403);
+        }
+
+
         $success = $this->userReviewService->CreateReviewForAlbum($args['albumId'], $userId, $data['review'], $data['rating']);
 
         if (!$success) {
