@@ -106,7 +106,7 @@ class JournalistReviewFactory
         if ($journalistReviewData === false) {
             return null;
         }
-        
+
         $journalist = new Journalist(
             $journalistReviewData['journalist_first_name'],
             $journalistReviewData['journalist_last_name'],
@@ -128,5 +128,67 @@ class JournalistReviewFactory
         );
     }
 
+    public function getAllJournalistReviewsForJournalist(int $journalistId): ?array
+    {
+        $query = '
+        SELECT
+            journalist_reviews.id AS review_id,
+            journalist_reviews.rating AS review_rating,
+            journalist_reviews.abstract AS review_abstract,
+            journalist_reviews.full_review AS review_text,
+            journalist_reviews.album_id,
+            users.first_name AS journalist_first_name,
+            users.last_name AS journalist_last_name,
+            users.profile_picture AS journalist_profile_picture,
+            journalists.bio AS journalist_bio,
+            journalists.id AS journalist_id,
+            users.created_at,
+            users.id AS user_id,
+            users.username FROM journalist_reviews INNER JOIN journalists ON journalist_reviews.journalist_id = journalists.id
+             INNER JOIN users ON users.id = journalists.user_id
+             WHERE users.id = :journalist_id
+             ORDER BY journalist_reviews.published_at DESC';
+
+        $statement = $this->db->prepare($query);
+        $statement->bindParam(':journalist_id', $journalistId, PDO::PARAM_INT);
+        $success = $statement->execute();
+
+        if (!$success) {
+            return null;
+        }
+
+        $journalistReviewData = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        if (empty($journalistReviewData)) {
+            return null;
+        }
+
+        $journalistReviews = [];
+
+        foreach ($journalistReviewData as $journalistReview) {
+            $journalist = new Journalist(
+                $journalistReview['journalist_first_name'],
+                $journalistReview['journalist_last_name'],
+                $journalistReview['journalist_bio'],
+                $journalistReview['username'],
+                $journalistReview['journalist_profile_picture'],
+                $journalistReview['user_id'],
+                $journalistReview['created_at']
+            );
+
+            $journalistReviews[] = new JournalistReview(
+                $journalistReview['review_id'],
+                $journalistReview['review_rating'],
+                $journalistReview['review_abstract'],
+                $journalistReview['review_text'],
+                $journalist,
+                $journalistReview['album_id']
+            );
+        }
+
+        return $journalistReviews;
+
+
+    }
 
 }

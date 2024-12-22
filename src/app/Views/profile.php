@@ -78,19 +78,11 @@
                                 </div>
                             </div>
                             <div class="pt-2 row justify-content-center">
-                                <!--                                <div class="col-4 text-center">-->
-                                <!--                                    <h5>Total Likes</h5>-->
-                                <!--                                </div>-->
-
                                 <div class="col-12 text-center">
                                     <h5>User Since</h5>
                                 </div>
                             </div>
                             <div class="row justify-content-center">
-                                <!--                                <div class="col-4 text-center">-->
-                                <!--                                    <p></p>-->
-                                <!--                                </div>-->
-
                                 <div class="col-12 text-center">
                                     <p><?= $user->getCreatedAt() ?></p>
                                 </div>
@@ -99,12 +91,62 @@
 
                     </div>
 
+                    <?php if (isset($isJournalist) && $isJournalist): ?>
+
+                        <div id="journalist-reviews" class="pt-3 container d-flex justify-content-center">
+                            <?php if (!empty($journalistReviews) && !empty($albumDetailsMap)): ?>
+                                <div class="row justify-content-center">
+                                    <h2 class="text-center pt-3 pb-3">BeatMagazine Reviews</h2>
+                                    <?php foreach ($journalistReviews as $journalistReview): ?>
+                                        <div class="col-md-4 col-sm-6 mb-4">
+                                            <div class="card shadow">
+                                                <img src="<?= $albumDetailsMap[$journalistReview->getAlbumId()]->getAlbumArt() ?>"
+                                                     class="card-img-top" alt="Album Art">
+                                                <div class="card-body">
+                                                    <h5 class="card-title"><?= $albumDetailsMap[$journalistReview->getAlbumId()]->getAlbumName() ?></h5>
+
+                                                    <div class="container mb-2">
+                                                        <div class="row justify-content-center">
+                                                            <div class="col-auto">
+                                                                <div class="rating-container rounded d-flex justify-content-center align-items-center p-2 border">
+                                                                    <h4 class="rating-display fw-bold mb-0"><?= $journalistReview->getRating() . "/10" ?></h4>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <p class="card-text"><?= $journalistReview->getAbstract() ?> <a
+                                                                class="link-opacity-100 read-review-link" type="link"
+                                                                onclick="UrlForAlbum('<?= addslashes($albumDetailsMap[$journalistReview->getAlbumId()]->getArtistName()) ?>', '<?= addslashes($albumDetailsMap[$journalistReview->getAlbumId()]->getAlbumName()) ?>')">Read
+                                                            More</a></p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    <?php endforeach; ?>
+
+                                </div>
+
+
+                            <?php else: ?>
+                                <div class="row justify-content-center">
+                                    <div class="col-12">
+                                        <p class="text-center"><?= $user->getUsername() ?> has not left any reviews on
+                                            behalf of BeatMagazine!</p>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+
+                        </div>
+
+                    <?php endif; ?>
+
+
                     <div id="reviews-container" class="container d-flex justify-content-center pb-3 pt-3">
                         <div class="container">
                             <div class="row gx-5">
                                 <div class="col-12">
 
-                                    <h2 class="text-center mb-5 mt-2">Reviews</h2>
+                                    <h2 class="text-center mb-5 mt-2">Community Reviews</h2>
                                 </div>
 
                                 <div class="col-12">
@@ -134,12 +176,18 @@
                                                         </div>
                                                         <div class="card-body d-flex flex-column flex-md-row align-items-center">
                                                             <div class="col-12 col-md-4 text-center text-md-start mb-3 mb-md-0">
-                                                                <div class="rating-container rounded p-2 shadow-sm d-flex justify-content-center align-items-center ">
-                                                                    <h2 class="rating-display fw-bold mb-0"><?= $userReview->getRating() . "/10" ?></h2>
+                                                                <div class="container mb-2">
+                                                                    <div class="row justify-content-center">
+                                                                        <div class="col-auto">
+                                                                            <div class="rating-container rounded d-flex justify-content-center align-items-center p-2 border">
+                                                                                <h4 class="rating-display fw-bold mb-0"><?= $journalistReview->getRating() . "/10" ?></h4>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                             <div class="ps-3 col-12 col-md-8">
-                                                                <p class="review-text"><?= $userReview->getReview() ?></p>
+                                                                <p class="review-text mb-0"><?= $userReview->getReview() ?></p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -195,6 +243,12 @@
                 } else {
                 }
             });
+
+            const UrlForAlbum = (artist, title) => {
+                const encodedArtist = encodeURIComponent(artist).replace(/%20/g, '+');
+                const encodedTitle = encodeURIComponent(title).replace(/%20/g, '+');
+                window.location.href = `/artist/${encodedArtist}/${encodedTitle}`;
+            }
 
         </script>
     </main>
