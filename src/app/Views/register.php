@@ -12,14 +12,7 @@
                             <?php include PRIVATE_PATH . '/src/app/components/registration/step3.php'; ?>
                             <?php include PRIVATE_PATH . '/src/app/components/registration/step4.php'; ?>
                         </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#registrationCarousel"
-                                data-bs-slide="prev" aria-label="Previous">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#registrationCarousel"
-                                data-bs-slide="next" aria-label="Next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        </button>
+                     
                     </div>
                 </div>
             </div>
