@@ -146,6 +146,7 @@ const validateOTP = async (event) => {
         return response.json();
     }).then(data => {
         if (data.valid) {
+            alert('2FA Setup Successful');
             document.getElementById('submitRegistrationForm').disabled = false;
         } else {
             alert('Invalid code');

@@ -32,6 +32,8 @@ class RegisterController
         $_SESSION['google2faSecret'] = $google2faSecret;
         $qrCodeUrl = $tfa->getQRCodeImageAsDataUri('BeatMagazine', $google2faSecret);
 
+        $_SESSION['otp_pending'] = true;
+
         ob_start();
         include PRIVATE_PATH . '/src/app/Views/register.php';
         $output = ob_get_clean();
@@ -89,6 +91,7 @@ class RegisterController
         }
 
         $response->getBody()->write(json_encode(['valid' => true]));
+        $_SESSION['otp_pending'] = false;
         return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
     }
 
@@ -107,9 +110,15 @@ class RegisterController
         $password = $data['password'] ?? '';
         $google2faSecret = $this->getGoogle2faSecret();
 
+
+        if ($_SESSION['otp_pending'] === true) {
+            return $response->withStatus(400);
+        }
+
         if (empty($username) || empty($email) || empty($firstName) || empty($lastName) || empty($password) || empty($google2faSecret)) {
             return $response->withStatus(400);
         }
+
 
         $confirmNumbers = preg_match_all('/[0-9]/', $password) >= 3;
         $confirmCapital = preg_match_all('/[A-Z]/', $password) >= 1;
