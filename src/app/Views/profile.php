@@ -96,7 +96,7 @@
                         <div id="journalist-reviews" class="pt-3 container d-flex justify-content-center">
                             <?php if (!empty($journalistReviews) && !empty($albumDetailsMap)): ?>
                                 <div class="row justify-content-center">
-                                    <h2 class="text-center pt-3 pb-3">BeatMagazine Reviews</h2>
+                                    <h2 class="text-center pt-3 pb-3">Official BeatMagazine Reviews</h2>
                                     <?php foreach ($journalistReviews as $journalistReview): ?>
                                         <?php $album = $albumDetailsMap[$journalistReview->getAlbumId()]; ?>
                                         <div class="col-md-4 col-sm-6 mb-4 d-flex flex-column justify-content-center text-center">
