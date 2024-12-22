@@ -118,17 +118,20 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 col-12 order-1 order-md-<?php echo $i % 2 == 0 ? '0' : '1'; ?> justify-content-center">
-                                                    <div class="review card">
+                                                    <div class="review card mb-4 shadow">
                                                         <div class="card-header">
-                                                            <h4 id="album-title"><?= $albumDetailsMap[$userReview->getAlbumId()]->getAlbumName() ?></h4>
-                                                            <h5 id="album-artist"><?= $albumDetailsMap[$userReview->getAlbumId()]->getArtistName() ?></h5>
+                                                            <h4 id="album-title"
+                                                                class="mb-0"><?= $albumDetailsMap[$userReview->getAlbumId()]->getAlbumName() ?></h4>
+                                                            <h5 id="album-artist"
+                                                                class="fw-light"><?= $albumDetailsMap[$userReview->getAlbumId()]->getArtistName() ?></h5>
                                                         </div>
-                                                        <div class="card-body container d-flex flex-column flex-md-row align-items-center">
+                                                        <div class="card-body d-flex flex-column flex-md-row align-items-center">
                                                             <div class="col-12 col-md-4 text-center text-md-start mb-3 mb-md-0">
-                                                                <h2 class="rating-display"><?= $userReview->getRating() . "/10" ?>
-                                                                </h2>
+                                                                <div class="rating-container rounded p-2 shadow-sm d-flex justify-content-center align-items-center ">
+                                                                    <h2 class="rating-display fw-bold mb-0"><?= $userReview->getRating() . "/10" ?></h2>
+                                                                </div>
                                                             </div>
-                                                            <div class="col-12 col-md-8">
+                                                            <div class="ps-3 col-12 col-md-8">
                                                                 <p class="review-text"><?= $userReview->getReview() ?></p>
                                                             </div>
                                                         </div>
@@ -160,23 +163,28 @@
 
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                        <script>
-                            const container = document.getElementById('reviews-container');
 
-                            container.addEventListener('click', (event) => {
-                                const card = event.target.closest('.album-review');
-                                if (card) {
-                                    const artist = card.querySelector('#album-artist').textContent;
-                                    const title = card.querySelector('#album-title').textContent;
-                                    const encodedArtist = encodeURIComponent(artist).replace(/%20/g, '+');
-                                    const encodedTitle = encodeURIComponent(title).replace(/%20/g, '+');
-                                    window.location.href = `/artist/${encodedArtist}/${encodedTitle}`;
-                                } else {
-                                }
-                            });
+        <script>
+            const container = document.getElementById('reviews-container');
 
-                        </script>
+            container.addEventListener('click', (event) => {
+                const card = event.target.closest('.album-review');
+                if (card) {
+                    const artist = card.querySelector('#album-artist').textContent;
+                    const title = card.querySelector('#album-title').textContent;
+                    const encodedArtist = encodeURIComponent(artist).replace(/%20/g, '+');
+                    const encodedTitle = encodeURIComponent(title).replace(/%20/g, '+');
+                    window.location.href = `/artist/${encodedArtist}/${encodedTitle}`;
+                } else {
+                }
+            });
+
+        </script>
     </main>
 
     <!-- AOS JS -->
