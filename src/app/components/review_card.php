@@ -39,7 +39,7 @@
                               style="display: none"
                               onsubmit="handleSubmitEditReview(event, <?= $userReview->getId() ?>)">
                             <div class="mb-3">
-                                <label for="updateReviewRating"
+                                <label for="updateReviewRating-<?= $userReview->getId() ?>"
                                        class="form-label">Updated Rating</label>
                                 <select class="form-select"
                                         id="updateReviewRating-<?= $userReview->getId() ?>">
@@ -118,7 +118,7 @@
                 </div>
             </div>
         </div>
-    
+
     </div>
 
 <?php endif; ?>
