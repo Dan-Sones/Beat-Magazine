@@ -59,7 +59,7 @@
                         document.getElementById('journalistReviewText').value = reviewText;
                         document.getElementById('preview').innerHTML = reviewText;
 
-                        document.querySelector('form').onsubmit = editJournalistReview;
+                        document.getElementById('journalistReviewForm').onsubmit = editJournalistReview;
 
 
                         const reviewEditorModal = new bootstrap.Modal(document.getElementById('reviewEditor'));

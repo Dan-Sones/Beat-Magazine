@@ -1,7 +1,7 @@
 <?php if (isset($album)) : ?>
     <div class="modal fade" id="reviewEditor" tabindex="-1" aria-labelledby="reviewEditorModal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
-            <form>
+            <form id="journalistReviewForm">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="exampleModalLabel">Review Editor</h1>
@@ -75,7 +75,7 @@
                 preview.innerHTML = reviewText.value;
             });
 
-            const reviewForm = document.querySelector('form');
+            const reviewForm = document.getElementById('journalistReviewForm');
             reviewForm.onsubmit = submitJournalistReview;
         });
 

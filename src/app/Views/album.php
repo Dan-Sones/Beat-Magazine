@@ -4,6 +4,10 @@
     <?php include PRIVATE_PATH . '/src/app/components/delete_album_modal.php'; ?>
 
 
+    <?php if ($isJournalist && !isset($journalistReview)) : ?>
+        <?php include PRIVATE_PATH . '/src/app/components/review_editor_modal.php'; ?>
+    <?php endif; ?>
+
     <?php if (isset($journalistReview) && (isset($userID) && (int)$userID === (int)$journalistReview->getJournalist()->getId())) : ?>
         <?php include PRIVATE_PATH . '/src/app/components/review_editor_modal.php'; ?>
     <?php endif; ?>
