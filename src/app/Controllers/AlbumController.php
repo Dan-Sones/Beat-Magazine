@@ -78,8 +78,15 @@ class AlbumController
 
         $hasUserLeftReview = $this->userReviewService->hasUserLeftReviewForAlbum($album->getAlbumID());
 
+        $userID = null;
+
         if (isset($_SESSION['user_id'])) {
             $userID = $_SESSION['user_id'];
+        }
+
+        $isJournalist = false;
+        if (isset($_SESSION['role']) && $_SESSION['role'] === 'journalist') {
+            $isJournalist = true;
         }
 
         ob_start();

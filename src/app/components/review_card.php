@@ -34,69 +34,71 @@
                     <div class="col-12 col-md-6 order-3 order-md-3 d-flex justify-content-center align-items-center mb-0">
                         <p class="mb-0"
                            id="userReviewText-<?= $userReview->getId() ?>"><?= $userReview->getReview() ?></p>
-                        <form class="p-2 rounded w-100"
-                              id="editUserReview-<?= $userReview->getId() ?>"
-                              style="display: none"
-                              onsubmit="handleSubmitEditReview(event, <?= $userReview->getId() ?>)">
-                            <div class="mb-3">
-                                <label for="updateReviewRating-<?= $userReview->getId() ?>"
-                                       class="form-label">Updated Rating</label>
-                                <select class="form-select"
-                                        id="updateReviewRating-<?= $userReview->getId() ?>">
-                                    <option value="1" <?= $userReview->getRating() == 1 ? 'selected' : '' ?>>
-                                        1
-                                    </option>
-                                    <option value="2" <?= $userReview->getRating() == 2 ? 'selected' : '' ?>>
-                                        2
-                                    </option>
-                                    <option value="3" <?= $userReview->getRating() == 3 ? 'selected' : '' ?>>
-                                        3
-                                    </option>
-                                    <option value="4" <?= $userReview->getRating() == 4 ? 'selected' : '' ?>>
-                                        4
-                                    </option>
-                                    <option value="5" <?= $userReview->getRating() == 5 ? 'selected' : '' ?>>
-                                        5
-                                    </option>
-                                    <option value="6" <?= $userReview->getRating() == 6 ? 'selected' : '' ?>>
-                                        6
-                                    </option>
-                                    <option value="7" <?= $userReview->getRating() == 7 ? 'selected' : '' ?>>
-                                        7
-                                    </option>
-                                    <option value="8" <?= $userReview->getRating() == 8 ? 'selected' : '' ?>>
-                                        8
-                                    </option>
-                                    <option value="9" <?= $userReview->getRating() == 9 ? 'selected' : '' ?>>
-                                        9
-                                    </option>
-                                    <option value="10" <?= $userReview->getRating() == 10 ? 'selected' : '' ?>>
-                                        10
-                                    </option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="updatedReviewText"
-                                       class="form-label">Updated Review</label>
-                                <textarea class="form-control"
-                                          id="updatedReviewText-<?= $userReview->getId() ?>"
-                                          rows="5"><?= $userReview->getReview() ?></textarea>
-                            </div>
-                            <div class="d-grid"
-                                 id="submitUpdatedReviewWrapper-<?= $userReview->getId() ?>"
-                                 data-toggle="tooltip">
-                                <button id="submitUpdateReview-<?= $userReview->getId() ?>"
-                                        type="submit"
-                                        class="btn btn-primary mb-1">Submit
-                                    Review
-                                </button>
+                        <?php if (isset($userID) && (int)$userID === (int)$userReview->getUser()->getId()): ?>
+                            <form class="p-2 rounded w-100"
+                                  id="editUserReview-<?= $userReview->getId() ?>"
+                                  style="display: none"
+                                  onsubmit="handleSubmitEditReview(event, <?= $userReview->getId() ?>)">
+                                <div class="mb-3">
+                                    <label for="updateReviewRating-<?= $userReview->getId() ?>"
+                                           class="form-label">Updated Rating</label>
+                                    <select class="form-select"
+                                            id="updateReviewRating-<?= $userReview->getId() ?>">
+                                        <option value="1" <?= $userReview->getRating() == 1 ? 'selected' : '' ?>>
+                                            1
+                                        </option>
+                                        <option value="2" <?= $userReview->getRating() == 2 ? 'selected' : '' ?>>
+                                            2
+                                        </option>
+                                        <option value="3" <?= $userReview->getRating() == 3 ? 'selected' : '' ?>>
+                                            3
+                                        </option>
+                                        <option value="4" <?= $userReview->getRating() == 4 ? 'selected' : '' ?>>
+                                            4
+                                        </option>
+                                        <option value="5" <?= $userReview->getRating() == 5 ? 'selected' : '' ?>>
+                                            5
+                                        </option>
+                                        <option value="6" <?= $userReview->getRating() == 6 ? 'selected' : '' ?>>
+                                            6
+                                        </option>
+                                        <option value="7" <?= $userReview->getRating() == 7 ? 'selected' : '' ?>>
+                                            7
+                                        </option>
+                                        <option value="8" <?= $userReview->getRating() == 8 ? 'selected' : '' ?>>
+                                            8
+                                        </option>
+                                        <option value="9" <?= $userReview->getRating() == 9 ? 'selected' : '' ?>>
+                                            9
+                                        </option>
+                                        <option value="10" <?= $userReview->getRating() == 10 ? 'selected' : '' ?>>
+                                            10
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="updatedReviewText"
+                                           class="form-label">Updated Review</label>
+                                    <textarea class="form-control"
+                                              id="updatedReviewText-<?= $userReview->getId() ?>"
+                                              rows="5"><?= $userReview->getReview() ?></textarea>
+                                </div>
+                                <div class="d-grid"
+                                     id="submitUpdatedReviewWrapper-<?= $userReview->getId() ?>"
+                                     data-toggle="tooltip">
+                                    <button id="submitUpdateReview-<?= $userReview->getId() ?>"
+                                            type="submit"
+                                            class="btn btn-primary mb-1">Submit
+                                        Review
+                                    </button>
 
-                                <button type="button" class="btn btn-secondary"
-                                        onclick="handleCancelEditReview(<?= $userReview->getId() ?>)">
-                                    Cancel
-                                </button>
-                            </div>
-                        </form>
+                                    <button type="button" class="btn btn-secondary"
+                                            onclick="handleCancelEditReview(<?= $userReview->getId() ?>)">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </form>
+                        <?php endif; ?>
                     </div>
                     <?php if (isset($userID) && (int)$userID === (int)$userReview->getUser()->getId()): ?>
                         <div class="col-1 d-flex justify-content-center align-items-center order-4 order-md-4">
