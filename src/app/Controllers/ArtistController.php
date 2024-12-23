@@ -86,7 +86,8 @@ class ArtistController
 
     public function show(Request $request, Response $response, array $args): Response
     {
-        $artistName = urldecode(htmlspecialchars($args['artistName']));
+        $artistName = urldecode($args['artistName']);
+
 
         $artist = $this->artistFactory->getArtistByName($artistName);
         $albums = $this->albumFactory->getAlbumsByArtistName($artistName);

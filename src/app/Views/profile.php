@@ -15,7 +15,8 @@
                                             <input type="file" name="profile_picture" id="profilePictureInput"
                                                    style="display: none;">
                                             <div id="profilePicture" style="cursor: pointer; position: relative;">
-                                                <img src="<?= $user->getProfilePictureUri() ?>" alt="Profile Picture" ∂
+                                                <img src="<?= htmlspecialchars($user->getProfilePictureUri()) ?>"
+                                                     alt="Profile Picture" ∂
                                                      class="img-fluid rounded-circle"
                                                      style="width: 200px; height: 200px; object-fit: cover">
                                                 <div id="uploadOverlay" class="rounded-circle">
@@ -23,7 +24,7 @@
                                             </div>
                                         </form>
                                     <?php else: ?>
-                                        <img src="<?= $user->getProfilePictureUri() ?>"
+                                        <img src="<?= htmlspecialchars($user->getProfilePictureUri()) ?>"
                                              class="img-fluid rounded-circle p-2"
                                              style="width: 250px; height: 250px; object-fit: cover"
                                              alt="Profile Picture">
@@ -68,10 +69,10 @@
                                         <!--TODO:Allow editing if logged in-->
                                         <?php if (isset($isJournalist) && $isJournalist): ?>
                                             <h1 class="text-center" data-bs-toggle="tooltip" data-bs-placement="right"
-                                                title="This User is a Journalist for BeatMagazine.com"><?= $user->getUsername() ?>
+                                                title="This User is a Journalist for BeatMagazine.com"><?= htmlspecialchars($user->getUsername()) ?>
                                                 📝</h1>
                                         <?php else: ?>
-                                            <h1 class="text-center"><?= $user->getUsername() ?> </h1>
+                                            <h1 class="text-center"><?= htmlspecialchars($user->getUsername()) ?> </h1>
                                         <?php endif; ?>
 
                                     </div>
@@ -84,7 +85,7 @@
                             </div>
                             <div class="row justify-content-center">
                                 <div class="col-12 text-center">
-                                    <p><?= $user->getCreatedAt() ?></p>
+                                    <p><?= htmlspecialchars($user->getCreatedAt()) ?></p>
                                 </div>
                             </div>
                         </div>
@@ -104,12 +105,12 @@
                                                 <img src="<?= $album->getAlbumArt() ?>"
                                                      class="card-img-top" alt="Album Art">
                                                 <div class="card-body">
-                                                    <h5 class="card-title"><?= $album->getAlbumName() ?></h5>
+                                                    <h5 class="card-title"><?= htmlspecialchars($album->getAlbumName()) ?></h5>
                                                     <p class="card-text">
                                                         <em class="artist-name"
                                                             onclick="UrlForArtist('<?= addslashes($album->getArtistName()) ?>')"> <?= $album->getArtistName() ?></em>
                                                         |
-                                                        <?= $album->getLabel() ?>
+                                                        <?= htmlspecialchars($album->getLabel()) ?>
                                                     </p>
 
                                                     <hr/>
@@ -138,7 +139,8 @@
                             <?php else: ?>
                                 <div class="row justify-content-center">
                                     <div class="col-12">
-                                        <p class="text-center"><?= $user->getUsername() ?> has not left any reviews on
+                                        <p class="text-center"><?= htmlspecialchars($user->getUsername()) ?> has not
+                                            left any reviews on
                                             behalf of BeatMagazine!</p>
                                     </div>
                                 </div>
@@ -169,19 +171,19 @@
                                                  data-aos-duration="1000" id="album-review">
                                                 <div class="col-md-6 col-12 order-0 order-md-<?php echo $i % 2 == 0 ? '1' : '0'; ?> justify-content-center pb-sm-3">
                                                     <div class="album-art pb-3">
-                                                        <img src="<?= $album->getAlbumArt() ?>"
+                                                        <img src="<?= htmlspecialchars($album->getAlbumArt()) ?>"
                                                              class="img-fluid shadow album-art"
                                                              id="album-art"
-                                                             alt="Album Art for <?= $album->getAlbumName() ?>"/>
+                                                             alt="Album Art for <?= htmlspecialchars($album->getAlbumName()) ?>"/>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 col-12 order-1 order-md-<?php echo $i % 2 == 0 ? '0' : '1'; ?> justify-content-center">
                                                     <div class="review card mb-4 shadow">
                                                         <div class="card-header">
                                                             <h4 id="album-title"
-                                                                class="mb-0"><?= $album->getAlbumName() ?></h4>
+                                                                class="mb-0"><?= htmlspecialchars($album->getAlbumName()) ?></h4>
                                                             <h5 id="album-artist"
-                                                                class="fw-light"><?= $album->getArtistName() ?></h5>
+                                                                class="fw-light"><?= htmlspecialchars($album->getArtistName()) ?></h5>
                                                         </div>
                                                         <div class="card-body d-flex flex-column flex-md-row align-items-center">
                                                             <div class="col-12 col-md-4 text-center text-md-start mb-3 mb-md-0">
@@ -189,14 +191,14 @@
                                                                     <div class="row justify-content-center">
                                                                         <div class="col-auto">
                                                                             <div class="rating-container rounded d-flex justify-content-center align-items-center p-2 border">
-                                                                                <h4 class="rating-display  mb-0"><?= $userReview->getRating() . "/10" ?></h4>
+                                                                                <h4 class="rating-display  mb-0"><?= htmlspecialchars($userReview->getRating()) . "/10" ?></h4>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="ps-3 col-12 col-md-8">
-                                                                <p class="review-text mb-0"><?= $userReview->getReview() ?></p>
+                                                                <p class="review-text mb-0"><?= htmlspecialchars($userReview->getReview()) ?></p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -208,7 +210,8 @@
                                     <?php else: ?>
                                         <div class="row justify-content-center">
                                             <div class="col-12">
-                                                <p class="text-center"><?= $user->getUsername() ?> has not left any
+                                                <p class="text-center"><?= htmlspecialchars($user->getUsername()) ?> has
+                                                    not left any
                                                     reviews!</p>
                                             </div>
                                         </div>
