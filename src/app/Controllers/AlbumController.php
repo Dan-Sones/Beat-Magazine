@@ -78,6 +78,8 @@ class AlbumController
 
         $hasUserLeftReview = $this->userReviewService->hasUserLeftReviewForAlbum($album->getAlbumID());
 
+        $userID = null;
+
         if (isset($_SESSION['user_id'])) {
             $userID = $_SESSION['user_id'];
         }
