@@ -252,6 +252,8 @@
                 document.getElementById('artistSuggestions').innerHTML = '';
 
 
+            } else if (response.status === 409) {
+                alert('An artist with that name already exists');
             } else {
                 alert('Failed to create artist');
             }

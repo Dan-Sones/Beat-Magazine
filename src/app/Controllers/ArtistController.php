@@ -7,6 +7,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use S246109\BeatMagazine\Factories\AlbumFactory;
 use S246109\BeatMagazine\Factories\ArtistFactory;
 use S246109\BeatMagazine\Factories\JournalistReviewFactory;
+use S246109\BeatMagazine\Services\ArtistService;
 
 class ArtistController
 {
@@ -17,16 +18,20 @@ class ArtistController
 
     private JournalistReviewFactory $journalistReviewFactory;
 
+    private ArtistService $artistService;
+
     /**
      * @param ArtistFactory $artistFactory
      * @param AlbumFactory $albumFactory
      * @param JournalistReviewFactory $journalistReviewFactory
+     * @param ArtistService $artistService
      */
-    public function __construct(ArtistFactory $artistFactory, AlbumFactory $albumFactory, JournalistReviewFactory $journalistReviewFactory)
+    public function __construct(ArtistFactory $artistFactory, AlbumFactory $albumFactory, JournalistReviewFactory $journalistReviewFactory, ArtistService $artistService)
     {
         $this->artistFactory = $artistFactory;
         $this->albumFactory = $albumFactory;
         $this->journalistReviewFactory = $journalistReviewFactory;
+        $this->artistService = $artistService;
     }
 
 
@@ -60,6 +65,10 @@ class ArtistController
 
         if (!isset($data['artistName']) || !isset($data['artistBio']) || !isset($data['artistGenre'])) {
             return $response->withStatus(400);
+        }
+
+        if ($this->artistService->doesArtistExist($data['artistName'])) {
+            return $response->withStatus(409);
         }
 
         $id = $this->artistFactory->createArtist($data['artistName'], $data['artistBio'], $data['artistGenre']);
