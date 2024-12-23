@@ -84,6 +84,11 @@ class AlbumController
             $userID = $_SESSION['user_id'];
         }
 
+        $isJournalist = false;
+        if (isset($_SESSION['role']) && $_SESSION['role'] === 'journalist') {
+            $isJournalist = true;
+        }
+
         ob_start();
         include PRIVATE_PATH . '/src/app/Views/album.php';
         $output = ob_get_clean();
