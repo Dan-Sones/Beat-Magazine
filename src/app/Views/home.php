@@ -14,17 +14,15 @@
 
                     <div class="col-md-6 mb-4">
                         <div class="card h-100 shadow">
-                            <img src="<?= $album->getAlbumArt() ?>" class="card-img-top"
+                            <img src="<?= htmlspecialchars($album->getAlbumArt()) ?>" class="card-img-top"
                                  alt="Album art for <?= htmlspecialchars($album->getAlbumName()) ?>">
                             <div class="card-body p-4">
-                                <h5 class="card-title"><?= $album->getAlbumName() ?> -
+                                <h5 class="card-title"><?= htmlspecialchars($album->getAlbumName()) ?> -
                                     <em onclick="UrlForArtist('<?= addslashes($album->getArtistName()) ?>')"
-                                        class="artist-link"><?= $album->getArtistName() ?></em></h5>
+                                        class="artist-link"><?= htmlspecialchars($album->getArtistName()) ?></em></h5>
                                 <div class="card-text">
 
-                                    <p class="big-card mb-1"><?= $rev->getAbstract() ?>
-
-                                    </p>
+                                    <p class="big-card mb-1"><?= htmlspecialchars($rev->getAbstract()) ?></p>
                                     <a class="link-opacity-100 read-review-link" type="link"
                                        onclick="UrlForAlbum('<?= addslashes($album->getArtistName()) ?>', '<?= addslashes($album->getAlbumName()) ?>')">Read
                                         More</a>
@@ -38,16 +36,15 @@
                             <?php else: ?>
                                 <div class="col-lg-6 mb-4">
                                     <div class="card h-100 shadow">
-                                        <img src="<?= $album->getAlbumArt() ?>" class="card-img-top"
+                                        <img src="<?= htmlspecialchars($album->getAlbumArt()) ?>" class="card-img-top"
                                              alt="Album art for <?= htmlspecialchars($album->getAlbumName()) ?>">
                                         <div class="card-body">
-                                            <h5 class="card-title"><?= $album->getAlbumName() ?> -
+                                            <h5 class="card-title"><?= htmlspecialchars($album->getAlbumName()) ?> -
                                                 <em class="artist-link"
-                                                    onclick="UrlForArtist('<?= addslashes($album->getArtistName()) ?>')"><?= $album->getArtistName() ?></em>
+                                                    onclick="UrlForArtist('<?= addslashes($album->getArtistName()) ?>')"><?= htmlspecialchars($album->getArtistName()) ?></em>
                                             </h5>
                                             <div class="card-text">
-                                                <p class="small-card mb-1">100%
-                                                    <?= $rev->getAbstract() ?></p>
+                                                <p class="small-card mb-1"><?= htmlspecialchars($rev->getAbstract()) ?></p>
                                                 <a class="link-opacity-100 read-review-link" type="link"
                                                    onclick="UrlForAlbum('<?= addslashes($album->getArtistName()) ?>', '<?= addslashes($album->getAlbumName()) ?>')">Read
                                                     More</a>

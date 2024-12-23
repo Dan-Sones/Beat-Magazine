@@ -4,17 +4,18 @@
             <!-- Artist Header Section -->
             <?php if (isset($artist) && $artist): ?>
                 <div class="artist-header text-center bg-light py-4 mb-4 rounded shadow">
-                    <h1><?= $artist->getName() ?></h1>
+                    <h1><?= htmlspecialchars($artist->getName()) ?></h1>
                     <div class="artist-details">
-                        <span class="d-block"><?= $artist->getGenre() ?></span>
-                        <span class="d-block">Average Journalist Rating: <?= $artist->getAverageJournalistRating() ?></span>
+                        <span class="d-block"><?= htmlspecialchars($artist->getGenre()) ?></span>
+                        <span class="d-block">Average Journalist Rating: <?= htmlspecialchars($artist->getAverageJournalistRating()) ?></span>
                     </div>
-                    <p class="artist-bio mt-3"><?= $artist->getBio() ?></p>
+                    <p class="artist-bio mt-3"><?= htmlspecialchars($artist->getBio()) ?></p>
                 </div>
 
                 <!-- Albums Section -->
                 <div class="albums-container mt-4 mb-4">
-                    <h2 class="section-title text-center mb-4">Albums by <?= $artist->getName() ?></h2>
+                    <h2 class="section-title text-center mb-4">Albums
+                        by <?= htmlspecialchars($artist->getName()) ?></h2>
                     <div class="row justify-content-center">
                         <?php if (isset($albums) && is_array($albums)): ?>
                             <?php foreach ($albums as $album): ?>
@@ -23,20 +24,21 @@
                                          onclick="navigateToAlbum('<?= addslashes($album->getArtistName()) ?>', '<?= addslashes($album->getAlbumName()) ?>')">
                                         <img src="<?= htmlspecialchars($album->getAlbumArt()) ?>"
                                              class="card-img-top"
-                                             alt="<?= $album->getAlbumName() ?>"/>
+                                             alt="<?= htmlspecialchars($album->getAlbumName()) ?>"/>
                                         <div class="card-body d-flex flex-column justify-content-center text-center">
-                                            <h4 class="card-title"><?= $album->getAlbumName() ?></h4>
+                                            <h4 class="card-title"><?= htmlspecialchars($album->getAlbumName()) ?></h4>
                                             <p class="card-text">
-                                                <?= $album->getArtistName() ?> | <em><?= $album->getLabel() ?></em>
+                                                <?= htmlspecialchars($album->getArtistName()) ?> |
+                                                <em><?= htmlspecialchars($album->getLabel()) ?></em>
                                             </p>
                                             <div class="align-items-center d-flex text-center flex-grow-1">
                                                 <?php if (isset($journalistReviews[(string)$album->getAlbumID()])): ?>
                                                     <p class="card-text small text-center m-auto">
-                                                        <?= $journalistReviews[(string)$album->getAlbumID()]->getAbstract() ?>
+                                                        <?= htmlspecialchars($journalistReviews[(string)$album->getAlbumID()]->getAbstract()) ?>
                                                         <br>
                                                         -
                                                         <em class="journalist-name"
-                                                            onclick="navigateToJournalist(event, '<?= $journalistReviews[(string)$album->getAlbumID()]->getJournalist()->getUsername() ?>')"><?= $journalistReviews[(string)$album->getAlbumID()]->getJournalist()->getFullName() ?></em>
+                                                            onclick="navigateToJournalist(event, '<?= addslashes($journalistReviews[(string)$album->getAlbumID()]->getJournalist()->getUsername()) ?>')"><?= htmlspecialchars($journalistReviews[(string)$album->getAlbumID()]->getJournalist()->getFullName()) ?></em>
                                                     </p>
                                                 <?php else: ?>
                                                     <p class="card-text small text-muted m-auto">No review available</p>
@@ -70,7 +72,5 @@
             const encodedJournalist = encodeURIComponent(journalistUsername).replace(/%20/g, '+');
             window.location.href = `/user/${encodedJournalist}`;
         }
-
-
     </script>
 <?php include 'includes/footer.php'; ?>
