@@ -101,4 +101,19 @@ class AlbumService
         return $statement->execute();
     }
 
+    public function doesAlbumExist(string $albumName, string $artistID): bool
+    {
+        $query = '
+            SELECT COUNT(*) FROM albums
+            WHERE name = :name AND artist_id = :artist_id
+        ';
+
+        $statement = $this->db->prepare($query);
+        $statement->bindValue(':name', $albumName, PDO::PARAM_STR);
+        $statement->bindValue(':artist_id', $artistID, PDO::PARAM_INT);
+        $statement->execute();
+
+        return $statement->fetchColumn() > 0;
+    }
+
 }

@@ -72,6 +72,10 @@ class CreateAlbumController
             return $response->withStatus(400);
         }
 
+        if ($this->albumService->doesAlbumExist($data['albumName'], $data['artistID'])) {
+            return $response->withStatus(409);
+        }
+
         $success = $this->albumService->createAlbum($data['albumName'], $data['artistID'], $data['genre'], $data['label'], $data['releaseDate'], json_decode($data['songs'], true), $albumArt);
 
         if (!$success) {
