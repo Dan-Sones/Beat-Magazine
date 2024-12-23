@@ -304,6 +304,8 @@
                 const encodedArtist = encodeURIComponent(artist).replace(/%20/g, '+');
                 const encodedTitle = encodeURIComponent(albumTitle).replace(/%20/g, '+');
                 window.location.href = `/artist/${encodedArtist}/${encodedTitle}`;
+            } else if (response.status === 409) {
+                alert('An album with that name already exists for this artist');
             } else {
                 alert('Failed to create album');
             }
