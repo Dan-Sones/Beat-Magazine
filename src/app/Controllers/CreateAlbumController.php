@@ -59,15 +59,13 @@ class CreateAlbumController
         }
 
         if ($albumArt->getError() === UPLOAD_ERR_OK) {
-            // Check if the file is an image
-            $fileType = exif_imagetype($albumArt->getStream()->getMetadata('uri'));
-            if ($fileType === false) {
-                error_log('File is not an image');
+            $allowedMimeTypes = ['image/gif', 'image/jpeg', 'image/png'];
+            $fileMimeType = $albumArt->getClientMediaType();
+            if (!in_array($fileMimeType, $allowedMimeTypes)) {
                 return $response->withStatus(400);
             }
-
         }
-
+        
         if (!isset($data['albumName']) || !isset($data['artistID']) || !isset($data['releaseDate']) || !isset($data['genre']) || !isset($data['label']) || !isset($data['songs'])) {
             return $response->withStatus(400);
         }

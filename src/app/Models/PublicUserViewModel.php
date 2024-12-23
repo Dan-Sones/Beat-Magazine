@@ -49,7 +49,7 @@ class PublicUserViewModel
     public function getProfilePictureUri(): string
     {
         if ($this->profilePictureUri === null || $this->profilePictureUri === '') {
-            return 'https://via.placeholder.com/150';
+            return 'https://img.freepik.com/premium-vector/man-avatar-profile-picture-vector-illustration_268834-541.jpg';
         }
 
         return '/images/user-profile-pictures/' . $this->profilePictureUri;

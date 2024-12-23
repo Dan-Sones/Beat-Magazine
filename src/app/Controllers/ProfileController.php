@@ -100,9 +100,9 @@ class ProfileController
         }
 
         if ($profilePicture->getError() === UPLOAD_ERR_OK) {
-            // Check if the file is an image
-            $fileType = exif_imagetype($profilePicture->getStream()->getMetadata('uri'));
-            if ($fileType === false) {
+            $allowedMimeTypes = ['image/gif', 'image/jpeg', 'image/png'];
+            $fileMimeType = $profilePicture->getClientMediaType();
+            if (!in_array($fileMimeType, $allowedMimeTypes)) {
                 return $response->withStatus(400);
             }
 
