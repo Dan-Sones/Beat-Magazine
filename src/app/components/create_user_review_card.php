@@ -36,59 +36,10 @@
     </div>
 
     <script>
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const activeSession = <?= isset($_SESSION['authenticated']) && $_SESSION['authenticated'] === true ? 'true' : 'false' ?>;
-
-            const submitReviewButton = document.getElementById('submitReview');
-            const submitReviewWrapper = document.getElementById('submitReviewWrapper');
-
-            if (!activeSession) {
-                submitReviewButton.disabled = true;
-                submitReviewWrapper.title = 'You must be logged in to submit a review';
-
-            } else if (activeSession) {
-                const leftReview = <?= isset($hasUserLeftReview) && $hasUserLeftReview ? 'true' : 'false' ?>;
-                if (leftReview) {
-                    submitReviewButton.disabled = true;
-                    submitReviewWrapper.title = 'You have already left a review for this album';
-                }
-
-            }
-
-
-        });
-
-
-        const handleReviewSubmission = async (event) => {
-            event.preventDefault();
-            const rating = document.getElementById('reviewRating').value;
-            const review = document.getElementById('reviewText').value;
-
-            if (rating === 'Select a rating') {
-                alert('Please select a valid rating.');
-                return;
-            }
-
-            const albumId = <?= $album->getAlbumID() ?>;
-
-            return await fetch(`/api/albums/${albumId}/reviews`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    rating: rating,
-                    review: review
-                })
-            }).then(response => {
-                if (response.status === 201) {
-                    alert('Review submitted successfully');
-                    location.reload();
-                } else {
-                    alert('An error occurred while submitting your review');
-                }
-            });
-        };
+        const leftReview = <?= isset($hasUserLeftReview) && $hasUserLeftReview ? 'true' : 'false' ?>;
+        const activeSession = <?= isset($_SESSION['authenticated']) && $_SESSION['authenticated'] === true ? 'true' : 'false' ?>;
+        const albumId = <?= $album->getAlbumID() ?>;
     </script>
+
+    <script src="/js/create-user-review-card.js"></script>
 <?php endif; ?>
