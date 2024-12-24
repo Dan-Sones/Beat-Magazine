@@ -35,6 +35,14 @@ return function (App $app) {
         $group->post('/password-reset', [PasswordResetController::class, 'resetPassword']);
         $group->post('/upload-profile-picture', [ProfileController::class, 'uploadProfilePicture']);
 
+        $group->group('/profile', function (RouteCollectorProxy $profileGroup) {
+            $profileGroup->group('/{username}', function (RouteCollectorProxy $usernameGroup) {
+                $usernameGroup->group('/journalist', function (RouteCollectorProxy $journalistGroup) {
+                    $journalistGroup->put('/bio', [ProfileController::class, 'updateJournalistBio']);
+                });
+            });
+        });
+
         $group->group('/artists', function (RouteCollectorProxy $artistGroup) {
             $artistGroup->get('', [ArtistController::class, 'search']);
             $artistGroup->post('', [ArtistController::class, 'create']);

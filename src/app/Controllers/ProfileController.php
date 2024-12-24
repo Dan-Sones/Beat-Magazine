@@ -8,6 +8,7 @@ use S246109\BeatMagazine\Factories\AlbumFactory;
 use S246109\BeatMagazine\Factories\JournalistReviewFactory;
 use S246109\BeatMagazine\Factories\UserFactory;
 use S246109\BeatMagazine\Factories\UserReviewFactory;
+use S246109\BeatMagazine\Services\JournalistService;
 use S246109\BeatMagazine\Services\UserService;
 
 class ProfileController
@@ -22,21 +23,26 @@ class ProfileController
 
     private JournalistReviewFactory $journalistReviewFactory;
 
+    private JournalistService $journalistService;
+
     /**
      * @param UserFactory $userFactory
      * @param UserReviewFactory $userReviewFactory
      * @param AlbumFactory $albumFactory
      * @param UserService $userService
      * @param JournalistReviewFactory $journalistReviewFactory
+     * @param JournalistService $journalistService
      */
-    public function __construct(UserFactory $userFactory, UserReviewFactory $userReviewFactory, AlbumFactory $albumFactory, UserService $userService, JournalistReviewFactory $journalistReviewFactory)
+    public function __construct(UserFactory $userFactory, UserReviewFactory $userReviewFactory, AlbumFactory $albumFactory, UserService $userService, JournalistReviewFactory $journalistReviewFactory, JournalistService $journalistService)
     {
         $this->userFactory = $userFactory;
         $this->userReviewFactory = $userReviewFactory;
         $this->albumFactory = $albumFactory;
         $this->userService = $userService;
         $this->journalistReviewFactory = $journalistReviewFactory;
+        $this->journalistService = $journalistService;
     }
+
 
     public function show(Request $request, Response $response, array $args): Response
     {
@@ -46,35 +52,40 @@ class ProfileController
         $idForUser = $this->userService->getUserIdFromUsername($username);
 
         $user = $this->userFactory->getPublicUserByUsername($username);
-        if ($user === null) {
-            return $response->withStatus(404);
-        }
 
-        $isJournalist = $user->getRole() === 'journalist';
-
-        $journalistReviews = [];
-
-        if ($isJournalist) {
-            $journalistReviews = $this->journalistReviewFactory->getAllJournalistReviewsForJournalist($idForUser);
-        }
-
-        $userReviews = $this->userReviewFactory->getAllUsersReviews($user);
-        $albumIds = array_map(fn($review) => $review->getAlbumId(), $userReviews);
-
-        if (!empty($journalistReviews)) {
-            $journalistAlbumIds = array_map(fn($review) => $review->getAlbumId(), $journalistReviews);
-            $albumIds = array_merge($albumIds, $journalistAlbumIds);
-        }
-
-        $albumDetailsMap = [];
+        if ($user != null) {
 
 
-        foreach ($albumIds as $albumId) {
-            $album = $this->albumFactory->getAlbumById($albumId);
-            if ($album) {
-                $albumDetailsMap[$albumId] = $album;
+            $isJournalist = $user->getRole() === 'journalist';
+
+            $journalistReviews = [];
+
+            $journalistBio = null;
+
+            if ($isJournalist) {
+                $journalistReviews = $this->journalistReviewFactory->getAllJournalistReviewsForJournalist($idForUser);
+                $journalistBio = $this->journalistService->getJournalistBio($idForUser);
+            }
+
+            $userReviews = $this->userReviewFactory->getAllUsersReviews($user);
+            $albumIds = array_map(fn($review) => $review->getAlbumId(), $userReviews);
+
+            if (!empty($journalistReviews)) {
+                $journalistAlbumIds = array_map(fn($review) => $review->getAlbumId(), $journalistReviews);
+                $albumIds = array_merge($albumIds, $journalistAlbumIds);
+            }
+
+            $albumDetailsMap = [];
+
+
+            foreach ($albumIds as $albumId) {
+                $album = $this->albumFactory->getAlbumById($albumId);
+                if ($album) {
+                    $albumDetailsMap[$albumId] = $album;
+                }
             }
         }
+
 
         ob_start();
         include PRIVATE_PATH . '/src/app/Views/profile.php';
@@ -107,6 +118,40 @@ class ProfileController
             }
 
             $this->userService->uploadProfilePicture($profilePicture);
+        }
+
+        return $response->withStatus(200);
+    }
+
+    public function updateJournalistBio(Request $request, Response $response, array $args): Response
+    {
+
+        if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
+            return $response->withStatus(401);
+        }
+
+        if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'journalist') {
+            return $response->withStatus(403);
+        }
+
+        $userId = $_SESSION['user_id'] ?? null;
+        if ($userId === null) {
+            return $response->withStatus(401);
+        }
+
+        $journalistId = $this->journalistService->getJournalistIDByUserID($userId);
+
+        $data = json_decode($request->getBody()->getContents(), true);
+        $bio = $data['bio'] ?? null;
+
+        if ($bio === null) {
+            return $response->withStatus(400);
+        }
+
+        $success = $this->journalistService->updateBio($journalistId, $bio);
+
+        if (!$success) {
+            return $response->withStatus(500);
         }
 
         return $response->withStatus(200);

@@ -31,6 +31,18 @@ class JournalistService extends UserService
 
     }
 
+    public function getJournalistBio(string $userId): string|null
+    {
+        $query = 'SELECT bio FROM journalists WHERE user_id = :journalist_id';
+        $statement = $this->db->prepare($query);
+        $statement->bindValue(':journalist_id', $userId, PDO::PARAM_STR);
+        $statement->execute();
+
+        if ($bio = $statement->fetchColumn()) {
+            return $bio;
+        }
+        return null;
+    }
 
     public function validateUpgradePassword(string $input): bool
     {
@@ -40,6 +52,15 @@ class JournalistService extends UserService
         }
         return false;
 
+    }
+
+    public function updateBio(string $journalistID, string $bio): bool
+    {
+        $query = 'UPDATE journalists SET bio = :bio WHERE id = :journalist_id';
+        $statement = $this->db->prepare($query);
+        $statement->bindValue(':bio', $bio, PDO::PARAM_STR);
+        $statement->bindValue(':journalist_id', $journalistID, PDO::PARAM_STR);
+        return $statement->execute();
     }
 
 }

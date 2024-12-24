@@ -1,6 +1,10 @@
 <?php include 'includes/loadHeader.php'; ?>
 
-    <main class="album-wrapper">
+<?php if (isset($user) && isset($_SESSION['user_id']) && (string)$_SESSION['user_id'] === (string)$user->getId() && isset($isJournalist) && $isJournalist): ?>
+    <?php include PRIVATE_PATH . '/src/app/components/update_bio_modal.php'; ?>
+<?php endif; ?>
+
+    <main class=" album-wrapper">
         <div class="container-fluid overflow-x-hidden">
             <div class="row justify-content-center">
                 <div class="col-xl-8 col-lg-10 col-md-10 col-sm-12">
@@ -33,36 +37,6 @@
                                 </div>
                             </div>
 
-                            <script>
-                                // Show the file upload dialog when the profile picture is clicked - Because the file input is hidden
-                                document.getElementById('profilePicture').addEventListener('click', function () {
-                                    document.getElementById('profilePictureInput').click();
-                                });
-
-                                document.getElementById('profilePictureInput').addEventListener('change', function () {
-                                    handleUpload();
-                                });
-
-                                const handleUpload = async () => {
-                                    const fileInput = document.getElementById('profilePictureInput');
-                                    const file = fileInput.files[0];
-                                    const formData = new FormData();
-                                    formData.append('profile_picture', file);
-
-                                    const response = await fetch('/api/upload-profile-picture', {
-                                        method: 'POST',
-                                        body: formData
-                                    });
-
-                                    if (response.ok) {
-                                        window.location.reload();
-                                    } else {
-                                        alert('Failed to upload profile picture. Make sure you are using a valid image file.');
-                                    }
-                                };
-                            </script>
-
-
                             <div class="row">
                                 <div class="col-12">
                                     <div class="userInfo pt-2">
@@ -87,6 +61,24 @@
                                 <div class="col-12 text-center">
                                     <p><?= htmlspecialchars($user->getCreatedAt()) ?></p>
                                 </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-6 text-center">
+                                    <?php if (isset($journalistBio)): ?>
+                                        <p>
+                                            <?= htmlspecialchars($journalistBio) ?>
+                                        </p>
+                                        <?php if (isset($_SESSION['user_id']) && (string)$_SESSION['user_id'] === (string)$user->getId()): ?>
+                                            <a class="link-opacity-100" onclick="handleUpdateBio()">Update Bio</a>
+                                        <?php endif; ?>
+
+                                    <?php elseif (isset($isJournalist) && $isJournalist): ?>
+
+                                        <p>We can't find a bio for this user!</p>
+
+                                    <?php endif; ?>
+                                </div>
+
                             </div>
                         </div>
 
@@ -241,7 +233,6 @@
 
             const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 
-
             const container = document.getElementById('reviews-container');
 
             container.addEventListener('click', (event) => {
@@ -267,6 +258,39 @@
                 window.location.href = `/artist/${encodedArtist}`;
             }
 
+
+            const handleUpdateBio = () => {
+                const reviewEditorModal = new bootstrap.Modal(document.getElementById('bioEditorModal'));
+                reviewEditorModal.show();
+            };
+
+
+            // Show the file upload dialog when the profile picture is clicked - Because the file input is hidden
+            document.getElementById('profilePicture').addEventListener('click', function () {
+                document.getElementById('profilePictureInput').click();
+            });
+
+            document.getElementById('profilePictureInput').addEventListener('change', function () {
+                handleUpload();
+            });
+
+            const handleUpload = async () => {
+                const fileInput = document.getElementById('profilePictureInput');
+                const file = fileInput.files[0];
+                const formData = new FormData();
+                formData.append('profile_picture', file);
+
+                const response = await fetch('/api/upload-profile-picture', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    window.location.reload();
+                } else {
+                    alert('Failed to upload profile picture. Make sure you are using a valid image file.');
+                }
+            };
         </script>
     </main>
 
