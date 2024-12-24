@@ -74,7 +74,7 @@
 
                                         <?php endif; ?>
 
-                                    <?php else: ?>
+                                    <?php elseif (isset($isJournalist) && $isJournalist): ?>
 
                                         <p>We can't find a bio for this user!</p>
 
