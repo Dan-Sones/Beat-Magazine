@@ -1,0 +1,66 @@
+const handleEditJournalistReview = () => {
+    document.getElementById('journalistReviewRating').value = reviewRating;
+    document.getElementById('journalistAbstractText').value = reviewAbstract;
+    document.getElementById('journalistReviewText').value = reviewText;
+    document.getElementById('preview').innerHTML = reviewText;
+
+    document.getElementById('journalistReviewForm').onsubmit = editJournalistReview;
+
+
+    const reviewEditorModal = new bootstrap.Modal(document.getElementById('reviewEditor'));
+    reviewEditorModal.show();
+}
+
+const handleDeleteJournalistReview = async () => {
+
+
+    await fetch(`/api/albums/${albumId}/journalist-reviews`, {
+        method: 'DELETE'
+    }).then(response => {
+        if (response.status === 200) {
+            alert('Review successfully deleted.');
+            location.reload();
+        } else {
+            alert('An error occurred whilst deleting your review');
+        }
+    });
+
+
+}
+
+const URLForJournalist = (username) => {
+    const encodedUsername = encodeURIComponent(username).replace(/%20/g, '+');
+    window.location.href = `/user/${encodedUsername}`;
+
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const reviewCard = document.querySelector('.review-card');
+    const readMoreBtn = reviewCard.querySelector('.read-more-btn');
+    const fullReviewContainer = reviewCard.querySelector('.review-full-container');
+
+    const animateHeight = (element, action) => {
+        if (action === 'expand') {
+            element.style.height = element.scrollHeight + 'px';
+
+            element.addEventListener('transitionend', () => {
+                element.style.height = 'auto';
+            }, {once: true});
+        } else if (action === 'collapse') {
+            element.style.height = element.scrollHeight + 'px';
+
+            element.offsetHeight;
+            element.style.height = '0';
+        }
+    };
+
+    readMoreBtn.addEventListener('click', () => {
+        if (fullReviewContainer.style.height === '0px' || fullReviewContainer.style.height === '') {
+            animateHeight(fullReviewContainer, 'expand');
+            readMoreBtn.textContent = 'Read Less';
+        } else {
+            animateHeight(fullReviewContainer, 'collapse');
+            readMoreBtn.textContent = 'Read More';
+        }
+    });
+});
