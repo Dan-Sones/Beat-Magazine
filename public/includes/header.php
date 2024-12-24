@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, maximum-scale=1.0, user-scalable=no">
-    <title>Beat Magazines</title>
+    <title>BeatMagazine.com</title>
     <link rel="stylesheet" href="/css/custom-bootstrap.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
