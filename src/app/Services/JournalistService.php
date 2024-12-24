@@ -7,13 +7,19 @@ use S246109\BeatMagazine\Services\UserService;
 
 class JournalistService extends UserService
 {
-    public function upgradeUser(string $username): void
+    public function upgradeUser(string $userId): void
     {
-        $query = 'UPDATE users SET role = :role WHERE username = :username';
+        $query = 'UPDATE users SET role = :role WHERE id = :user_id';
         $statement = $this->db->prepare($query);
         $statement->bindValue(':role', 'journalist', PDO::PARAM_STR);
-        $statement->bindValue(':username', $username, PDO::PARAM_STR);
+        $statement->bindValue(':user_id', $userId, PDO::PARAM_STR);
         $statement->execute();
+
+        $query = 'INSERT INTO journalists (user_id) VALUES (:user_id)';
+        $statement = $this->db->prepare($query);
+        $statement->bindValue(':user_id', $userId, PDO::PARAM_STR);
+        $statement->execute();
+        
     }
 
 

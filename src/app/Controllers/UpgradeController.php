@@ -23,7 +23,7 @@ class UpgradeController
 
     public function index(Request $request, Response $response, array $args): Response
     {
-        
+
         if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] === false) {
             return $response->withHeader('Location', '/login')->withStatus(302);
         }
@@ -56,10 +56,9 @@ class UpgradeController
             return $response->withStatus(403);
         }
 
-        if (!isset($_SESSION['username'])) {
-            return $response->withStatus(500);
+        if (!isset($_SESSION['user_id'])) {
+            return $response->withStatus(400);
         }
-
 
         $validatePassword = $this->journalistService->validateUpgradePassword($request->getParsedBody()['password']);
 
@@ -67,7 +66,7 @@ class UpgradeController
             return $response->withStatus(400);
         }
 
-        $this->journalistService->upgradeUser($_SESSION['username']);
+        $this->journalistService->upgradeUser($_SESSION['user_id']);
 
         $_SESSION['role'] = 'journalist';
 

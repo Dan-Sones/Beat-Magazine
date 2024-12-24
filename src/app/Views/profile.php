@@ -68,13 +68,14 @@
                                         <p>
                                             <?= htmlspecialchars($journalistBio) ?>
                                         </p>
+                                    <?php elseif (isset($isJournalist) && $isJournalist): ?>
+                                        <p>We can't find a bio for this user!</p>
+                                    <?php endif; ?>
+                                    <?php if (isset($isJournalist) && $isJournalist): ?>
                                         <?php if (isset($_SESSION['user_id']) && (string)$_SESSION['user_id'] === (string)$user->getId()): ?>
                                             <a class="link-opacity-100" onclick="handleUpdateBio()">Update Bio</a>
                                         <?php endif; ?>
 
-                                    <?php elseif (isset($isJournalist) && $isJournalist): ?>
-
-                                        <p>We can't find a bio for this user!</p>
 
                                     <?php endif; ?>
                                 </div>
