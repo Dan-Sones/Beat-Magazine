@@ -101,7 +101,7 @@
                                                     <h5 class="card-title"><?= htmlspecialchars($album->getAlbumName()) ?></h5>
                                                     <p class="card-text">
                                                         <em class="artist-name"
-                                                            onclick="UrlForArtist('<?= addslashes($album->getArtistName()) ?>')"> <?= $album->getArtistName() ?></em>
+                                                            onclick="UrlForArtist(event, '<?= addslashes($album->getArtistName()) ?>')"> <?= $album->getArtistName() ?></em>
                                                         |
                                                         <?= htmlspecialchars($album->getLabel()) ?>
                                                     </p>
@@ -176,7 +176,8 @@
                                                             <h4 id="album-title"
                                                                 class="mb-0"><?= htmlspecialchars($album->getAlbumName()) ?></h4>
                                                             <h5 id="album-artist"
-                                                                class="fw-light"><?= htmlspecialchars($album->getArtistName()) ?></h5>
+                                                                class="fw-light artist-name"
+                                                                onclick="UrlForArtist(event, '<?= addslashes($album->getArtistName()) ?>')"><?= htmlspecialchars($album->getArtistName()) ?></h5>
                                                         </div>
                                                         <div class="card-body d-flex flex-column flex-md-row align-items-center">
                                                             <div class="col-12 col-md-4 text-center text-md-start mb-3 mb-md-0">
@@ -254,7 +255,8 @@
                 window.location.href = `/artist/${encodedArtist}/${encodedTitle}`;
             }
 
-            const UrlForArtist = (artist) => {
+            const UrlForArtist = (event, artist) => {
+                event.stopPropagation();
                 const encodedArtist = encodeURIComponent(artist).replace(/%20/g, '+');
                 window.location.href = `/artist/${encodedArtist}`;
             }
