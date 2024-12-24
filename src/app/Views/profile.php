@@ -16,7 +16,8 @@
                                     <?php if (isset($_SESSION['authenticated']) && $_SESSION['authenticated'] && isset($idForUser) && $_SESSION['user_id'] === $idForUser): ?>
                                         <form id="uploadForm"
                                               enctype="multipart/form-data" style="position: relative;">
-                                            <input type="file" name="profile_picture" id="profilePictureInput"
+                                            <input type="file" accept="image/*" name="profile_picture"
+                                                   id="profilePictureInput"
                                                    style="display: none;">
                                             <div id="profilePicture" style="cursor: pointer; position: relative;">
                                                 <img src="<?= htmlspecialchars($user->getProfilePictureUri()) ?>"
