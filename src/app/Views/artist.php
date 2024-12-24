@@ -19,6 +19,9 @@
                     <div class="row justify-content-center">
                         <?php if (isset($albums) && is_array($albums)): ?>
                             <?php foreach ($albums as $album): ?>
+                                <?php if (isset($journalistReviews) && isset($journalistReviews[(string)$album->getAlbumID()])) : ?>
+                                    <?php $currJournalistReview = $journalistReviews[(string)$album->getAlbumID()]; ?>
+                                <?php endif; ?>
                                 <div class="col-md-6 col-lg-4 mb-4">
                                     <div class="card shadow h-100 album-card"
                                          onclick="navigateToAlbum('<?= addslashes($album->getArtistName()) ?>', '<?= addslashes($album->getAlbumName()) ?>')">
@@ -32,13 +35,13 @@
                                                 <em><?= htmlspecialchars($album->getLabel()) ?></em>
                                             </p>
                                             <div class="align-items-center d-flex text-center flex-grow-1">
-                                                <?php if (isset($journalistReviews[(string)$album->getAlbumID()])): ?>
+                                                <?php if (isset($currJournalistReview)): ?>
                                                     <p class="card-text small text-center m-auto">
-                                                        <?= htmlspecialchars($journalistReviews[(string)$album->getAlbumID()]->getAbstract()) ?>
+                                                        <?= htmlspecialchars($currJournalistReview->getAbstract()) ?>
                                                         <br>
                                                         -
                                                         <em class="journalist-name"
-                                                            onclick="navigateToJournalist(event, '<?= addslashes($journalistReviews[(string)$album->getAlbumID()]->getJournalist()->getUsername()) ?>')"><?= htmlspecialchars($journalistReviews[(string)$album->getAlbumID()]->getJournalist()->getFullName()) ?></em>
+                                                            onclick="navigateToJournalist(event, '<?= addslashes($currJournalistReview->getJournalist()->getUsername()) ?>')"><?= htmlspecialchars($currJournalistReview->getJournalist()->getFullName()) ?></em>
                                                     </p>
                                                 <?php else: ?>
                                                     <p class="card-text small text-muted m-auto">No review available</p>
