@@ -8,8 +8,7 @@
                 <div class="col-md-3 d-flex flex-column align-items-center">
                     <img alt="profilePicture for <?= $journalistReview->getJournalist()->getFullName() ?>"
                          src="<?= $journalistReview->getJournalist()->getProfilePictureUri() ?>"
-                         class="img-fluid rounded-circle p-2"
-                         style="width: 130px; height: 130px; object-fit: cover">
+                         class="img-fluid rounded-circle p-2 journalist-profile-picture">
                     <h5 class="mt-2 journalist-name"
                         onclick="URLForJournalist('<?= $journalistReview->getJournalist()->getUsername() ?>')"><?= $journalistReview->getJournalist()->getFullName() ?></h5>
                     <p class="text-muted text-center">
@@ -25,15 +24,15 @@
                 <div class="col-md-6">
                     <p class="review-abstract mb-0">
                         <?= $journalistReview->getAbstract() ?>
-                        <button class="btn btn-link read-more-btn p-0" type="button">Read More
-                        </button>
+                        <a class="link-opacity-100 read-more-btn p-0" type="link">Read More
+                        </a>
                     </p>
                 </div>
             </div>
             <?php if (isset($userID) && (int)$userID === (int)$journalistReview->getJournalist()->getId()): ?>
                 <div class="col-1 d-flex justify-content-center align-items-center order-4 order-md-4">
                     <button class="btn btn-link text-muted mb-0"
-                            data-bs-toggle="dropdown" aria-expanded="false">
+                            data-bs-toggle="dropdown" aria-expanded="false" aria-label="Journalist review options">
                         <i class="bi bi-three-dots"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">

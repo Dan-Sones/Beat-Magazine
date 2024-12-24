@@ -5,7 +5,7 @@
             <div class="col-12 col-lg-4 order-1 order-lg-1 align-content-center">
                 <img src="<?= htmlspecialchars($album->getAlbumArt()) ?>"
                      class="img-fluid shadow-sm"
-                     alt="Responsive Image">
+                     alt="Album art for <?= htmlspecialchars($album->getAlbumName()) ?>">
             </div>
 
             <div class="album-info col-12 col-lg-8 ps-4 order-2 order-lg-2">
@@ -14,7 +14,8 @@
                         <h2><?= htmlspecialchars($album->getAlbumName()) ?>
                             <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'journalist'): ?>
                                 <button class="btn btn-link text-muted mb-0"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        data-bs-toggle="dropdown" aria-expanded="false"
+                                        aria-label="Journalist Album Options">
                                     <i class="bi bi-three-dots"></i>
                                 </button>
                                 <ul class="dropdown-menu">
