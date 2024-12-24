@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="BeatMagazine.com is your go-to source for the latest album reviews.">
+    <meta name="keywords" content="music, albums, reviews, artists">
+    <meta name="author" content="Beat Magazine">
     <title>BeatMagazine.com</title>
     <link rel="stylesheet" href="/css/custom-bootstrap.css">
 
