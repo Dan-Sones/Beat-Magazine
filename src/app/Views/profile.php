@@ -1,6 +1,6 @@
 <?php include 'includes/loadHeader.php'; ?>
 
-<?php if (isset($user) && (string)$_SESSION['user_id'] === (string)$user->getId() && isset($isJournalist) && $isJournalist): ?>
+<?php if (isset($user) && isset($_SESSION['user_id']) && (string)$_SESSION['user_id'] === (string)$user->getId() && isset($isJournalist) && $isJournalist): ?>
     <?php include PRIVATE_PATH . '/src/app/components/update_bio_modal.php'; ?>
 <?php endif; ?>
 
@@ -68,10 +68,8 @@
                                         <p>
                                             <?= htmlspecialchars($journalistBio) ?>
                                         </p>
-                                        <?php if ((string)$_SESSION['user_id'] === (string)$user->getId()): ?>
-
+                                        <?php if (isset($_SESSION['user_id']) && (string)$_SESSION['user_id'] === (string)$user->getId()): ?>
                                             <a class="link-opacity-100" onclick="handleUpdateBio()">Update Bio</a>
-
                                         <?php endif; ?>
 
                                     <?php elseif (isset($isJournalist) && $isJournalist): ?>
