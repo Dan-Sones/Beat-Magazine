@@ -13,7 +13,7 @@
                         onclick="URLForJournalist('<?= $journalistReview->getJournalist()->getUsername() ?>')"><?= $journalistReview->getJournalist()->getFullName() ?></h5>
                     <p class="text-muted text-center">
                         <?php if (empty($journalistReview->getJournalist()->getBio())): ?>
-                            <?= $journalistReview->getJournalist()->getUsername() ?> has not set a bio yet.
+                            <?= $journalistReview->getJournalist()->getFullName() ?> has not set a bio yet.
                         <?php else: ?>
                             <?= $journalistReview->getJournalist()->getBio() ?>
                         <?php endif; ?>

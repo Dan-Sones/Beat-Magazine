@@ -4,7 +4,7 @@ namespace S246109\BeatMagazine\Models;
 
 class Journalist extends PublicUserViewModel
 {
-    private string $bio;
+    private string|null $bio;
 
     private string $firstName;
     private string $lastName;
@@ -17,7 +17,7 @@ class Journalist extends PublicUserViewModel
      * @param int $id
      * @param string $created_at
      */
-    public function __construct(string $firstName, string $lastName, string $bio, string $username, string|null $profilePictureUri, int $id, string $created_at)
+    public function __construct(string $firstName, string $lastName, string|null $bio, string $username, string|null $profilePictureUri, int $id, string $created_at)
     {
         parent::__construct($username, $profilePictureUri, $id, 'journalist', $created_at);
         $this->bio = $bio;
@@ -41,7 +41,7 @@ class Journalist extends PublicUserViewModel
         return $this->firstName . ' ' . $this->lastName;
     }
 
-    public function getBio(): string
+    public function getBio(): string|null
     {
         return $this->bio;
     }
