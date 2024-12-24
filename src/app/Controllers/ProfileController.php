@@ -31,15 +31,18 @@ class ProfileController
      * @param AlbumFactory $albumFactory
      * @param UserService $userService
      * @param JournalistReviewFactory $journalistReviewFactory
+     * @param JournalistService $journalistService
      */
-    public function __construct(UserFactory $userFactory, UserReviewFactory $userReviewFactory, AlbumFactory $albumFactory, UserService $userService, JournalistReviewFactory $journalistReviewFactory)
+    public function __construct(UserFactory $userFactory, UserReviewFactory $userReviewFactory, AlbumFactory $albumFactory, UserService $userService, JournalistReviewFactory $journalistReviewFactory, JournalistService $journalistService)
     {
         $this->userFactory = $userFactory;
         $this->userReviewFactory = $userReviewFactory;
         $this->albumFactory = $albumFactory;
         $this->userService = $userService;
         $this->journalistReviewFactory = $journalistReviewFactory;
+        $this->journalistService = $journalistService;
     }
+
 
     public function show(Request $request, Response $response, array $args): Response
     {
@@ -49,35 +52,40 @@ class ProfileController
         $idForUser = $this->userService->getUserIdFromUsername($username);
 
         $user = $this->userFactory->getPublicUserByUsername($username);
-        if ($user === null) {
-            return $response->withStatus(404);
-        }
 
-        $isJournalist = $user->getRole() === 'journalist';
-
-        $journalistReviews = [];
-
-        if ($isJournalist) {
-            $journalistReviews = $this->journalistReviewFactory->getAllJournalistReviewsForJournalist($idForUser);
-        }
-
-        $userReviews = $this->userReviewFactory->getAllUsersReviews($user);
-        $albumIds = array_map(fn($review) => $review->getAlbumId(), $userReviews);
-
-        if (!empty($journalistReviews)) {
-            $journalistAlbumIds = array_map(fn($review) => $review->getAlbumId(), $journalistReviews);
-            $albumIds = array_merge($albumIds, $journalistAlbumIds);
-        }
-
-        $albumDetailsMap = [];
+        if ($user != null) {
 
 
-        foreach ($albumIds as $albumId) {
-            $album = $this->albumFactory->getAlbumById($albumId);
-            if ($album) {
-                $albumDetailsMap[$albumId] = $album;
+            $isJournalist = $user->getRole() === 'journalist';
+
+            $journalistReviews = [];
+
+            $journalistBio = null;
+
+            if ($isJournalist) {
+                $journalistReviews = $this->journalistReviewFactory->getAllJournalistReviewsForJournalist($idForUser);
+                $journalistBio = $this->journalistService->getJournalistBio($idForUser);
+            }
+
+            $userReviews = $this->userReviewFactory->getAllUsersReviews($user);
+            $albumIds = array_map(fn($review) => $review->getAlbumId(), $userReviews);
+
+            if (!empty($journalistReviews)) {
+                $journalistAlbumIds = array_map(fn($review) => $review->getAlbumId(), $journalistReviews);
+                $albumIds = array_merge($albumIds, $journalistAlbumIds);
+            }
+
+            $albumDetailsMap = [];
+
+
+            foreach ($albumIds as $albumId) {
+                $album = $this->albumFactory->getAlbumById($albumId);
+                if ($album) {
+                    $albumDetailsMap[$albumId] = $album;
+                }
             }
         }
+
 
         ob_start();
         include PRIVATE_PATH . '/src/app/Views/profile.php';
