@@ -42,16 +42,5 @@
         </div>
 
     </div>
-    <script>
-        const UrlForArtist = (artist) => {
-            const encodedArtist = encodeURIComponent(artist).replace(/%20/g, '+');
-            window.location.href = `/artist/${encodedArtist}`;
-        }
-
-        const handleDeleteAlbumIntention = () => {
-            const modal = new bootstrap.Modal(document.getElementById('deleteAlbumModal'));
-            modal.show();
-        }
-
-    </script>
+    <script src="/js/album-info.js"></script>
 <?php endif; ?>
