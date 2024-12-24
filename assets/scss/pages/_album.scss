@@ -61,13 +61,12 @@
 }
 
 .read-more-btn {
-  color: #007bff;
-  text-decoration: underline;
+  text-decoration: none;
   cursor: pointer;
 }
 
 .read-more-btn:hover {
-  text-decoration: none;
+  text-decoration: underline;
 }
 
 .artist-name {
@@ -93,4 +92,10 @@
 
 .journalist-name:hover {
   text-decoration: underline;
+}
+
+.journalist-profile-picture {
+  width: 130px;
+  height: 130px;
+  object-fit: cover
 }
