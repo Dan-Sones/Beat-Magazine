@@ -106,7 +106,11 @@
     </main>
 
 <?php else: ?>
-    <p>404: Album not Found</p>
+    <div class="h-100 container d-flex flex-grow-1">
+        <div class="col-12 d-flex align-items-center justify-content-center">
+            <h1>404: Album not Found</h1>
+        </div>
+    </div>
 <?php endif; ?>
 
     <script>
