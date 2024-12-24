@@ -51,31 +51,10 @@
         </div>
 
         <script>
-
-
-            const getProfileHref = () => {
-                // if the user is not authenticated, redirect to login page
-                if (!<?= json_encode($_SESSION['authenticated'] ?? false) ?>) {
-                    return '/login';
-                }
-                // if the user is authenticated, redirect to their profile page
-                return '/user/' + <?= json_encode($_SESSION['username'] ?? '') ?>;
-            }
-
-            const logout = async () => {
-                return await fetch('/api/logout', {
-                    method: 'POST',
-                })
-                    .then(response => {
-                        if (response.ok) {
-                            window.location.reload();
-                        } else {
-                            alert('Failed to logout');
-                        }
-                    });
-
-            }
+            const authenticated = <?= json_encode($_SESSION['authenticated'] ?? false) ?>;
+            const username = <?= json_encode($_SESSION['username'] ?? '') ?>;
         </script>
+        <script src="/js/header.js"></script>
 
     </nav>
 
