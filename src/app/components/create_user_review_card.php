@@ -41,5 +41,5 @@
         const albumId = <?= $album->getAlbumID() ?>;
     </script>
 
-    <script src="/js/create-user-review-card.js"></script>
+    <script src="/js/createUserReviewCard.js"></script>
 <?php endif; ?>

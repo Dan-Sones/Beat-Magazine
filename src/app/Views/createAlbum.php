@@ -120,5 +120,5 @@
     </form>
 </div>
 
-<script src="/js/create-album.js">
+<script src="/js/createAlbum.js">
 </script>

@@ -22,5 +22,5 @@
         </div>
     </div>
 
-    <script src="/js/delete-album-modal.js"></script>
+    <script src="/js/deleteAlbumModal.js"></script>
 <?php endif; ?>

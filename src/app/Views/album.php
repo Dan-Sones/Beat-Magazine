@@ -82,6 +82,6 @@
 
 
     <script src="/js/album.js"></script>
-    <script src="/js/review_card.js"></script>
+    <script src="/js/reviewCard.js"></script>
 
 <?php include 'includes/footer.php'; ?>
