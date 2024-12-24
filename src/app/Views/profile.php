@@ -65,10 +65,11 @@
                             <div class="row justify-content-center">
                                 <div class="col-6 text-center">
                                     <?php if (isset($journalistBio)): ?>
+                                        <p>
+                                            <?= htmlspecialchars($journalistBio) ?>
+                                        </p>
                                         <?php if ((string)$_SESSION['user_id'] === (string)$user->getId()): ?>
-                                            <p>
-                                                <?= htmlspecialchars($journalistBio) ?>
-                                            </p>
+
                                             <a class="link-opacity-100" onclick="handleUpdateBio()">Update Bio</a>
 
                                         <?php endif; ?>
