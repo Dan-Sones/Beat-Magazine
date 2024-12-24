@@ -31,7 +31,6 @@ class JournalistService extends UserService
 
     }
 
-
     public function validateUpgradePassword(string $input): bool
     {
         $password = $_ENV['UPGRADE_PASSWORD'];
@@ -40,6 +39,15 @@ class JournalistService extends UserService
         }
         return false;
 
+    }
+
+    public function updateBio(string $journalistID, string $bio): bool
+    {
+        $query = 'UPDATE journalists SET bio = :bio WHERE id = :journalist_id';
+        $statement = $this->db->prepare($query);
+        $statement->bindValue(':bio', $bio, PDO::PARAM_STR);
+        $statement->bindValue(':journalist_id', $journalistID, PDO::PARAM_STR);
+        return $statement->execute();
     }
 
 }
