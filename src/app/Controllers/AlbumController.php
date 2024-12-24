@@ -72,12 +72,11 @@ class AlbumController
         $artistName = urldecode($args['artistName']);
 
         $album = $this->albumFactory->getAlbumByName($albumName, $artistName);
-        $userReviews = $this->userReviewFactory->getAllUserReviewsForAlbum($album->getAlbumID());
-        $journalistReview = $this->journalistReviewFactory->getJournalistReviewForAlbum($album->getAlbumID());
-
-
-        $hasUserLeftReview = $this->userReviewService->hasUserLeftReviewForAlbum($album->getAlbumID());
-
+        if ($album !== null) {
+            $userReviews = $this->userReviewFactory->getAllUserReviewsForAlbum($album->getAlbumID());
+            $journalistReview = $this->journalistReviewFactory->getJournalistReviewForAlbum($album->getAlbumID());
+            $hasUserLeftReview = $this->userReviewService->hasUserLeftReviewForAlbum($album->getAlbumID());
+        }
         $userID = null;
 
         if (isset($_SESSION['user_id'])) {

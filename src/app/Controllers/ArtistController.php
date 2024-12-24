@@ -90,18 +90,18 @@ class ArtistController
 
 
         $artist = $this->artistFactory->getArtistByName($artistName);
-        $albums = $this->albumFactory->getAlbumsByArtistName($artistName);
 
-        $journalistReviews = [];
+        if ($artist) {
+            $albums = $this->albumFactory->getAlbumsByArtistName($artistName);
+            $journalistReviews = [];
 
-        foreach ($albums as $album) {
-            $reviewForAlbum = $this->journalistReviewFactory->getJournalistReviewForAlbum($album->getAlbumID());
-            if ($reviewForAlbum) {
-                $journalistReviews[$album->getAlbumID()] = $reviewForAlbum;
+            foreach ($albums as $album) {
+                $reviewForAlbum = $this->journalistReviewFactory->getJournalistReviewForAlbum($album->getAlbumID());
+                if ($reviewForAlbum) {
+                    $journalistReviews[$album->getAlbumID()] = $reviewForAlbum;
+                }
             }
         }
-
-//        error_log(print_r($journalistReviews, true));
 
 
         ob_start();
