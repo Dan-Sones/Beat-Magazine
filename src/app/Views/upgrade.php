@@ -19,36 +19,11 @@
                             </button>
                         </div>
                     </form>
-
-                    <script>
-                        const submitUpgradeForm = async (event) => {
-                            event.preventDefault();
-
-                            await fetch('/api/upgrade', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                },
-                                body: JSON.stringify({
-                                    password: document.getElementById('password').value,
-                                }),
-                            })
-                                .then(response => {
-                                    if (response.ok) {
-                                        alert('Account upgraded successfully');
-                                        window.location.href = '/albums';
-                                    } else {
-                                        alert('Failed to upgrade account');
-                                    }
-
-                                })
-                        }
-                    </script>
                 </div>
             </div>
         </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="/js/upgrade.js"></script>
     </main>
 
 <?php include 'includes/footer.php'; ?>
