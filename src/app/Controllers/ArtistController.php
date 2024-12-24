@@ -92,10 +92,7 @@ class ArtistController
         $artist = $this->artistFactory->getArtistByName($artistName);
 
         if ($artist) {
-
-
             $albums = $this->albumFactory->getAlbumsByArtistName($artistName);
-
             $journalistReviews = [];
 
             foreach ($albums as $album) {
