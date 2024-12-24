@@ -13,7 +13,11 @@
                     <h5 class="mt-2 journalist-name"
                         onclick="URLForJournalist('<?= $journalistReview->getJournalist()->getUsername() ?>')"><?= $journalistReview->getJournalist()->getFullName() ?></h5>
                     <p class="text-muted text-center">
-                        <?= $journalistReview->getJournalist()->getBio() ?>
+                        <?php if (empty($journalistReview->getJournalist()->getBio())): ?>
+                            <?= $journalistReview->getJournalist()->getUsername() ?> has not set a bio yet.
+                        <?php else: ?>
+                            <?= $journalistReview->getJournalist()->getBio() ?>
+                        <?php endif; ?>
                     </p>
                 </div>
 
