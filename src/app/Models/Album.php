@@ -10,8 +10,6 @@ class Album implements \JsonSerializable
     private string $artistName;
     private string $genre;
     private string $label;
-    private string $averageUserRating;
-    private string $journalistRating;
     private string $releaseDate;
     private array $songs;
 

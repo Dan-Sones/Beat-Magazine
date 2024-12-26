@@ -92,7 +92,7 @@ class AlbumController
             $userReviews = $this->userReviewFactory->getAllUserReviewsForAlbum($album->getAlbumID());
             $journalistReview = $this->journalistReviewFactory->getJournalistReviewForAlbum($album->getAlbumID());
             $hasUserLeftReview = $this->userReviewService->hasUserLeftReviewForAlbum($album->getAlbumID());
-
+            $averageUserRating = $this->userReviewService->getAverageUserRatingForAlbum($album->getAlbumID());
             if ($userID) {
                 $likedReviewsForUser = $this->likeService->getLikedReviewsPerAlbum($album->getAlbumID(), $userID);
             }

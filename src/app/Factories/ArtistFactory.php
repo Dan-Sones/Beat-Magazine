@@ -47,10 +47,12 @@ class ArtistFactory
         artists.name AS artist_name,
         artists.genre AS artist_genre,
         artists.bio AS artist_bio,
-        CAST(AVG(journalist_reviews.rating) AS UNSIGNED) AS average_journalist_rating
+        CAST(AVG(journalist_reviews.rating) AS UNSIGNED) AS average_journalist_rating,
+        CAST(AVG(user_reviews.rating) AS UNSIGNED) AS average_user_rating
     FROM artists
     LEFT JOIN albums ON artists.id = albums.artist_id
     LEFT JOIN journalist_reviews ON albums.id = journalist_reviews.album_id
+    LEFT JOIN user_reviews ON albums.id = user_reviews.album_id
     WHERE artists.name = :name
     GROUP BY artists.id
     ';
@@ -70,7 +72,8 @@ class ArtistFactory
             $artistData['artist_name'],
             $artistData['artist_genre'],
             $artistData['artist_bio'],
-            $artistData['average_journalist_rating'] ?? ''
+            $artistData['average_journalist_rating'] ?? '',
+            $artistData['average_user_rating'] ?? ''
         );
 
     }
