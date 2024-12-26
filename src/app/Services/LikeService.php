@@ -62,21 +62,28 @@ class LikeService
         return $result['count'] > 0;
     }
 
-    public function getLikesForReview(string $reviewId): int
+    public function getLikedReviewsPerAlbum(string $albumId, string $userId): array
     {
         $query = '
-            SELECT COUNT(*) as count
+            SELECT review_id
             FROM likes
-            WHERE review_id = :review_id
+            JOIN user_reviews ON likes.review_id = user_reviews.id
+            WHERE user_reviews.album_id = :album_id
+            AND likes.user_id = :user_id
         ';
 
         $statement = $this->db->prepare($query);
-        $statement->bindValue(':review_id', $reviewId, PDO::PARAM_STR);
+        $statement->bindValue(':album_id', $albumId, PDO::PARAM_STR);
+        $statement->bindValue(':user_id', $userId, PDO::PARAM_STR);
         $statement->execute();
 
-        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        $likedReviews = [];
 
-        return $result['count'];
+        while ($review = $statement->fetch(PDO::FETCH_ASSOC)) {
+            $likedReviews[] = $review['review_id'];
+        }
+
+        return $likedReviews;
     }
 
 }

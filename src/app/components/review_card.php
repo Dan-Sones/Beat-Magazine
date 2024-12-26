@@ -116,10 +116,39 @@
                             </ul>
                         </div>
                     <?php endif; ?>
+
+                    <div class="col-12 col-md-1 d-flex justify-content-center align-items-center order-5 order-md-5">
+
+                        <p><?= htmlspecialchars($userReview->getLikeCount()) ?></p>
+
+                        <?php if (isset($userID) && isset($authenticated) && $authenticated): ?>
+
+                            <?php if (isset($likedReviewsForUser)): ?>
+                                <?php if (in_array($userReview->getId(), $likedReviewsForUser)): ?>
+                                    <i onclick="handleUnlikeReview('<?= htmlspecialchars($userReview->getId()) ?>')"
+                                       class="bi bi-hand-thumbs-up-fill"></i>
+                                <?php else: ?>
+                                    <i onclick="handleLikeReview('<?= htmlspecialchars($userReview->getId()) ?>')"
+                                       class="bi bi-hand-thumbs-up"></i>
+                                <?php endif; ?>
+
+                            <?php endif; ?>
+
+
+                        <?php else: ?>
+                            <i class="bi bi-hand-thumbs-up" data-bs-toggle="tooltip"
+                               data-bs-title="You must be logged in to like reviews"></i>
+                        <?php endif; ?>
+
+
+                    </div>
                 </div>
             </div>
         </div>
 
     </div>
+
+    <!--    <i class="bi bi-hand-thumbs-up-fill"></i>-->
+    <!--    <i class="bi bi-hand-thumbs-up"></i>-->
 
 <?php endif; ?>

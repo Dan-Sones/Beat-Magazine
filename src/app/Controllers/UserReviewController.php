@@ -119,7 +119,7 @@ class UserReviewController
         return $response->withStatus(200);
     }
 
-    public function likeReview(Request $request, Response $response, array $args): Response
+    public function like(Request $request, Response $response, array $args): Response
     {
         $userId = $_SESSION['user_id'];
         $authenticated = $_SESSION['authenticated'];
@@ -142,7 +142,7 @@ class UserReviewController
         return $response->withStatus(200);
     }
 
-    public function unlikeReview(Request $request, Response $response, array $args): Response
+    public function unlike(Request $request, Response $response, array $args): Response
     {
         $userId = $_SESSION['user_id'];
         $authenticated = $_SESSION['authenticated'];

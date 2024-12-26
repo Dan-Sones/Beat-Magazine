@@ -8,6 +8,7 @@ use S246109\BeatMagazine\Factories\AlbumFactory;
 use S246109\BeatMagazine\Factories\JournalistReviewFactory;
 use S246109\BeatMagazine\Factories\UserReviewFactory;
 use S246109\BeatMagazine\Services\AlbumService;
+use S246109\BeatMagazine\Services\LikeService;
 use S246109\BeatMagazine\Services\UserReviewService;
 
 class AlbumController
@@ -23,21 +24,26 @@ class AlbumController
 
     private AlbumService $albumService;
 
+    private LikeService $likeService;
+
     /**
      * @param AlbumFactory $albumFactory
      * @param JournalistReviewFactory $journalistReviewFactory
      * @param UserReviewFactory $userReviewFactory
      * @param UserReviewService $userReviewService
      * @param AlbumService $albumService
+     * @param LikeService $likeService
      */
-    public function __construct(AlbumFactory $albumFactory, JournalistReviewFactory $journalistReviewFactory, UserReviewFactory $userReviewFactory, UserReviewService $userReviewService, AlbumService $albumService)
+    public function __construct(AlbumFactory $albumFactory, JournalistReviewFactory $journalistReviewFactory, UserReviewFactory $userReviewFactory, UserReviewService $userReviewService, AlbumService $albumService, LikeService $likeService)
     {
         $this->albumFactory = $albumFactory;
         $this->journalistReviewFactory = $journalistReviewFactory;
         $this->userReviewFactory = $userReviewFactory;
         $this->userReviewService = $userReviewService;
         $this->albumService = $albumService;
+        $this->likeService = $likeService;
     }
+
 
     public function delete(Request $request, Response $response, array $args): Response
     {
@@ -68,6 +74,16 @@ class AlbumController
 
     public function show(Request $request, Response $response, array $args): Response
     {
+        $userID = null;
+        if (isset($_SESSION['user_id'])) {
+            $userID = $_SESSION['user_id'];
+        }
+
+        $authenticated = false;
+        if (isset($_SESSION['authenticated']) && $_SESSION['authenticated']) {
+            $authenticated = $_SESSION['authenticated'];
+        }
+
         $albumName = urldecode($args['albumName']);
         $artistName = urldecode($args['artistName']);
 
@@ -76,11 +92,10 @@ class AlbumController
             $userReviews = $this->userReviewFactory->getAllUserReviewsForAlbum($album->getAlbumID());
             $journalistReview = $this->journalistReviewFactory->getJournalistReviewForAlbum($album->getAlbumID());
             $hasUserLeftReview = $this->userReviewService->hasUserLeftReviewForAlbum($album->getAlbumID());
-        }
-        $userID = null;
 
-        if (isset($_SESSION['user_id'])) {
-            $userID = $_SESSION['user_id'];
+            if ($userID) {
+                $likedReviewsForUser = $this->likeService->getLikedReviewsPerAlbum($album->getAlbumID(), $userID);
+            }
         }
 
         $isJournalist = false;
