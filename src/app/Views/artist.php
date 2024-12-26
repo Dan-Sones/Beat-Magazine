@@ -11,8 +11,8 @@
                     <span class="d-block"><?= htmlspecialchars($artist->getGenre()) ?></span>
                     <div class="container justify-content-center mt-3">
                         <div class="row justify-content-center">
-                            <span class="d-block col-3">Average Journalist Rating: <em><?= htmlspecialchars($artist->getAverageJournalistRating()) ?></em></span>
-                            <span class="d-block col-3">Average User Rating: <em> <?= htmlspecialchars($artist->getAverageUserRating()) ?></em></span>
+                            <span class="d-block col-4">Average Journalist Rating: <?= htmlspecialchars($artist->getAverageJournalistRating()) ?>/10</span>
+                            <span class="d-block col-4">Average User Rating:  <?= htmlspecialchars($artist->getAverageUserRating()) ?>/10</span>
                         </div>
 
                     </div>
