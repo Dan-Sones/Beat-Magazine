@@ -30,7 +30,7 @@
                     <div class="col-md-2 align-items-center justify-content-center d-none d-md-flex order-2 order-md-2">
                         <h3><?= htmlspecialchars($userReview->getRating()) ?>/10</h3>
                     </div>
-                    <div class="col-12 col-md-6 order-3 order-md-3 d-flex justify-content-center align-items-center mb-0">
+                    <div class="col-12 col-md-6 order-3 order-md-3 d-flex justify-content-center align-items-center mb-2">
                         <p class="mb-0"
                            id="userReviewText-<?= htmlspecialchars($userReview->getId()) ?>"><?= htmlspecialchars($userReview->getReview()) ?></p>
                         <?php if (isset($userID) && (int)$userID === (int)$userReview->getUser()->getId()): ?>
@@ -99,8 +99,27 @@
                             </form>
                         <?php endif; ?>
                     </div>
-                    <?php if (isset($userID) && (int)$userID === (int)$userReview->getUser()->getId()): ?>
-                        <div class="col-1 d-flex justify-content-center align-items-center order-4 order-md-4">
+                    <div class="col-lg-1 col-md-12 d-flex justify-content-center align-items-center order-4 order-md-4 ps-0 ">
+
+                        <div class="d-flex align-items-center justify-content-center">
+                            <p class="mb-0 me-2 text-muted"><?= htmlspecialchars($userReview->getLikeCount()) ?></p>
+                            <?php if (isset($userID) && isset($authenticated) && $authenticated): ?>
+                                <?php if (isset($likedReviewsForUser)): ?>
+                                    <?php if (in_array($userReview->getId(), $likedReviewsForUser)): ?>
+                                        <i onclick="handleUnlikeReview('<?= htmlspecialchars($userReview->getId()) ?>')"
+                                           class="bi bi-hand-thumbs-up-fill text-primary" style="cursor: pointer;"></i>
+                                    <?php else: ?>
+                                        <i onclick="handleLikeReview('<?= htmlspecialchars($userReview->getId()) ?>')"
+                                           class="bi bi-hand-thumbs-up" style="cursor: pointer;"></i>
+                                    <?php endif; ?>
+                                <?php endif; ?>
+                            <?php else: ?>
+                                <i class="bi bi-hand-thumbs-up" data-bs-toggle="tooltip"
+                                   data-bs-title="You must be logged in to like reviews"></i>
+                            <?php endif; ?>
+                        </div>
+
+                        <?php if (isset($userID) && (int)$userID === (int)$userReview->getUser()->getId()): ?>
                             <button class="btn btn-link text-muted mb-0"
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-three-dots"></i>
@@ -114,12 +133,12 @@
                                         Review</a>
                                 </li>
                             </ul>
-                        </div>
-                    <?php endif; ?>
+                        <?php endif; ?>
+                    </div>
                 </div>
             </div>
         </div>
-
     </div>
+
 
 <?php endif; ?>

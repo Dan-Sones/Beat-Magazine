@@ -4,14 +4,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const submitReviewWrapper = document.getElementById('submitReviewWrapper');
 
     if (!activeSession) {
+        submitReviewWrapper.setAttribute("data-bs-title", 'You must be logged in to submit a review');
         submitReviewButton.disabled = true;
-        submitReviewWrapper.title = 'You must be logged in to submit a review';
+
 
     } else if (activeSession) {
 
         if (leftReview) {
+            submitReviewWrapper.setAttribute("data-bs-title", 'You have already left a review for this album');
             submitReviewButton.disabled = true;
-            submitReviewWrapper.title = 'You have already left a review for this album';
         }
 
     }

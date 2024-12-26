@@ -43,9 +43,7 @@ const handleSubmitEditReview = async (event, reviewId) => {
 };
 
 const handleDeleteReview = async (reviewId) => {
-    const albumId = albumIdGlobal;
-
-    return await fetch(`/api/albums/${albumId}/reviews/${reviewId}`, {
+    return await fetch(`/api/albums/${albumIdGlobal}/reviews/${reviewId}`, {
         method: 'DELETE'
     }).then(response => {
         if (response.status === 200) {
@@ -57,3 +55,34 @@ const handleDeleteReview = async (reviewId) => {
     });
 
 };
+
+const handleLikeReview = async (reviewId) => {
+    return await fetch(`/api/albums/${albumIdGlobal}/reviews/${reviewId}/like`, {
+        method: 'POST'
+    }).then(response => {
+        if (response.status === 200) {
+            location.reload();
+        } else {
+            alert('An error occurred whilst liking the review');
+        }
+    });
+
+};
+
+const handleUnlikeReview = async (reviewId) => {
+    return await fetch(`/api/albums/${albumIdGlobal}/reviews/${reviewId}/unlike`, {
+        method: 'DELETE'
+    }).then(response => {
+        if (response.status === 200) {
+            location.reload();
+        } else {
+            alert('An error occurred whilst unliking the review');
+        }
+    });
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+});
+

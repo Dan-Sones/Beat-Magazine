@@ -5,6 +5,7 @@ namespace S246109\BeatMagazine\Controllers;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use S246109\BeatMagazine\Factories\UserReviewFactory;
+use S246109\BeatMagazine\Services\LikeService;
 use S246109\BeatMagazine\Services\UserReviewService;
 
 class UserReviewController
@@ -12,16 +13,16 @@ class UserReviewController
 
     private UserReviewService $userReviewService;
 
-    private UserReviewFactory $userReviewFactory;
+    private LikeService $likeService;
 
     /**
      * @param UserReviewService $userReviewService
-     * @param UserReviewFactory $userReviewFactory
+     * @param LikeService $likeService
      */
-    public function __construct(UserReviewService $userReviewService, UserReviewFactory $userReviewFactory)
+    public function __construct(UserReviewService $userReviewService, LikeService $likeService)
     {
         $this->userReviewService = $userReviewService;
-        $this->userReviewFactory = $userReviewFactory;
+        $this->likeService = $likeService;
     }
 
     public function create(Request $request, Response $response, array $args): Response
@@ -116,6 +117,53 @@ class UserReviewController
         }
 
         return $response->withStatus(200);
+    }
+
+    public function like(Request $request, Response $response, array $args): Response
+    {
+        $userId = $_SESSION['user_id'];
+        $authenticated = $_SESSION['authenticated'];
+        if (!isset($userId) || !isset($authenticated) || !$authenticated) {
+            return $response->withStatus(401);
+        }
+
+        if (!isset($args['reviewId'])) {
+            return $response->withStatus(400);
+        }
+
+        $reviewID = $args['reviewId'];
+
+        $success = $this->likeService->likeReview($reviewID, $userId);
+
+        if (!$success) {
+            return $response->withStatus(500);
+        }
+
+        return $response->withStatus(200);
+    }
+
+    public function unlike(Request $request, Response $response, array $args): Response
+    {
+        $userId = $_SESSION['user_id'];
+        $authenticated = $_SESSION['authenticated'];
+        if (!isset($userId) || !isset($authenticated) || !$authenticated) {
+            return $response->withStatus(401);
+        }
+
+        if (!isset($args['reviewId'])) {
+            return $response->withStatus(400);
+        }
+
+        $reviewID = $args['reviewId'];
+
+        $success = $this->likeService->unlikeReview($reviewID, $userId);
+
+        if (!$success) {
+            return $response->withStatus(500);
+        }
+
+        return $response->withStatus(200);
+
     }
 
 

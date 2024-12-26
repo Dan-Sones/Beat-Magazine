@@ -25,7 +25,7 @@
                     <textarea class="form-control" id="reviewText" rows="5"
                               placeholder="Write your review here"></textarea>
                 </div>
-                <div class="d-grid" id="submitReviewWrapper" data-toggle="tooltip">
+                <div class="d-grid" id="submitReviewWrapper" data-bs-toggle="tooltip" tabindex="0">
                     <button id="submitReview" type="submit"
                             class="btn btn-primary">Submit
                         Review

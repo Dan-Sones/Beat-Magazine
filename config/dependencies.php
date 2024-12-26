@@ -12,6 +12,7 @@ use S246109\BeatMagazine\Services\ArtistService;
 use S246109\BeatMagazine\Services\HomeService;
 use S246109\BeatMagazine\Services\JournalistReviewService;
 use S246109\BeatMagazine\Services\JournalistService;
+use S246109\BeatMagazine\Services\LikeService;
 use S246109\BeatMagazine\Services\UserReviewService;
 use S246109\BeatMagazine\Services\UserService;
 
@@ -69,8 +70,10 @@ return function (ContainerBuilder $containerBuilder) {
         },
         HomeService::class => function (ContainerInterface $c) {
             return new HomeService($c->get(AlbumFactory::class), $c->get(JournalistReviewFactory::class));
+        },
+        LikeService::class => function (ContainerInterface $c) {
+            return new LikeService($c->get(PDO::class));
         }
-
     ]);
 };
 

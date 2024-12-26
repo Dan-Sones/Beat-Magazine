@@ -64,6 +64,8 @@ return function (App $app) {
                     $reviewGroup->post('', [UserReviewController::class, 'create']);
                     $reviewGroup->put('/{reviewId}', [UserReviewController::class, 'update']);
                     $reviewGroup->delete('/{reviewId}', [UserReviewController::class, 'delete']);
+                    $reviewGroup->post('/{reviewId}/like', [UserReviewController::class, 'like']);
+                    $reviewGroup->delete('/{reviewId}/unlike', [UserReviewController::class, 'unlike']);
                 })->add(new RestrictUserReviewsMiddleware());
             });
 
