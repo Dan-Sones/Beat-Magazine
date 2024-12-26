@@ -99,26 +99,9 @@
                             </form>
                         <?php endif; ?>
                     </div>
-                    <?php if (isset($userID) && (int)$userID === (int)$userReview->getUser()->getId()): ?>
-                        <div class="col-1 d-flex justify-content-center align-items-center order-4 order-md-4">
-                            <button class="btn btn-link text-muted mb-0"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-three-dots"></i>
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item text-danger"
-                                       onclick="handleDeleteReview(<?= htmlspecialchars($userReview->getId()) ?>)">Delete
-                                        Review</a></li>
-                                <li><a class="dropdown-item"
-                                       onclick="handleEditReview(<?= htmlspecialchars($userReview->getId()) ?>)">Edit
-                                        Review</a>
-                                </li>
-                            </ul>
-                        </div>
-                    <?php endif; ?>
+                    <div class="col-lg-1 col-md-12 d-flex justify-content-center align-items-center order-4 order-md-4 ps-0 ">
 
-                    <div class="col-12 col-md-1 d-flex justify-content-center align-items-center order-5 order-md-5">
-                        <div class="d-flex align-items-center">
+                        <div class="d-flex align-items-center justify-content-center">
                             <p class="mb-0 me-2 text-muted"><?= htmlspecialchars($userReview->getLikeCount()) ?></p>
                             <?php if (isset($userID) && isset($authenticated) && $authenticated): ?>
                                 <?php if (isset($likedReviewsForUser)): ?>
@@ -135,6 +118,22 @@
                                    data-bs-title="You must be logged in to like reviews"></i>
                             <?php endif; ?>
                         </div>
+
+                        <?php if (isset($userID) && (int)$userID === (int)$userReview->getUser()->getId()): ?>
+                            <button class="btn btn-link text-muted mb-0"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-three-dots"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item text-danger"
+                                       onclick="handleDeleteReview(<?= htmlspecialchars($userReview->getId()) ?>)">Delete
+                                        Review</a></li>
+                                <li><a class="dropdown-item"
+                                       onclick="handleEditReview(<?= htmlspecialchars($userReview->getId()) ?>)">Edit
+                                        Review</a>
+                                </li>
+                            </ul>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
