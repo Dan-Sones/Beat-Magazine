@@ -30,15 +30,16 @@ class UserReviewFactory
     public function getAllUserReviewsForAlbum(string $albumId): array
     {
         $query = '
-            SELECT 
-                user_reviews.id, 
-                user_reviews.album_id, 
-                user_reviews.user_id, 
-                user_reviews.review_text, 
-                user_reviews.rating
-            FROM user_reviews
-            WHERE user_reviews.album_id = :album_id
-        ';
+        SELECT
+            user_reviews.id,
+            user_reviews.album_id,
+            user_reviews.user_id,
+            user_reviews.review_text,
+            user_reviews.rating,
+            (SELECT COUNT(*) FROM likes WHERE likes.review_id = user_reviews.id) AS like_count
+        FROM user_reviews
+        WHERE user_reviews.album_id = :album_id
+    ';
 
         $statement = $this->db->prepare($query);
         $statement->bindValue(':album_id', $albumId, PDO::PARAM_STR);
@@ -48,7 +49,7 @@ class UserReviewFactory
 
         while ($userReviewData = $statement->fetch(PDO::FETCH_ASSOC)) {
             $user = $this->userFactory->getPublicUserByUserId($userReviewData['user_id']);
-            $review = new UserReview($userReviewData['id'], $userReviewData['album_id'], $user, $userReviewData['review_text'], $userReviewData['rating']);
+            $review = new UserReview($userReviewData['id'], $userReviewData['album_id'], $user, $userReviewData['review_text'], $userReviewData['rating'], $userReviewData['like_count']);
             $userReviews[] = $review;
         }
 
@@ -61,14 +62,16 @@ class UserReviewFactory
         $userId = $user->getId();
 
         $query = '
-            SELECT 
-                user_reviews.id, 
-                user_reviews.album_id, 
-                user_reviews.user_id, 
-                user_reviews.review_text, 
-                user_reviews.rating
-            FROM user_reviews
-            WHERE user_reviews.user_id = :user_id';
+        SELECT
+            user_reviews.id,
+            user_reviews.album_id,
+            user_reviews.user_id,
+            user_reviews.review_text,
+            user_reviews.rating,
+            (SELECT COUNT(*) FROM likes WHERE likes.review_id = user_reviews.id) AS like_count
+        FROM user_reviews
+        WHERE user_reviews.user_id = :user_id
+    ';
         $statement = $this->db->prepare($query);
         $statement->bindValue(':user_id', $userId, PDO::PARAM_STR);
         $statement->execute();
@@ -76,12 +79,12 @@ class UserReviewFactory
         $userReviews = [];
 
         while ($userReviewData = $statement->fetch(PDO::FETCH_ASSOC)) {
-            $review = new UserReview($userReviewData['id'], $userReviewData['album_id'], $user, $userReviewData['review_text'], $userReviewData['rating']);
+            $review = new UserReview($userReviewData['id'], $userReviewData['album_id'], $user, $userReviewData['review_text'], $userReviewData['rating'], $userReviewData['like_count']);
             $userReviews[] = $review;
         }
 
         return $userReviews;
-        
+
     }
 
 }
