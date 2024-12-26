@@ -4,11 +4,20 @@
         <div class="container">
             <div class="artist-header text-center bg-light py-4 mb-4 rounded shadow">
                 <h1><?= htmlspecialchars($artist->getName()) ?></h1>
-                <div class="artist-details">
+                <div class="artist-details container">
+                    <div class="row justify-content-center">
+                        <p class="artist-bio col-6 justify-content-center mt-3"><?= htmlspecialchars($artist->getBio()) ?></p>
+                    </div>
                     <span class="d-block"><?= htmlspecialchars($artist->getGenre()) ?></span>
-                    <span class="d-block">Average Journalist Rating: <?= htmlspecialchars($artist->getAverageJournalistRating()) ?></span>
+                    <div class="container justify-content-center mt-3">
+                        <div class="row justify-content-center">
+                            <span class="d-block col-3">Average Journalist Rating: <em><?= htmlspecialchars($artist->getAverageJournalistRating()) ?></em></span>
+                            <span class="d-block col-3">Average Journalist Rating: <em> <?= htmlspecialchars($artist->getAverageUserRating()) ?></em></span>
+                        </div>
+
+                    </div>
                 </div>
-                <p class="artist-bio mt-3"><?= htmlspecialchars($artist->getBio()) ?></p>
+
             </div>
 
             <div class="albums-container mt-4 mb-4">
