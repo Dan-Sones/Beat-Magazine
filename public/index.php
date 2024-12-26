@@ -41,6 +41,15 @@ $app->addBodyParsingMiddleware();
 $app->addRoutingMiddleware();
 $app->addErrorMiddleware(false, true, true);
 
+ini_set('session.gc_maxlifetime', 5400); // 1.5 hours (90 minutes)
+session_set_cookie_params([
+    'lifetime' => 5400, // 1.5 hours in seconds (90 minutes)
+    'path' => '/',
+    'secure' => true,
+    'httponly' => true,
+    'samesite' => 'Strict'
+]);
+
 session_start();
 
 (require PRIVATE_PATH . '/src/routes/web.php')($app);
