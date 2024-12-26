@@ -37,6 +37,10 @@
                     <p><strong>Release Date:</strong> <?= htmlspecialchars($album->getReleaseDate()) ?></p>
                     <p><strong>Genre</strong>: <?= htmlspecialchars($album->getGenre()) ?></p>
                     <p><strong>Label:</strong> <?= htmlspecialchars($album->getLabel()) ?></p>
+                    <?php if (isset($averageUserRating)): ?>
+                        <p><strong>Average User Rating:</strong> <?= htmlspecialchars($averageUserRating) ?></p>
+
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

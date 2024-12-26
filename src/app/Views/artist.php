@@ -12,7 +12,7 @@
                     <div class="container justify-content-center mt-3">
                         <div class="row justify-content-center">
                             <span class="d-block col-3">Average Journalist Rating: <em><?= htmlspecialchars($artist->getAverageJournalistRating()) ?></em></span>
-                            <span class="d-block col-3">Average Journalist Rating: <em> <?= htmlspecialchars($artist->getAverageUserRating()) ?></em></span>
+                            <span class="d-block col-3">Average User Rating: <em> <?= htmlspecialchars($artist->getAverageUserRating()) ?></em></span>
                         </div>
 
                     </div>

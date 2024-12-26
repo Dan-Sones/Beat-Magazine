@@ -115,5 +115,4 @@ class AlbumService
 
         return $statement->fetchColumn() > 0;
     }
-
 }

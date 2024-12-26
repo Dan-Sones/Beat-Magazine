@@ -105,4 +105,17 @@ class UserReviewService
 
         return $statement->execute();
     }
+
+    public function getAverageUserRatingForAlbum($albumId): int|null
+    {
+        $query = '
+            SELECT CAST(AVG(rating) AS UNSIGNED) FROM user_reviews WHERE album_id = :album_id
+        ';
+
+        $statement = $this->db->prepare($query);
+        $statement->bindValue(':album_id', $albumId, PDO::PARAM_STR);
+        $statement->execute();
+
+        return $statement->fetchColumn();
+    }
 }
