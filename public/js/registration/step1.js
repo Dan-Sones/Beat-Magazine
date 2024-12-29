@@ -6,19 +6,27 @@ document.addEventListener('DOMContentLoaded', function () {
     const passwordInput = document.getElementById('password');
 
     const validateInput = (input, isValid, message) => {
+        const tooltipInstance = bootstrap.Tooltip.getInstance(input);
+
         if (!isValid) {
             input.classList.add('is-invalid');
-            input.setAttribute('data-bs-title', message);
-            new bootstrap.Tooltip(input);
+            input.setAttribute('title', message);
 
+            if (!tooltipInstance) {
+                new bootstrap.Tooltip(input, {trigger: 'manual'}).show();
+            } else {
+                tooltipInstance.setContent({'.tooltip-inner': message});
+                tooltipInstance.show();
+            }
         } else {
             input.classList.remove('is-invalid');
-            input.removeAttribute('data-bs-title');
-            if (bootstrap.Tooltip.getInstance(input)) {
-                bootstrap.Tooltip.getInstance(input).dispose();
 
+            if (tooltipInstance) {
+                tooltipInstance.hide();
+                tooltipInstance.dispose();
             }
 
+            input.removeAttribute('title');
         }
     };
 
