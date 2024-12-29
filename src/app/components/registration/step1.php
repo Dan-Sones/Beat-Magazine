@@ -4,17 +4,17 @@
         <div class="mb-3">
             <label for="username" class="form-label">Username</label>
             <input type="text" class="form-control" id="username"
-                   placeholder="Enter username" data-bs-toggle="tooltip" data-bs-title="" required>
+                   placeholder="Enter username" data-bs-toggle="tooltip" required>
         </div>
         <div class="mb-3">
             <label for="email" class="form-label">Email</label>
             <input type="email" class="form-control" id="email"
-                   placeholder="Enter email" data-bs-toggle="tooltip" data-bs-title="" required>
+                   placeholder="Enter email" data-bs-toggle="tooltip" required>
         </div>
         <div class="mb-3">
             <label for="password" class="form-label">Password</label>
             <input type="password" class="form-control" id="password"
-                   placeholder="Enter password" data-bs-toggle="tooltip" data-bs-title="" required>
+                   placeholder="Enter password" data-bs-toggle="tooltip" required>
         </div>
 
         <div class="card p-4 shadow-sm mb-2">

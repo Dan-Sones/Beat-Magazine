@@ -14,7 +14,10 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             input.classList.remove('is-invalid');
             input.removeAttribute('data-bs-title');
-            bootstrap.Tooltip.getInstance(input).dispose();
+            if (bootstrap.Tooltip.getInstance(input)) {
+                bootstrap.Tooltip.getInstance(input).dispose();
+
+            }
 
         }
     };
