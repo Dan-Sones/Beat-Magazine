@@ -28,6 +28,8 @@
                         <?php foreach ($albums as $album): ?>
                             <?php if (isset($journalistReviews) && isset($journalistReviews[(string)$album->getAlbumID()])) : ?>
                                 <?php $currJournalistReview = $journalistReviews[(string)$album->getAlbumID()]; ?>
+                            <?php else: ?>
+                                <?php $currJournalistReview = null; ?>
                             <?php endif; ?>
                             <div class="col-md-6 col-lg-4 mb-4">
                                 <div class="card shadow h-100 album-card"
@@ -51,7 +53,8 @@
                                                         onclick="navigateToJournalist(event, '<?= addslashes($currJournalistReview->getJournalist()->getUsername()) ?>')"><?= htmlspecialchars($currJournalistReview->getJournalist()->getFullName()) ?></em>
                                                 </p>
                                             <?php else: ?>
-                                                <p class="card-text small text-muted m-auto">No review available</p>
+                                                <p class="card-text small text-muted m-auto">We have not published a
+                                                    review for this album yet!</p>
                                             <?php endif; ?>
                                         </div>
                                     </div>

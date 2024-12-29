@@ -16,13 +16,15 @@
             <div class="row px-5 gy-5" id="albums-row" role="list">
                 <?php if (isset($albums) && is_array($albums)): ?>
                     <?php foreach ($albums as $album): ?>
-                        <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2" role="listitem">
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2" role="listitem"
+                             onclick="navigateToAlbum(event, '<?= htmlspecialchars($album->getArtistName()) ?>', '<?= htmlspecialchars($album->getAlbumName()) ?>')">
                             <div class="card shadow album-card" style="width: 100%;" tabindex="0">
                                 <img src="<?= htmlspecialchars($album->getAlbumArt()) ?>" class="card-img-top"
                                      alt="<?= htmlspecialchars($album->getAlbumName()) ?>">
                                 <div class="card-body">
                                     <h4 class="card-title album-title"><?= htmlspecialchars($album->getAlbumName()) ?></h4>
-                                    <p class="card-text album-artist"><?= htmlspecialchars($album->getArtistName()) ?></p>
+                                    <p class="card-text album-artist"
+                                       onclick="navigateToArtist(event, '<?= htmlspecialchars($album->getArtistName()) ?>')"><?= htmlspecialchars($album->getArtistName()) ?></p>
                                 </div>
                             </div>
                         </div>
