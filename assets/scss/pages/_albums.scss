@@ -31,6 +31,11 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+.album-artist:hover {
+  text-decoration: underline;
 }
 
 // Limit the width of the container to 2000px so on ultra wide screens the content doesn't stretch too far

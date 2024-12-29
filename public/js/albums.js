@@ -39,6 +39,14 @@ const navigateToAlbum = (event) => {
     }
 }
 
+const navigateToArtist = (event, artistName) => {
+    event.stopPropagation();
+    if (artistName) {
+        const encodedArtist = encodeURIComponent(artistName).replace(/%20/g, '+');
+        window.location.href = `/artist/${encodedArtist}`;
+    }
+}
+
 const fetchAlbums = (query = '') => {
     fetch(`/api/albums?search=${encodeURIComponent(query)}`)
         .then(response => {

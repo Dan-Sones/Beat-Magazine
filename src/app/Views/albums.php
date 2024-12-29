@@ -22,7 +22,8 @@
                                      alt="<?= htmlspecialchars($album->getAlbumName()) ?>">
                                 <div class="card-body">
                                     <h4 class="card-title album-title"><?= htmlspecialchars($album->getAlbumName()) ?></h4>
-                                    <p class="card-text album-artist"><?= htmlspecialchars($album->getArtistName()) ?></p>
+                                    <p class="card-text album-artist"
+                                       onclick="navigateToArtist(event, '<?= htmlspecialchars($album->getArtistName()) ?>')"><?= htmlspecialchars($album->getArtistName()) ?></p>
                                 </div>
                             </div>
                         </div>
