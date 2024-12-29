@@ -46,7 +46,9 @@ const handleTaken = (taken, targetElementID) => {
         if (taken === true) {
             const tooltipContents = `This ${targetElementID === 'emailStatus' ? 'email' : 'username'} is already taken`;
             document.getElementById(targetElementID).innerHTML = `<i data-bs-toggle="tooltip" class="bi bi-slash-circle icon-error"></i>`
-            document.getElementById(targetElementID).setAttribute("title", tooltipContents);
+            document.getElementById(targetElementID).setAttribute("data-bs-title", tooltipContents);
+            new bootstrap.Tooltip(document.getElementById(targetElementID).querySelector('[data-bs-toggle="tooltip"]'));
+
         } else {
             document.getElementById(targetElementID).innerHTML = '<i class="bi bi-check-circle-fill icon-success"></i>';
         }
@@ -154,3 +156,9 @@ const validateOTP = async (event) => {
         }
     });
 };
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+});

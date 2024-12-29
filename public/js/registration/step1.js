@@ -8,10 +8,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const validateInput = (input, isValid, message) => {
         if (!isValid) {
             input.classList.add('is-invalid');
-            input.setAttribute('title', message);
+            input.setAttribute('data-bs-title', message);
+            new bootstrap.Tooltip(input);
+
         } else {
             input.classList.remove('is-invalid');
-            input.removeAttribute('title');
+            input.removeAttribute('data-bs-title');
+            bootstrap.Tooltip.getInstance(input).dispose();
+
         }
     };
 
