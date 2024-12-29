@@ -16,25 +16,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const container = document.querySelector('.albums-container .container-fluid');
 
-    container.addEventListener('click', (event) => {
-        navigateToAlbum(event);
-    });
-
-    container.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter' || event.key === ' ') {
-            navigateToAlbum(event);
-        }
-    });
 });
 
 
-const navigateToAlbum = (event) => {
-    const card = event.target.closest('.album-card');
-    if (card) {
-        const artist = card.querySelector('.album-artist').textContent;
-        const title = card.querySelector('.album-title').textContent;
-        const encodedArtist = encodeURIComponent(artist).replace(/%20/g, '+');
-        const encodedTitle = encodeURIComponent(title).replace(/%20/g, '+');
+const navigateToAlbum = (event, artistName, albumName) => {
+    if (artistName && albumName) {
+        const encodedArtist = encodeURIComponent(artistName).replace(/%20/g, '+');
+        const encodedTitle = encodeURIComponent(albumName).replace(/%20/g, '+');
         window.location.href = `/artist/${encodedArtist}/${encodedTitle}`;
     }
 }
