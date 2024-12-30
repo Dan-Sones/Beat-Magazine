@@ -41,7 +41,6 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="userInfo pt-2">
-                                        <!--TODO:Allow editing if logged in-->
                                         <?php if (isset($isJournalist) && $isJournalist): ?>
                                             <h1 class="text-center" data-bs-toggle="tooltip" data-bs-placement="top"
                                                 title="This User is a Journalist for BeatMagazine.com"><?= htmlspecialchars($user->getUsername()) ?>

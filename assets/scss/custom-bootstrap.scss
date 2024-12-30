@@ -1,7 +1,3 @@
-//TODO change this back to the original local path
-@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css");
-
-
 $brand-light: #F1F6F9;
 $brand-secondary-light: #9BA4B5;
 $brand-muted: #394867;
@@ -17,40 +13,7 @@ $body-color: $brand-dark;
 
 $text-primary: $brand-dark;
 
-
-:root {
-  interpolate-size: allow-keywords; /* 👈 */
-}
-
-
-html, body {
-  margin: 0;
-  padding: 0;
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  font-family: 'Inter', sans-serif;
-}
-
-.wrapper {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-footer {
-  flex-shrink: 0;
-}
-
-main {
-  flex: 1;
-}
-
-footer {
-  flex-shrink: 0;
-}
-
-
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css");
 @import "../../node_modules/bootstrap/scss/functions";
 @import "../../node_modules/bootstrap/scss/variables";
 @import "../../node_modules/bootstrap/scss/bootstrap";
