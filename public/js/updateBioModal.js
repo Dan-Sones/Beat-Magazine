@@ -24,6 +24,10 @@ const updateBio = async (event, userId) => {
     if (response.ok) {
         window.location.reload();
     } else {
-        alert('Failed to update bio. Please try again later.');
+        Swal.fire({
+            title: 'An error occurred while updating your bio',
+            icon: 'error',
+            confirmButtonText: 'Got It'
+        });
     }
 };

@@ -33,7 +33,7 @@
         <button class="btn btn-secondary prev-btn me-2" type="button" data-bs-target="#registrationCarousel"
                 data-bs-slide="prev">Back
         </button>
-        <button class="btn btn-success" type="submit" id="submitRegistrationForm" onclick="submitForm(event)">Submit
+        <button class="btn btn-success" type="submit" id="submitRegistrationForm" onclick="submitForm(event)">Register
         </button>
     </div>
 </div>
@@ -41,3 +41,4 @@
 <script>
     const qrCodeUrl = "<?php echo $google2faSecret ?>";
 </script>
+<script src="/js/registration/step4.js"></script>

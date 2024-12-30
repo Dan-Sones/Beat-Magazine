@@ -46,14 +46,22 @@ const submitOTPForm = async (event) => {
         contentType: 'application/json'
     }).then(response => {
         if (!response.ok) {
-            alert('Invalid code');
+            Swal.fire({
+                title: 'Invalid OTP',
+                icon: 'error',
+                confirmButtonText: 'Got It'
+            });
         }
         return response.json();
     }).then(data => {
         if (data.valid) {
             window.location.href = '/albums';
         } else {
-            alert('Invalid code');
+            Swal.fire({
+                title: 'Something went wrong',
+                icon: 'error',
+                confirmButtonText: 'Got It'
+            });
             document.getElementById('submitOTP').disabled = true;
         }
     });
@@ -64,19 +72,39 @@ const handleRequestPasswordReset = async () => {
     const data = {
         email: email
     };
-    return await fetch('/api/password-reset-request', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    }).then(response => {
-        if (response.status === 200) {
-            alert('Password reset email sent');
-        } else {
-            alert('Unable to send password reset email');
+
+    Swal.fire({
+        title: 'Sending password reset email',
+        didOpen: () => {
+            Swal.showLoading();
+
+            fetch('/api/password-reset-request', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }).then(response => {
+                if (response.status === 200) {
+                    Swal.fire({
+                        title: 'Password reset email sent',
+                        icon: 'success',
+                        confirmButtonText: 'Got It'
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'Failed to send password reset email, make sure you entered the correct email address.',
+                        icon: 'error',
+                        confirmButtonText: 'Got It'
+                    });
+                }
+            });
         }
-    });
+
+
+    })
+
+
 };
 
 emailInput.addEventListener('input', () => {

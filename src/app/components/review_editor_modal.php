@@ -66,9 +66,6 @@
             </form>
         </div>
     </div>
-    <script>
-        const albumId = <?= $album->getAlbumID() ?>;
-    </script>
     <script src="/js/reviewEditorModal.js"></script>
 
 <?php endif; ?>

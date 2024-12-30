@@ -9,8 +9,9 @@
                         <div class="mb-3">
                             <label for="email" class="form-label">Email Address</label>
                             <input type="text" class="form-control" id="email"
-                                   placeholder="Enter username" required>
-                            <a class="disabled" id="passwordResetLink" onclick="handleRequestPasswordReset()">Forgot
+                                   placeholder="Enter email address" required>
+                            <a class="pointer-event" style="cursor: pointer" id="passwordResetLink"
+                               onclick="handleRequestPasswordReset()">Forgot
                                 Password?</a>
                         </div>
 
@@ -20,7 +21,7 @@
                                    placeholder="Enter password" required>
                         </div>
                         <div class="d-flex justify-content-center">
-                            <button class="btn btn-success" id="submitLogin" type="submit">Submit</button>
+                            <button class="btn btn-success" id="submitLogin" type="submit">Login</button>
                         </div>
                     </form>
 
@@ -31,7 +32,7 @@
                                    placeholder="Enter OTP" required>
                         </div>
                         <div class="d-flex justify-content-center">
-                            <button class="btn btn-success" id="submitOTP" type="submit">Submit</button>
+                            <button class="btn btn-success" id="submitOTP" type="submit">Submit OTP</button>
                         </div>
                     </form>
                 </div>

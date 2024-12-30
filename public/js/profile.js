@@ -49,14 +49,24 @@ const handleUpload = async () => {
     const formData = new FormData();
     formData.append('profile_picture', file);
 
-    const response = await fetch('/api/upload-profile-picture', {
-        method: 'POST',
-        body: formData
-    });
+    try {
+        const response = await fetch('/api/upload-profile-picture', {
+            method: 'POST',
+            body: formData
+        });
 
-    if (response.ok) {
-        window.location.reload();
-    } else {
-        alert('Failed to upload profile picture. Make sure you are using a valid image file.');
+        if (response.ok) {
+            window.location.reload();
+        } else {
+            Swal.fire({
+                title: 'An error occurred while uploading your profile picture',
+                icon: 'error',
+            });
+        }
+    } catch (error) {
+        Swal.fire({
+            title: 'An error occurred while uploading your profile picture',
+            icon: 'error',
+        });
     }
 };

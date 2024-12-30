@@ -122,11 +122,20 @@ const submitForm = async (event) => {
         body: data
     });
     if (response.ok) {
-        // Redirect to login page
-        alert('Registration successful');
-        window.location.href = '/login';
+        Swal.fire({
+            title: 'Registration successful',
+            icon: 'success',
+            confirmButtonText: 'Got It'
+        }).then(() => {
+            window.location.href = '/login';
+        })
     } else {
-        alert('Registration failed');
+        Swal.fire({
+            title: 'Registration failed',
+            icon: 'error',
+            confirmButtonText: 'Got It'
+        });
+
     }
 };
 
@@ -148,10 +157,18 @@ const validateOTP = async (event) => {
         return response.json();
     }).then(data => {
         if (data.valid) {
-            alert('2FA Setup Successful');
+            Swal.fire({
+                title: 'OTP Verified',
+                icon: 'success',
+                confirmButtonText: 'Got It'
+            });
             document.getElementById('submitRegistrationForm').disabled = false;
         } else {
-            alert('Invalid code');
+            Swal.fire({
+                title: 'Invalid OTP',
+                icon: 'error',
+                confirmButtonText: 'Got It'
+            });
             document.getElementById('submitRegistrationForm').disabled = true;
         }
     });

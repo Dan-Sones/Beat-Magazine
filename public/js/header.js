@@ -15,7 +15,11 @@ const logout = async () => {
             if (response.ok) {
                 window.location.reload();
             } else {
-                alert('Failed to logout');
+                Swal.fire({
+                    title: 'An error occurred while logging out',
+                    icon: 'error',
+                    confirmButtonText: 'Got It'
+                });
             }
         });
 

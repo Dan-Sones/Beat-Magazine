@@ -21,7 +21,7 @@
                                                    style="display: none;">
                                             <div id="profilePicture" style="cursor: pointer; position: relative;">
                                                 <img src="<?= htmlspecialchars($user->getProfilePictureUri()) ?>"
-                                                     alt="Profile Picture" ∂
+                                                     alt="Profile Picture"
                                                      class="img-fluid rounded-circle"
                                                      style="width: 200px; height: 200px; object-fit: cover">
                                                 <div id="uploadOverlay" class="rounded-circle">
@@ -41,7 +41,6 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="userInfo pt-2">
-                                        <!--TODO:Allow editing if logged in-->
                                         <?php if (isset($isJournalist) && $isJournalist): ?>
                                             <h1 class="text-center" data-bs-toggle="tooltip" data-bs-placement="top"
                                                 title="This User is a Journalist for BeatMagazine.com"><?= htmlspecialchars($user->getUsername()) ?>
@@ -237,6 +236,6 @@
     <script>
         AOS.init();
     </script>
-    <
+
 
 <?php include 'includes/footer.php'; ?>

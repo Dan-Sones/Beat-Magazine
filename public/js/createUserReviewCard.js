@@ -6,18 +6,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!activeSession) {
         submitReviewWrapper.setAttribute("data-bs-title", 'You must be logged in to submit a review');
         submitReviewButton.disabled = true;
-
-
     } else if (activeSession) {
-
         if (leftReview) {
             submitReviewWrapper.setAttribute("data-bs-title", 'You have already left a review for this album');
             submitReviewButton.disabled = true;
         }
-
     }
-
-
 });
 
 
@@ -27,7 +21,11 @@ const handleReviewSubmission = async (event) => {
     const review = document.getElementById('reviewText').value;
 
     if (rating === 'Select a rating') {
-        alert('Please select a valid rating.');
+        Swal.fire({
+            title: 'Please select a rating',
+            icon: 'error',
+            confirmButtonText: 'Got It'
+        });
         return;
     }
 
@@ -43,10 +41,19 @@ const handleReviewSubmission = async (event) => {
         })
     }).then(response => {
         if (response.status === 201) {
-            alert('Review submitted successfully');
-            location.reload();
+            Swal.fire({
+                title: 'Review submitted successfully',
+                icon: 'success',
+                confirmButtonText: 'Ok!'
+            }).then(() => {
+                location.reload();
+            });
         } else {
-            alert('An error occurred while submitting your review');
+            Swal.fire({
+                title: 'An error occurred while submitting your review',
+                icon: 'error',
+                confirmButtonText: 'Got It'
+            });
         }
     });
 };
