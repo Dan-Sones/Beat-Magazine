@@ -21,7 +21,7 @@
                                                    style="display: none;">
                                             <div id="profilePicture" style="cursor: pointer; position: relative;">
                                                 <img src="<?= htmlspecialchars($user->getProfilePictureUri()) ?>"
-                                                     alt="Profile Picture" ∂
+                                                     alt="Profile Picture"
                                                      class="img-fluid rounded-circle"
                                                      style="width: 200px; height: 200px; object-fit: cover">
                                                 <div id="uploadOverlay" class="rounded-circle">
@@ -236,6 +236,6 @@
     <script>
         AOS.init();
     </script>
-    <
+
 
 <?php include 'includes/footer.php'; ?>

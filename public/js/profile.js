@@ -43,13 +43,13 @@ document.getElementById('profilePictureInput').addEventListener('change', functi
     handleUpload();
 });
 
-const handleUpload = async () => {
+const handleUpload = () => {
     const fileInput = document.getElementById('profilePictureInput');
     const file = fileInput.files[0];
     const formData = new FormData();
     formData.append('profile_picture', file);
 
-    const response = await fetch('/api/upload-profile-picture', {
+    const response = fetch('/api/upload-profile-picture', {
         method: 'POST',
         body: formData
     });
