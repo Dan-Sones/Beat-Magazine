@@ -13,7 +13,11 @@ const isMobileDevice = () => {
 
 const copySecret = () => {
     navigator.clipboard.writeText(qrCodeUrl).then(() => {
-        alert('QR Code URL copied to clipboard');
+        Swal.fire({
+            title: 'Copied to clipboard',
+            icon: 'success',
+            confirmButtonText: 'Got It'
+        });
     }).catch(err => {
         console.error('Failed to copy QR Code URL: ', err);
     });

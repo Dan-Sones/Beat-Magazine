@@ -34,10 +34,20 @@ const handleSubmitEditReview = async (event, reviewId) => {
         })
     }).then(response => {
         if (response.status === 200) {
-            alert('Review Edited successfully');
-            location.reload();
+            Swal.fire({
+                title: 'Review updated successfully',
+                icon: 'success',
+                confirmButtonText: 'Got It'
+            }).then(() => {
+                location.reload();
+            })
+
         } else {
-            alert('An error occurred whilst updating your review');
+            Swal.fire({
+                title: 'An error occurred while updating your review',
+                icon: 'error',
+                confirmButtonText: 'Got It'
+            });
         }
     });
 };
@@ -47,10 +57,19 @@ const handleDeleteReview = async (reviewId) => {
         method: 'DELETE'
     }).then(response => {
         if (response.status === 200) {
-            alert('Review successfully deleted.');
-            location.reload();
+            Swal.fire({
+                title: 'Review deleted successfully',
+                icon: 'success',
+                confirmButtonText: 'Got It'
+            }).then(() => {
+                location.reload();
+            })
         } else {
-            alert('An error occurred whilst deleting your review');
+            Swal.fire({
+                title: 'An error occurred while deleting your review',
+                icon: 'error',
+                confirmButtonText: 'Got It'
+            })
         }
     });
 
@@ -63,7 +82,11 @@ const handleLikeReview = async (reviewId) => {
         if (response.status === 200) {
             location.reload();
         } else {
-            alert('An error occurred whilst liking the review');
+            Swal.fire({
+                title: 'An error occurred whilst liking the review',
+                icon: 'error',
+                confirmButtonText: 'Ok'
+            });
         }
     });
 
@@ -76,7 +99,11 @@ const handleUnlikeReview = async (reviewId) => {
         if (response.status === 200) {
             location.reload();
         } else {
-            alert('An error occurred whilst unliking the review');
+            Swal.fire({
+                title: 'An error occurred whilst unliking the review',
+                icon: 'error',
+                confirmButtonText: 'Ok'
+            });
         }
     });
 };

@@ -57,6 +57,9 @@ const handleUpload = () => {
     if (response.ok) {
         window.location.reload();
     } else {
-        alert('Failed to upload profile picture. Make sure you are using a valid image file.');
+        Swal.fire({
+            title: 'An error occurred while uploading your profile picture',
+            icon: 'error',
+        });
     }
 };

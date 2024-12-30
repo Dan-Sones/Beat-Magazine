@@ -12,10 +12,19 @@ const submitUpgradeForm = async (event) => {
     })
         .then(response => {
             if (response.ok) {
-                alert('Account upgraded successfully');
-                window.location.href = '/albums';
+                Swal.fire({
+                    title: 'Account upgraded successfully',
+                    icon: 'success',
+                    confirmButtonText: 'Got It'
+                }).then(() => {
+                    window.location.href = '/albums';
+                });
             } else {
-                alert('Failed to upgrade account');
+                Swal.fire({
+                    title: 'An error occurred while upgrading your account',
+                    icon: 'error',
+                    confirmButtonText: 'Got It'
+                });
             }
 
         })

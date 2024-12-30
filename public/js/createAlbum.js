@@ -109,7 +109,10 @@ const submitCreateArtist = async (event) => {
         })
     }).then(response => {
         if (response.status === 201) {
-            alert('Artist created successfully');
+            Swal.fire({
+                title: 'Artist created successfully',
+                icon: 'success',
+            })
             const artistInput = document.getElementById('artist');
             artistInput.value = artistName;
             artistID = response.json().id;
@@ -129,9 +132,15 @@ const submitCreateArtist = async (event) => {
 
 
         } else if (response.status === 409) {
-            alert('An artist with that name already exists');
+            Swal.fire({
+                title: 'An artist with that name already exists',
+                icon: 'error',
+            });
         } else {
-            alert('Failed to create artist');
+            Swal.fire({
+                title: 'Failed to create artist',
+                icon: 'error',
+            });
         }
     });
 
@@ -176,14 +185,27 @@ const submitCreateAlbumForm = async (event) => {
         body: formData
     }).then(response => {
         if (response.ok) {
-            alert('Album created successfully');
-            const encodedArtist = encodeURIComponent(artist).replace(/%20/g, '+');
-            const encodedTitle = encodeURIComponent(albumTitle).replace(/%20/g, '+');
-            window.location.href = `/artist/${encodedArtist}/${encodedTitle}`;
+            Swal.fire({
+                title: 'Album created successfully',
+                icon: 'success',
+                showConfirmButton: 'Ok!'
+            }).then(() => {
+                const encodedArtist = encodeURIComponent(artist).replace(/%20/g, '+');
+                const encodedTitle = encodeURIComponent(albumTitle).replace(/%20/g, '+');
+                window.location.href = `/artist/${encodedArtist}/${encodedTitle}`;
+            })
+
         } else if (response.status === 409) {
-            alert('An album with that name already exists for this artist');
+            Swal.fire({
+                title: 'An album with that name already exists',
+                icon: 'error',
+            });
+
         } else {
-            alert('Failed to create album');
+            Swal.fire({
+                title: 'Failed to create album',
+                icon: 'error',
+            });
         }
     });
 }

@@ -12,20 +12,23 @@ const handleEditJournalistReview = () => {
 }
 
 const handleDeleteJournalistReview = async () => {
-
-
     await fetch(`/api/albums/${albumId}/journalist-reviews`, {
         method: 'DELETE'
     }).then(response => {
         if (response.status === 200) {
-            alert('Review successfully deleted.');
-            location.reload();
+            Swal.fire({
+                title: 'Review deleted successfully',
+                icon: 'success',
+            }).then(() => {
+                window.location.reload();
+            });
         } else {
-            alert('An error occurred whilst deleting your review');
+            Swal.fire({
+                title: 'An error occurred while deleting your review',
+                icon: 'error',
+            });
         }
     });
-
-
 }
 
 const URLForJournalist = (username) => {

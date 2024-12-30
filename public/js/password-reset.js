@@ -52,7 +52,11 @@ const submitResetPassword = async (event) => {
     if (newPassword !== confirmPassword) {
         document.getElementById('new_password').classList.add('is-invalid')
         document.getElementById('confirm_password').classList.add('is-invalid')
-        alert('Passwords do not match');
+        Swal.fire({
+            title: 'Passwords do not match',
+            icon: 'error',
+            confirmButtonText: 'Got It'
+        });
         return;
     }
 
@@ -66,7 +70,11 @@ const submitResetPassword = async (event) => {
     if (!newPassword.match(/^(?=.*[A-Z])(?=.*[0-9]{3,})(?=.*[!@#$%^&*()_+])[a-zA-Z0-9!@#$%^&*()_+]{8,}$/)) {
         // set the error style
         document.getElementById('new_password').classList.add('is-invalid')
-        alert('Password does not meet the criteria');
+        Swal.fire({
+            title: 'Password does not meet requirements',
+            icon: 'error',
+            confirmButtonText: 'Got It'
+        });
         return;
     }
 
@@ -83,10 +91,19 @@ const submitResetPassword = async (event) => {
         })
     }).then(response => {
         if (response.status === 200) {
-            alert('Password reset successfully');
-            window.location.href = '/login';
+            Swal.fire({
+                title: 'Password reset successfully',
+                icon: 'success',
+                confirmButtonText: 'Got It'
+            }).then(() => {
+                window.location.href = '/login';
+            });
         } else {
-            alert('Unable to reset password');
+            Swal.fire({
+                title: 'An error occurred while resetting your password',
+                icon: 'error',
+                confirmButtonText: 'Got It'
+            });
         }
     });
 }
