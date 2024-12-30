@@ -15,7 +15,8 @@
                                    required aria-label="Password">
                         </div>
                         <div class="d-flex justify-content-center">
-                            <button class="btn btn-success" id="submitLogin" type="submit" aria-label="Submit">Submit
+                            <button class="btn btn-success" id="submitLogin" type="submit" aria-label="Submit">Upgrade
+                                Account
                             </button>
                         </div>
                     </form>
