@@ -41,3 +41,4 @@
 <script>
     const qrCodeUrl = "<?php echo $google2faSecret ?>";
 </script>
+<script src="/js/registration/step4.js"></script>

@@ -43,20 +43,27 @@ document.getElementById('profilePictureInput').addEventListener('change', functi
     handleUpload();
 });
 
-const handleUpload = () => {
+const handleUpload = async () => {
     const fileInput = document.getElementById('profilePictureInput');
     const file = fileInput.files[0];
     const formData = new FormData();
     formData.append('profile_picture', file);
 
-    const response = fetch('/api/upload-profile-picture', {
-        method: 'POST',
-        body: formData
-    });
+    try {
+        const response = await fetch('/api/upload-profile-picture', {
+            method: 'POST',
+            body: formData
+        });
 
-    if (response.ok) {
-        window.location.reload();
-    } else {
+        if (response.ok) {
+            window.location.reload();
+        } else {
+            Swal.fire({
+                title: 'An error occurred while uploading your profile picture',
+                icon: 'error',
+            });
+        }
+    } catch (error) {
         Swal.fire({
             title: 'An error occurred while uploading your profile picture',
             icon: 'error',

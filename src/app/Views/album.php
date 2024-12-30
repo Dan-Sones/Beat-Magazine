@@ -1,10 +1,11 @@
 <?php include 'includes/header.php'; ?>
-
 <?php if (isset($isJournalist) && $isJournalist): ?>
     <?php include PRIVATE_PATH . '/src/app/components/delete_album_modal.php'; ?>
 
 
     <?php if ($isJournalist && !isset($journalistReview)) : ?>
+        <script> let albumId = <?= json_encode($album->getAlbumId()) ?></script>
+
         <?php include PRIVATE_PATH . '/src/app/components/review_editor_modal.php'; ?>
     <?php endif; ?>
 
