@@ -209,11 +209,12 @@ class AlbumFactory
         FROM albums
         INNER JOIN artists ON albums.artist_id = artists.id
         LEFT JOIN genres ON albums.genre_id = genres.id
-        WHERE albums.name LIKE :searchOne OR artists.name LIKE :searchTwo
+        WHERE albums.name LIKE :searchOne OR artists.name LIKE :searchTwo OR genres.name LIKE :searchThree
         ';
         $statement = $this->db->prepare($query);
         $statement->bindValue(':searchOne', '%' . $search . '%', PDO::PARAM_STR);
         $statement->bindValue(':searchTwo', '%' . $search . '%', PDO::PARAM_STR);
+        $statement->bindValue(':searchThree', '%' . $search . '%', PDO::PARAM_STR);
         $statement->execute();
 
         if ($statement->rowCount() === 0) {

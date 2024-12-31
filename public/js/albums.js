@@ -51,7 +51,7 @@ const updateAlbumsGrid = (albums) => {
     const albumsContainer = document.getElementById('albums-row');
     albumsContainer.innerHTML = albums.length > 0
         ? albums.map(album => `
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2" role="listitem">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2" role="listitem" onclick="navigateToAlbum(event, '${album.artistName}', '${album.albumName}')">
                 <div class="card shadow album-card" style="width: 100%;" tabindex="0">
                     <img src="/images/album-art/${album.albumArt}" class="card-img-top" alt="${album.albumName}">
                     <div class="card-body">
