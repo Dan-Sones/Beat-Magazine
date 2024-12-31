@@ -19,11 +19,12 @@
                             <div class="card-body p-4">
                                 <h5 class="card-title"><?= htmlspecialchars($album->getAlbumName()) ?> -
                                     <em onclick="UrlForArtist('<?= addslashes($album->getArtistName()) ?>')"
-                                        class="artist-link"><?= htmlspecialchars($album->getArtistName()) ?></em></h5>
+                                        class="link-underline"><?= htmlspecialchars($album->getArtistName()) ?></em>
+                                </h5>
                                 <div class="card-text">
 
                                     <p class="big-card mb-1"><?= htmlspecialchars($rev->getAbstract()) ?></p>
-                                    <a class="link-opacity-100 read-review-link" type="link"
+                                    <a class="link-opacity-100 link-underline" type="link"
                                        onclick="UrlForAlbum('<?= addslashes($album->getArtistName()) ?>', '<?= addslashes($album->getAlbumName()) ?>')">Read
                                         More</a>
                                 </div>
@@ -40,12 +41,12 @@
                                              alt="Album art for <?= htmlspecialchars($album->getAlbumName()) ?>">
                                         <div class="card-body">
                                             <h5 class="card-title"><?= htmlspecialchars($album->getAlbumName()) ?> -
-                                                <em class="artist-link"
+                                                <em class="link-underline"
                                                     onclick="UrlForArtist('<?= addslashes($album->getArtistName()) ?>')"><?= htmlspecialchars($album->getArtistName()) ?></em>
                                             </h5>
                                             <div class="card-text">
                                                 <p class="small-card mb-1"><?= htmlspecialchars($rev->getAbstract()) ?></p>
-                                                <a class="link-opacity-100 read-review-link" type="link"
+                                                <a class="link-opacity-100 link-underline" type="link"
                                                    onclick="UrlForAlbum('<?= addslashes($album->getArtistName()) ?>', '<?= addslashes($album->getAlbumName()) ?>')">Read
                                                     More</a>
                                             </div>

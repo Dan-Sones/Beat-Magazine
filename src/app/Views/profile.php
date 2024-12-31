@@ -72,7 +72,8 @@
                                     <?php endif; ?>
                                     <?php if (isset($isJournalist) && $isJournalist): ?>
                                         <?php if (isset($_SESSION['user_id']) && (string)$_SESSION['user_id'] === (string)$user->getId()): ?>
-                                            <a class="link-opacity-100 link " onclick="handleUpdateBio()">Update Bio</a>
+                                            <a class="link-opacity-100 link-underline" onclick="handleUpdateBio()">Update
+                                                Bio</a>
                                         <?php endif; ?>
 
 
@@ -116,7 +117,7 @@
                                                         </div>
                                                     </div>
                                                     <p class="card-text"><?= $journalistReview->getAbstract() ?> <a
-                                                                class="link-opacity-100 link" type="link"
+                                                                class="link-opacity-100 link-underline" type="link"
                                                                 onclick="UrlForAlbum('<?= addslashes($album->getArtistName()) ?>', '<?= addslashes($album->getAlbumName()) ?>')">Read
                                                             More</a></p>
                                                 </div>

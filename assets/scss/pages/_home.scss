@@ -9,14 +9,6 @@
     -webkit-box-orient: vertical;
   }
 
-  .read-review-link,
-  .artist-link {
-    cursor: pointer;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
 }
 
 @media (min-width: 768px) {

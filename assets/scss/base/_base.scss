@@ -29,3 +29,11 @@ main {
 footer {
   flex-shrink: 0;
 }
+
+.link-underline {
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
