@@ -55,8 +55,9 @@
                                                    placeholder="Song Name" required>
                                         </div>
                                         <div class="col-12 col-md-5 mb-2 mb-md-0">
-                                            <input type="text" class="form-control" name="songLength[]"
-                                                   placeholder="Song Length (e.g., 3:45)" required>
+                                            <input type="text" class="form-control" pattern="^\d{2}:\d{2}$"
+                                                   name="songLength[]"
+                                                   placeholder="Song Length (e.g., 03:45)" required>
                                         </div>
                                         <div class="col-12 col-md-2 d-flex align-items-center justify-content-center justify-content-md-start mt-2 mt-md-0">
                                             <button type="button" class="btn btn-danger w-100 w-md-auto"
