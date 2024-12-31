@@ -1,30 +1,26 @@
-.latest-reviews .small-card,
-.latest-reviews .big-card {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 5;
-  -webkit-box-orient: vertical;
+// Styles for latest reviews section
+.latest-reviews {
+  .small-card,
+  .big-card {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+  }
+
+  .read-review-link,
+  .artist-link {
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
 
 @media (min-width: 768px) {
   .latest-reviews .big-card {
-    -webkit-line-clamp: unset; /* Remove the line clamp on larger screens */
+    -webkit-line-clamp: unset; // Remove the line clamp on larger screens
   }
-}
-
-.read-review-link {
-  cursor: pointer;
-}
-
-.read-review-link:hover {
-  text-decoration: underline;
-}
-
-.artist-link {
-  cursor: pointer;
-}
-
-.artist-link:hover {
-  text-decoration: underline;
 }
