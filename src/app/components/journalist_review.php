@@ -1,6 +1,6 @@
 <?php if (isset($album)): ?>
 
-    <div class="container mt-3 pt-2">
+    <div class="container mt-3 pt-2" id="journalist-review">
         <div class="card p-4 shadow-sm review-card">
             <?php if (isset($journalistReview) && $journalistReview): ?>
 
@@ -91,7 +91,7 @@
         const reviewAbstract = <?= json_encode($journalistReview->getAbstract()) ?>;
         const reviewText = <?= json_encode($journalistReview->getReview()) ?>;
     </script>
-    
+
     <script src="/js/journalistReview.js"></script>
 
 <?php endif; ?>
