@@ -1,6 +1,5 @@
-const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-
-const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 
 const container = document.getElementById('reviews-container');
 
@@ -12,7 +11,6 @@ container.addEventListener('click', (event) => {
         const encodedArtist = encodeURIComponent(artist).replace(/%20/g, '+');
         const encodedTitle = encodeURIComponent(title).replace(/%20/g, '+');
         window.location.href = `/artist/${encodedArtist}/${encodedTitle}`;
-    } else {
     }
 });
 
@@ -20,19 +18,18 @@ const UrlForAlbum = (artist, title) => {
     const encodedArtist = encodeURIComponent(artist).replace(/%20/g, '+');
     const encodedTitle = encodeURIComponent(title).replace(/%20/g, '+');
     window.location.href = `/artist/${encodedArtist}/${encodedTitle}`;
-}
+};
 
 const UrlForArtist = (event, artist) => {
     event.stopPropagation();
     const encodedArtist = encodeURIComponent(artist).replace(/%20/g, '+');
     window.location.href = `/artist/${encodedArtist}`;
-}
+};
 
 const handleUpdateBio = () => {
     const reviewEditorModal = new bootstrap.Modal(document.getElementById('bioEditorModal'));
     reviewEditorModal.show();
 };
-
 
 // Show the file upload dialog when the profile picture is clicked - Because the file input is hidden
 document.getElementById('profilePicture').addEventListener('click', function () {

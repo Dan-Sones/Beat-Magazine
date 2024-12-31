@@ -6,15 +6,16 @@ const handleEditJournalistReview = () => {
 
     document.getElementById('journalistReviewForm').onsubmit = editJournalistReview;
 
-
     const reviewEditorModal = new bootstrap.Modal(document.getElementById('reviewEditor'));
     reviewEditorModal.show();
 }
 
 const handleDeleteJournalistReview = async () => {
-    await fetch(`/api/albums/${albumId}/journalist-reviews`, {
-        method: 'DELETE'
-    }).then(response => {
+    try {
+        const response = await fetch(`/api/albums/${albumId}/journalist-reviews`, {
+            method: 'DELETE'
+        });
+
         if (response.status === 200) {
             Swal.fire({
                 title: 'Review deleted successfully',
@@ -28,13 +29,17 @@ const handleDeleteJournalistReview = async () => {
                 icon: 'error',
             });
         }
-    });
+    } catch (error) {
+        Swal.fire({
+            title: 'Network error occurred while deleting your review',
+            icon: 'error',
+        });
+    }
 }
 
 const URLForJournalist = (username) => {
     const encodedUsername = encodeURIComponent(username).replace(/%20/g, '+');
     window.location.href = `/user/${encodedUsername}`;
-
 }
 
 document.addEventListener('DOMContentLoaded', () => {

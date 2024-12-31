@@ -15,9 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const container = document.querySelector('.albums-container .container-fluid');
-
 });
-
 
 const navigateToAlbum = (event, artistName, albumName) => {
     if (artistName && albumName) {
@@ -35,21 +33,18 @@ const navigateToArtist = (event, artistName) => {
     }
 }
 
-const fetchAlbums = (query = '') => {
-    fetch(`/api/albums?search=${encodeURIComponent(query)}`)
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            } else {
-                return null;
-            }
-        })
-        .then(albums => {
-            updateAlbumsGrid(albums || []);
-        })
-        .catch(error => {
+const fetchAlbums = async (query = '') => {
+    try {
+        const response = await fetch(`/api/albums?search=${encodeURIComponent(query)}`);
+        if (response.ok) {
+            const albums = await response.json();
+            updateAlbumsGrid(albums);
+        } else {
             updateAlbumsGrid([]);
-        });
+        }
+    } catch (error) {
+        updateAlbumsGrid([]);
+    }
 }
 
 const updateAlbumsGrid = (albums) => {
@@ -70,7 +65,6 @@ const updateAlbumsGrid = (albums) => {
 }
 
 const getNoAlbumsText = () => {
-
     if (isJournalist) {
         return '<p class="text-center">No albums found for this search term. <a href="/create-album">Create an album</a></p>';
     }

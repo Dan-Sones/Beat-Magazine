@@ -8,19 +8,25 @@ const getProfileHref = () => {
 }
 
 const logout = async () => {
-    return await fetch('/api/logout', {
-        method: 'POST',
-    })
-        .then(response => {
-            if (response.ok) {
-                window.location.reload();
-            } else {
-                Swal.fire({
-                    title: 'An error occurred while logging out',
-                    icon: 'error',
-                    confirmButtonText: 'Got It'
-                });
-            }
+    try {
+        const response = await fetch('/api/logout', {
+            method: 'POST',
         });
 
-}
+        if (response.ok) {
+            window.location.reload();
+        } else {
+            Swal.fire({
+                title: 'An error occurred while logging out',
+                icon: 'error',
+                confirmButtonText: 'Got It'
+            });
+        }
+    } catch (error) {
+        Swal.fire({
+            title: 'Network error occurred while logging out',
+            icon: 'error',
+            confirmButtonText: 'Got It'
+        });
+    }
+};

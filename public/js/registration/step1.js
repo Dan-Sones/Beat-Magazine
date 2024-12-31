@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const validateUsername = () => {
         const username = usernameInput.value;
-        let isValid = true; // Start with valid by default
+        let isValid = true;
 
         if (username.length < 3) {
             isValid = false;
@@ -66,9 +66,8 @@ document.addEventListener('DOMContentLoaded', function () {
         return isValid;
     };
 
-
     const checkFormValidity = () => {
-        const isFormValid = validateUsername() && validateEmail() && validatePassword()
+        const isFormValid = validateUsername() && validateEmail() && validatePassword();
         nextButton.disabled = !isFormValid;
     };
 

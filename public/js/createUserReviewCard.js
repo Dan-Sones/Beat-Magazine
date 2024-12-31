@@ -29,17 +29,18 @@ const handleReviewSubmission = async (event) => {
         return;
     }
 
+    try {
+        const response = await fetch(`/api/albums/${albumId}/reviews`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                rating: rating,
+                review: review
+            })
+        });
 
-    return await fetch(`/api/albums/${albumId}/reviews`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            rating: rating,
-            review: review
-        })
-    }).then(response => {
         if (response.status === 201) {
             Swal.fire({
                 title: 'Review submitted successfully',
@@ -55,5 +56,11 @@ const handleReviewSubmission = async (event) => {
                 confirmButtonText: 'Got It'
             });
         }
-    });
+    } catch (error) {
+        Swal.fire({
+            title: 'Network error occurred while submitting your review',
+            icon: 'error',
+            confirmButtonText: 'Got It'
+        });
+    }
 };

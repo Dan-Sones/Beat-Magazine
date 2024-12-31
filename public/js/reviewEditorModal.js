@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
     reviewForm.onsubmit = submitJournalistReview;
 });
 
-
 const submitJournalistReview = async (event) => {
     event.preventDefault();
 
@@ -18,17 +17,19 @@ const submitJournalistReview = async (event) => {
     const abstract = document.getElementById('journalistAbstractText').value;
     const review = document.getElementById('journalistReviewText').value;
 
-    return await fetch(`/api/albums/${albumId}/journalist-reviews`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            rating: rating,
-            abstract: abstract,
-            review: review
-        })
-    }).then(response => {
+    try {
+        const response = await fetch(`/api/albums/${albumId}/journalist-reviews`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                rating: rating,
+                abstract: abstract,
+                review: review
+            })
+        });
+
         if (response.status === 201) {
             Swal.fire({
                 title: 'Review submitted successfully',
@@ -36,7 +37,7 @@ const submitJournalistReview = async (event) => {
                 confirmButtonText: 'Ok!'
             }).then(() => {
                 location.reload();
-            })
+            });
         } else {
             Swal.fire({
                 title: 'An error occurred while submitting your review',
@@ -44,8 +45,14 @@ const submitJournalistReview = async (event) => {
                 confirmButtonText: 'Got It'
             });
         }
-    });
-}
+    } catch (error) {
+        Swal.fire({
+            title: 'An error occurred while submitting your review',
+            icon: 'error',
+            confirmButtonText: 'Got It'
+        });
+    }
+};
 
 const editJournalistReview = async (event) => {
     event.preventDefault();
@@ -54,18 +61,19 @@ const editJournalistReview = async (event) => {
     const abstract = document.getElementById('journalistAbstractText').value;
     const review = document.getElementById('journalistReviewText').value;
 
+    try {
+        const response = await fetch(`/api/albums/${albumId}/journalist-reviews`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                rating: rating,
+                abstract: abstract,
+                review: review
+            })
+        });
 
-    await fetch(`/api/albums/${albumId}/journalist-reviews`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            rating: rating,
-            abstract: abstract,
-            review: review
-        })
-    }).then(response => {
         if (response.status === 200) {
             Swal.fire({
                 title: 'Review updated successfully',
@@ -81,8 +89,14 @@ const editJournalistReview = async (event) => {
                 confirmButtonText: 'Got It'
             });
         }
-    });
+    } catch (error) {
+        Swal.fire({
+            title: 'An error occurred while updating your review',
+            icon: 'error',
+            confirmButtonText: 'Got It'
+        });
+    }
 
     // reset the default onSubmit
     document.querySelector('form').onsubmit = submitJournalistReview;
-}
+};

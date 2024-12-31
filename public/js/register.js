@@ -8,52 +8,50 @@ document.querySelectorAll('.next-btn[data-bs-slide="next"]').forEach(function (b
     });
 });
 
-
 const isUsernameTaken = async (username) => {
-    return await fetch('/api/register/isUsernameTaken?' + new URLSearchParams({
-        "username": username
-    }), {
-        method: 'GET',
-    }).then(response => {
+    try {
+        const response = await fetch('/api/register/isUsernameTaken?' + new URLSearchParams({"username": username}), {
+            method: 'GET',
+        });
         if (!response.ok) {
             // Something went wrong so assume it's taken
             return true;
         }
-        return response.json();
-    }).then(data => {
+        const data = await response.json();
         return data.taken;
-    });
+    } catch (error) {
+        console.error('Error checking username:', error);
+        return true;
+    }
 };
 
 const isEmailTaken = async (email) => {
-    return await fetch('/api/register/isEmailTaken?' + new URLSearchParams({
-        "email": email
-    }), {
-        method: 'GET',
-    }).then(response => {
+    try {
+        const response = await fetch('/api/register/isEmailTaken?' + new URLSearchParams({"email": email}), {
+            method: 'GET',
+        });
         if (!response.ok) {
             // Something went wrong so assume it's taken
             return true;
         }
-        return response.json();
-    }).then(data => {
+        const data = await response.json();
         return data.taken;
-    });
+    } catch (error) {
+        console.error('Error checking email:', error);
+        return true;
+    }
 };
 
-
 const handleTaken = (taken, targetElementID) => {
-        if (taken === true) {
-            const tooltipContents = `This ${targetElementID === 'emailStatus' ? 'email' : 'username'} is already taken`;
-            document.getElementById(targetElementID).innerHTML = `<i data-bs-toggle="tooltip" class="bi bi-slash-circle icon-error"></i>`
-            document.getElementById(targetElementID).setAttribute("data-bs-title", tooltipContents);
-            new bootstrap.Tooltip(document.getElementById(targetElementID).querySelector('[data-bs-toggle="tooltip"]'));
-
-        } else {
-            document.getElementById(targetElementID).innerHTML = '<i class="bi bi-check-circle-fill icon-success"></i>';
-        }
+    if (taken === true) {
+        const tooltipContents = `This ${targetElementID === 'emailStatus' ? 'email' : 'username'} is already taken`;
+        document.getElementById(targetElementID).innerHTML = `<i data-bs-toggle="tooltip" class="bi bi-slash-circle icon-error"></i>`;
+        document.getElementById(targetElementID).setAttribute("data-bs-title", tooltipContents);
+        new bootstrap.Tooltip(document.getElementById(targetElementID).querySelector('[data-bs-toggle="tooltip"]'));
+    } else {
+        document.getElementById(targetElementID).innerHTML = '<i class="bi bi-check-circle-fill icon-success"></i>';
     }
-;
+};
 
 const handleEmailTaken = (taken) => {
     handleTaken(taken, 'emailStatus');
@@ -63,27 +61,23 @@ const handleUsernameTaken = (taken) => {
     handleTaken(taken, 'usernameStatus');
 };
 
-
 const setSpinner = (targetElementID) => {
     document.getElementById(targetElementID).innerHTML = '<div class="spinner-border" role="status"></div>';
 };
 
 document.addEventListener('DOMContentLoaded', function () {
-
-    //Disable submit button by default
+    // Disable submit button by default
     document.getElementById("submitRegistrationForm").disabled = true;
 
     const carousel = document.getElementById('registrationCarousel');
     const totalSlides = carousel.querySelectorAll('.carousel-item').length;
 
-    carousel.addEventListener('slid.bs.carousel', function (event) {
+    carousel.addEventListener('slid.bs.carousel', function () {
         const activeIndex = [...carousel.querySelectorAll('.carousel-item')].indexOf(
             carousel.querySelector('.carousel-item.active')
         );
 
-
         if (activeIndex === totalSlides - 2) {
-
             document.getElementById('step3Next').disabled = true;
 
             setSpinner('emailStatus');
@@ -93,7 +87,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 isEmailTaken(document.getElementById('email').value),
                 isUsernameTaken(document.getElementById('username').value)
             ]).then(([emailTaken, usernameTaken]) => {
-
                 if (emailTaken === false && usernameTaken === false) {
                     document.getElementById('step3Next').disabled = false;
                 } else {
@@ -103,8 +96,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 handleUsernameTaken(usernameTaken);
             });
         }
-
-
     });
 });
 
@@ -116,26 +107,35 @@ const submitForm = async (event) => {
     data.set("firstName", document.getElementById("firstName").value);
     data.set("lastName", document.getElementById("lastName").value);
     data.set("password", document.getElementById("password").value);
-    const response = await fetch('/api/register', {
-        method: 'POST',
-        content_type: 'form-data',
-        body: data
-    });
-    if (response.ok) {
+
+    try {
+        const response = await fetch('/api/register', {
+            method: 'POST',
+            body: data
+        });
+
+        if (response.ok) {
+            Swal.fire({
+                title: 'Registration successful',
+                icon: 'success',
+                confirmButtonText: 'Got It'
+            }).then(() => {
+                window.location.href = '/login';
+            });
+        } else {
+            Swal.fire({
+                title: 'Registration failed',
+                icon: 'error',
+                confirmButtonText: 'Got It'
+            });
+        }
+    } catch (error) {
+        console.error('Error during registration:', error);
         Swal.fire({
-            title: 'Registration successful',
-            icon: 'success',
-            confirmButtonText: 'Got It'
-        }).then(() => {
-            window.location.href = '/login';
-        })
-    } else {
-        Swal.fire({
-            title: 'Registration failed',
+            title: 'An error occurred during registration',
             icon: 'error',
             confirmButtonText: 'Got It'
         });
-
     }
 };
 
@@ -144,18 +144,18 @@ const validateOTP = async (event) => {
 
     const form = event.target;
     const formData = new FormData(form);
-
     const code = formData.get('2faCode');
 
-    return await fetch('/api/register/verify-otp?', {
-        method: 'POST',
-        content_type: 'application/json',
-        body: JSON.stringify({otp: code})
-    }).then(response => {
-        if (!response.ok) {
-        }
-        return response.json();
-    }).then(data => {
+    try {
+        const response = await fetch('/api/register/verify-otp', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({otp: code})
+        });
+
+        const data = await response.json();
         if (data.valid) {
             Swal.fire({
                 title: 'OTP Verified',
@@ -171,11 +171,19 @@ const validateOTP = async (event) => {
             });
             document.getElementById('submitRegistrationForm').disabled = true;
         }
-    });
+    } catch (error) {
+        console.error('Error during OTP verification:', error);
+        Swal.fire({
+            title: 'An error occurred during OTP verification',
+            icon: 'error',
+            confirmButtonText: 'Got It'
+        });
+    }
 };
 
-
 document.addEventListener('DOMContentLoaded', function () {
-    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 });
+
+document.getElementById('resetPasswordForm').addEventListener('submit', submitForm);

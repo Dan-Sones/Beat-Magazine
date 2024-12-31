@@ -8,83 +8,84 @@ const submitLoginForm = async (event) => {
         email: emailInput.value,
         password: passwordInput.value
     };
-    return await fetch('/api/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    }).then(response => {
+    try {
+        const response = await fetch('/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
         if (response.status === 200) {
-            // Hide Login form and show otp form
             loginForm.classList.add('d-none');
             document.getElementById('otpForm').classList.remove('d-none');
-
         } else {
             emailInput.classList.add('is-invalid');
             passwordInput.classList.add('is-invalid');
         }
-    });
+    } catch (error) {
+        console.error('Error during login:', error);
+    }
 };
-
 
 const submitOTPForm = async (event) => {
     event.preventDefault();
-
     const form = event.target;
     const formData = new FormData(form);
-
     const otp = formData.get('otp');
+    const data = {otp};
 
-    const data = {
-        otp: otp
-    };
+    try {
+        const response = await fetch('/api/verify-otp', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
 
-    return await fetch('/api/verify-otp', {
-        method: 'POST',
-        body: JSON.stringify(data),
-        contentType: 'application/json'
-    }).then(response => {
-        if (!response.ok) {
+        if (response.ok) {
+            const result = await response.json();
+            if (result.valid) {
+                window.location.href = '/albums';
+            } else {
+                Swal.fire({
+                    title: 'Something went wrong',
+                    icon: 'error',
+                    confirmButtonText: 'Got It'
+                });
+                document.getElementById('submitOTP').disabled = true;
+            }
+        } else {
             Swal.fire({
                 title: 'Invalid OTP',
                 icon: 'error',
                 confirmButtonText: 'Got It'
             });
         }
-        return response.json();
-    }).then(data => {
-        if (data.valid) {
-            window.location.href = '/albums';
-        } else {
-            Swal.fire({
-                title: 'Something went wrong',
-                icon: 'error',
-                confirmButtonText: 'Got It'
-            });
-            document.getElementById('submitOTP').disabled = true;
-        }
-    });
+    } catch (error) {
+        console.error('Error during OTP verification:', error);
+    }
 };
 
 const handleRequestPasswordReset = async () => {
     const email = emailInput.value;
-    const data = {
-        email: email
-    };
+    const data = {email};
 
     Swal.fire({
         title: 'Sending password reset email',
-        didOpen: () => {
+        didOpen: async () => {
             Swal.showLoading();
+            try {
+                const response = await fetch('/api/password-reset-request', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
 
-            fetch('/api/password-reset-request', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            }).then(response => {
                 if (response.status === 200) {
                     Swal.fire({
                         title: 'Password reset email sent',
@@ -98,20 +99,17 @@ const handleRequestPasswordReset = async () => {
                         confirmButtonText: 'Got It'
                     });
                 }
-            });
+            } catch (error) {
+                console.error('Error during password reset request:', error);
+            }
         }
-
-
-    })
-
-
+    });
 };
 
 emailInput.addEventListener('input', () => {
-    document.getElementById('passwordResetLink').disabled = !isEmailValid()
+    document.getElementById('passwordResetLink').disabled = !isEmailValid();
 });
 
-
 const isEmailValid = () => {
-    return emailInput.value.match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/);
-}
+    return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(emailInput.value);
+};
