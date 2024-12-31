@@ -87,9 +87,11 @@
 
 
     <script>
+        <?php if (isset($journalistReview) && $journalistReview): ?>
         const reviewRating = <?= json_encode($journalistReview->getRating()) ?>;
         const reviewAbstract = <?= json_encode($journalistReview->getAbstract()) ?>;
         const reviewText = <?= json_encode($journalistReview->getReview()) ?>;
+        <?php endif; ?>
     </script>
 
     <script src="/js/journalistReview.js"></script>

@@ -27,8 +27,8 @@ const UrlForArtist = (event, artist) => {
 };
 
 const handleUpdateBio = () => {
-    const reviewEditorModal = new bootstrap.Modal(document.getElementById('bioEditorModal'));
-    reviewEditorModal.show();
+    const bioEditorModal = new bootstrap.Modal(document.getElementById('bioEditorModal'));
+    bioEditorModal.show();
 };
 
 // Show the file upload dialog when the profile picture is clicked - Because the file input is hidden
@@ -39,7 +39,7 @@ document.getElementById('profilePicture').addEventListener('click', function () 
 document.getElementById('profilePictureInput').addEventListener('change', function () {
     handleUpload();
 });
-
+ 
 const handleUpload = async () => {
     const fileInput = document.getElementById('profilePictureInput');
     const file = fileInput.files[0];
@@ -53,7 +53,14 @@ const handleUpload = async () => {
         });
 
         if (response.ok) {
-            window.location.reload();
+            Swal.fire({
+                title: 'Profile picture uploaded successfully',
+                icon: 'success',
+                confirmButtonText: 'Got It'
+            }).then(() => {
+                window.location.reload();
+            })
+
         } else {
             Swal.fire({
                 title: 'An error occurred while uploading your profile picture',

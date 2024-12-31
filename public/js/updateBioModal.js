@@ -23,7 +23,13 @@ const updateBio = async (event, userId) => {
         });
 
         if (response.ok) {
-            window.location.reload();
+            Swal.fire({
+                title: 'Bio updated successfully',
+                icon: 'success',
+                confirmButtonText: 'Got It'
+            }).then(() => {
+                window.location.reload();
+            })
         } else {
             Swal.fire({
                 title: 'An error occurred while updating your bio',
