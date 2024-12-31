@@ -23,7 +23,16 @@ class AlbumsController
 
     public function index(Request $request, Response $response): Response
     {
-        $albums = $this->albumFactory->getAllAlbums();
+        // if there is a query param :genre then filter by genre
+        if (isset($request->getQueryParams()['genre'])) {
+            $genre = $request->getQueryParams()['genre'];
+            error_log('genre: ' . $genre);
+            $albums = $this->albumFactory->getAlbumsByGenre($genre);
+        } else {
+            $albums = $this->albumFactory->getAllAlbums();
+
+        }
+
 
         if (isset($_SESSION['role'])) {
             $isJournalist = $_SESSION['role'] === 'journalist';
