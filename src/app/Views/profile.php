@@ -22,16 +22,15 @@
                                             <div id="profilePicture" style="cursor: pointer; position: relative;">
                                                 <img src="<?= htmlspecialchars($user->getProfilePictureUri()) ?>"
                                                      alt="Profile Picture"
-                                                     class="img-fluid rounded-circle"
-                                                     style="width: 200px; height: 200px; object-fit: cover">
+                                                     class="img-fluid rounded-circle profile-picture"
+                                                >
                                                 <div id="uploadOverlay" class="rounded-circle">
                                                     <i class="bi bi-cloud-upload"></i></div>
                                             </div>
                                         </form>
                                     <?php else: ?>
                                         <img src="<?= htmlspecialchars($user->getProfilePictureUri()) ?>"
-                                             class="img-fluid rounded-circle p-2"
-                                             style="width: 250px; height: 250px; object-fit: cover"
+                                             class="img-fluid rounded-circle p-2 profile-picture"
                                              alt="Profile Picture">
                                     <?php endif; ?>
 

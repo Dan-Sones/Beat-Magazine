@@ -27,6 +27,12 @@
   justify-content: center;
 
 
+  .profile-picture {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+  }
+
   .link {
     cursor: pointer;
 
