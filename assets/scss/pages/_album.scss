@@ -99,3 +99,14 @@
   height: 130px;
   object-fit: cover
 }
+
+.album-info {
+  .genre {
+    cursor: pointer;
+  }
+
+  .genre:hover {
+    text-decoration: underline;
+  }
+}
+

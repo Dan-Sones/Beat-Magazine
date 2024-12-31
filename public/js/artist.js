@@ -9,3 +9,9 @@ const navigateToJournalist = (event, journalistUsername) => {
     const encodedJournalist = encodeURIComponent(journalistUsername).replace(/%20/g, '+');
     window.location.href = `/user/${encodedJournalist}`;
 }
+
+const navigateToGenre = (genre) => {
+    console.log("TOoo")
+    const encodedGenre = encodeURIComponent(genre).replace(/%20/g, '+');
+    window.location.href = `/albums?genre=${encodedGenre}`;
+}

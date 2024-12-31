@@ -4,12 +4,17 @@
         <div class="container-fluid grid-container">
             <div class="row justify-content-center my-4 search-row">
                 <div class="col-10 col-md-8 col-lg-6">
-                    <form class="d-flex" role="search" aria-label="Search albums and artists">
-                        <label for="search" class="visually-hidden">Search by album or artist name</label>
-                        <input class="form-control me-2" type="search"
-                               placeholder="Search by album or artist name"
-                               aria-label="Search" id="search">
-                    </form>
+                    <div id="search-form">
+                        <form class="d-flex" role="search" aria-label="Search by Genre, Album, Artist">
+                            <label for="search" class="visually-hidden">Search by Genre, Album, Artist</label>
+                            <input class="form-control me-2" type="search"
+                                   placeholder="Search by Genre, Album, Artist"
+                                   aria-label="Search" id="search">
+                        </form>
+                    </div>
+                    <div id="genre-container" class="d-flex justify-content-center" style="display: none">
+                        <h2 id="genre-title"></h2>
+                    </div>
                 </div>
             </div>
 
@@ -35,7 +40,7 @@
             </div>
             <?php if (isset($isJournalist) && $isJournalist) : ?>
 
-                <div class="row p-5">
+                <div id="create-album-container" class="row p-5">
                     <div class="col-12 text-center">
                         <button class="btn btn-primary" onclick="window.location.href = '/create-album'">Create an
                             album
