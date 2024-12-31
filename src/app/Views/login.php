@@ -10,7 +10,7 @@
                             <label for="email" class="form-label">Email Address</label>
                             <input type="text" class="form-control" id="email"
                                    placeholder="Enter email address" required>
-                            <a class="pointer-event" style="cursor: pointer" id="passwordResetLink"
+                            <a class="link-underline" id="passwordResetLink"
                                onclick="handleRequestPasswordReset()">Forgot
                                 Password?</a>
                         </div>

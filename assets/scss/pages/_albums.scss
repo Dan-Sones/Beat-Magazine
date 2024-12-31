@@ -1,44 +1,49 @@
 .albums-container {
   width: 100%;
   justify-content: center;
-}
 
-.grid-container {
-  padding-top: 2vh;
-  padding-bottom: 7vh;
-}
 
-.search-row {
-  padding-bottom: 2vh;
-}
+  .grid-container {
+    padding-top: 2vh;
+    padding-bottom: 7vh;
 
-.album-card {
-  transition: transform 0.3s ease-in-out;
-}
+    .search-row {
+      padding-bottom: 2vh;
+    }
 
-.album-card:hover {
-  transform: scale(1.05);
-  cursor: grab;
-}
+    .album-card {
+      transition: transform 0.3s ease-in-out;
 
-.album-title {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
+      .album-title {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
 
-.album-artist {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  cursor: pointer;
-}
+      .album-artist {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        cursor: pointer;
+      }
 
-.album-artist:hover {
-  text-decoration: underline;
+      .album-artist:hover {
+        text-decoration: underline;
+      }
+    }
+
+    .album-card:hover {
+      transform: scale(1.05);
+      cursor: grab;
+    }
+
+  }
+
 }
 
 // Limit the width of the container to 2000px so on ultra wide screens the content doesn't stretch too far
 .container-fluid {
   max-width: 2000px;
 }
+
+@import "../components/_review_card.scss";

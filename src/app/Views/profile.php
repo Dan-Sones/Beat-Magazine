@@ -4,7 +4,7 @@
     <?php include PRIVATE_PATH . '/src/app/components/update_bio_modal.php'; ?>
 <?php endif; ?>
 
-    <main class=" album-wrapper">
+    <main class="profile-wrapper">
         <div class="container-fluid overflow-x-hidden">
             <div class="row justify-content-center">
                 <div class="col-xl-8 col-lg-10 col-md-10 col-sm-12">
@@ -22,16 +22,15 @@
                                             <div id="profilePicture" style="cursor: pointer; position: relative;">
                                                 <img src="<?= htmlspecialchars($user->getProfilePictureUri()) ?>"
                                                      alt="Profile Picture"
-                                                     class="img-fluid rounded-circle"
-                                                     style="width: 200px; height: 200px; object-fit: cover">
+                                                     class="img-fluid rounded-circle profile-picture"
+                                                >
                                                 <div id="uploadOverlay" class="rounded-circle">
                                                     <i class="bi bi-cloud-upload"></i></div>
                                             </div>
                                         </form>
                                     <?php else: ?>
                                         <img src="<?= htmlspecialchars($user->getProfilePictureUri()) ?>"
-                                             class="img-fluid rounded-circle p-2"
-                                             style="width: 250px; height: 250px; object-fit: cover"
+                                             class="img-fluid rounded-circle p-2 profile-picture"
                                              alt="Profile Picture">
                                     <?php endif; ?>
 
@@ -73,7 +72,8 @@
                                     <?php endif; ?>
                                     <?php if (isset($isJournalist) && $isJournalist): ?>
                                         <?php if (isset($_SESSION['user_id']) && (string)$_SESSION['user_id'] === (string)$user->getId()): ?>
-                                            <a class="link-opacity-100" onclick="handleUpdateBio()">Update Bio</a>
+                                            <a class="link-opacity-100 link-underline" onclick="handleUpdateBio()">Update
+                                                Bio</a>
                                         <?php endif; ?>
 
 
@@ -117,7 +117,7 @@
                                                         </div>
                                                     </div>
                                                     <p class="card-text"><?= $journalistReview->getAbstract() ?> <a
-                                                                class="link-opacity-100 read-review-link" type="link"
+                                                                class="link-opacity-100 link-underline" type="link"
                                                                 onclick="UrlForAlbum('<?= addslashes($album->getArtistName()) ?>', '<?= addslashes($album->getAlbumName()) ?>')">Read
                                                             More</a></p>
                                                 </div>

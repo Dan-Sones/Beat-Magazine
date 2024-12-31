@@ -21,42 +21,65 @@ class AlbumService
 
     public function createAlbum(string $name, string $artistID, string $genre, string $label, string $releaseDate, array $songs, $albumArt): bool
     {
+        $genreQuery = '
+        SELECT id FROM genres WHERE name = :genre
+    ';
+        $statement = $this->db->prepare($genreQuery);
+        $statement->bindValue(':genre', $genre, PDO::PARAM_STR);
+        $statement->execute();
 
-        $query = '
-            INSERT INTO albums (name, artist_id, genre, record_label, album_art, release_date)
-            VALUES (:name, :artist_id, :genre, :record_label, :album_art, :release_date)
+        $genreData = $statement->fetch(PDO::FETCH_ASSOC);
+
+        if ($genreData === false) {
+            $insertGenreQuery = '
+            INSERT INTO genres (name) VALUES (:genre)
         ';
+            $genreStatement = $this->db->prepare($insertGenreQuery);
+            $genreStatement->bindValue(':genre', $genre, PDO::PARAM_STR);
+            $genreSuccess = $genreStatement->execute();
+
+            if (!$genreSuccess) {
+                return false;
+            }
+
+            $genreID = $this->db->lastInsertId();
+        } else {
+            $genreID = $genreData['id'];
+        }
 
         $albumArt = $this->uploadAlbumArt($albumArt);
 
-        $statement = $this->db->prepare($query);
-        $statement->bindValue(':name', $name, PDO::PARAM_STR);
-        $statement->bindValue(':artist_id', $artistID, PDO::PARAM_INT);
-        $statement->bindValue(':genre', $genre, PDO::PARAM_STR);
-        $statement->bindValue(':record_label', $label, PDO::PARAM_STR);
-        $statement->bindValue(':album_art', $albumArt, PDO::PARAM_STR);
-        $statement->bindValue(':release_date', $releaseDate, PDO::PARAM_STR);
-        $albumSuccess = $statement->execute();
+        $albumQuery = '
+        INSERT INTO albums (name, artist_id, genre_id, record_label, album_art, release_date)
+        VALUES (:name, :artist_id, :genre_id, :record_label, :album_art, :release_date)
+    ';
+
+        $albumStatement = $this->db->prepare($albumQuery);
+        $albumStatement->bindValue(':name', $name, PDO::PARAM_STR);
+        $albumStatement->bindValue(':artist_id', $artistID, PDO::PARAM_INT);
+        $albumStatement->bindValue(':genre_id', $genreID, PDO::PARAM_INT);
+        $albumStatement->bindValue(':record_label', $label, PDO::PARAM_STR);
+        $albumStatement->bindValue(':album_art', $albumArt, PDO::PARAM_STR);
+        $albumStatement->bindValue(':release_date', $releaseDate, PDO::PARAM_STR);
+        $albumSuccess = $albumStatement->execute();
 
         if (!$albumSuccess) {
             return false;
         }
 
-
         $albumID = $this->db->lastInsertId();
 
-        $query = '
-            INSERT INTO songs (album_id, name, length)
-            VALUES (:album_id, :name, :length)
-                
-        ';
-        $statement = $this->db->prepare($query);
-        $statement->bindValue(':album_id', $albumID, PDO::PARAM_INT);
+        $songQuery = '
+        INSERT INTO songs (album_id, name, length)
+        VALUES (:album_id, :name, :length)
+    ';
+        $songStatement = $this->db->prepare($songQuery);
+        $songStatement->bindValue(':album_id', $albumID, PDO::PARAM_INT);
 
         foreach ($songs as $song) {
-            $statement->bindValue(':name', $song['name'], PDO::PARAM_STR);
-            $statement->bindValue(':length', $song['length'], PDO::PARAM_STR);
-            $songSuccess = $statement->execute();
+            $songStatement->bindValue(':name', $song['name'], PDO::PARAM_STR);
+            $songStatement->bindValue(':length', $song['length'], PDO::PARAM_STR);
+            $songSuccess = $songStatement->execute();
 
             if (!$songSuccess) {
                 return false;
@@ -64,7 +87,6 @@ class AlbumService
         }
 
         return true;
-
     }
 
     private function uploadAlbumArt($uploadedFile): string

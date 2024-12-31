@@ -1,18 +1,10 @@
-.profile-container {
-  margin-top: 4vh;
-}
-
-.album-art {
-  transition: transform 0.8s ease-in-out;
-}
-
-.album-art:hover {
-  transform: scale(1.02);
-  cursor: grab;
-}
 
 #profilePicture {
   position: relative;
+
+  &:hover #uploadOverlay {
+    display: flex;
+  }
 }
 
 #uploadOverlay {
@@ -28,22 +20,42 @@
   justify-content: center;
 }
 
-#profilePicture:hover #uploadOverlay {
-  display: flex;
+
+.profile-wrapper {
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+
+
+  .profile-picture {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+  }
+
+
+  .profile-container {
+    margin-top: 4vh;
+  }
+
+  .artist-name {
+    cursor: pointer;
+  }
+
+  .artist-name:hover {
+    text-decoration: underline;
+  }
+
+
+  .album-art {
+    transition: transform 0.8s ease-in-out;
+
+    &:hover {
+      transform: scale(1.02);
+      cursor: grab;
+    }
+  }
+
+
 }
 
-.artist-name {
-  cursor: pointer;
-}
-
-.artist-name:hover {
-  text-decoration: underline;
-}
-
-.official-review-card {
-  transition: all 0.4s ease-in-out;
-}
-
-.official-review-card:hover {
-  transform: scale(1.02);;
-}

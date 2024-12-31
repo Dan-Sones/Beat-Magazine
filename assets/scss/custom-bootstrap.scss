@@ -14,9 +14,7 @@ $body-color: $brand-dark;
 $text-primary: $brand-dark;
 
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css");
-@import "../../node_modules/bootstrap/scss/functions";
-@import "../../node_modules/bootstrap/scss/variables";
-@import "../../node_modules/bootstrap/scss/bootstrap";
+@import "vendors/bootstrap";
 @import "base/_base";
 @import "pages/_albums";
 @import "components/_header";
@@ -24,3 +22,4 @@ $text-primary: $brand-dark;
 @import "pages/_profile.scss";
 @import "pages/_home.scss";
 @import "pages/_artist.scss";
+@import "components/_review_editor_modal.scss";
