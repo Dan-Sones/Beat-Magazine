@@ -14,3 +14,15 @@
 .journalist-name:hover {
   text-decoration: underline;
 }
+
+
+.artist-page-wrapper {
+  .genre:hover {
+    text-decoration: underline;
+  }
+
+  .genre {
+    cursor: pointer;
+  }
+
+}
