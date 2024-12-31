@@ -4,10 +4,10 @@
         <div class="container-fluid grid-container">
             <div class="row justify-content-center my-4 search-row">
                 <div class="col-10 col-md-8 col-lg-6">
-                    <form class="d-flex" role="search" aria-label="Search albums and artists">
-                        <label for="search" class="visually-hidden">Search by album or artist name</label>
+                    <form class="d-flex" role="search" aria-label="Search by Genre, Album, Artist">
+                        <label for="search" class="visually-hidden">Search by Genre, Album, Artist</label>
                         <input class="form-control me-2" type="search"
-                               placeholder="Search by album or artist name"
+                               placeholder="Search by Genre, Album, Artist"
                                aria-label="Search" id="search">
                     </form>
                 </div>
