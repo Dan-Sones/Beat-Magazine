@@ -15,12 +15,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
           rel="stylesheet">
 
+    <link href="/css/aos.css" rel="stylesheet">
+    <link href="/css/sweetalert2.min.css" rel="stylesheet">
 </head>
-<body class="bg-light text-dark d-flex flex-column">
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+<script src="/dist/sweetalert2.min.js"></script>
+<script src="/dist/popper.min.js"></script>
+<script src="/dist/bootstrap.bundle.min.js"></script>
+
 
 <div class="wrapper">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
