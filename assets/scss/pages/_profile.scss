@@ -1,49 +1,63 @@
-.profile-container {
-  margin-top: 4vh;
-}
 
-.album-art {
-  transition: transform 0.8s ease-in-out;
-}
-
-.album-art:hover {
-  transform: scale(1.02);
-  cursor: grab;
-}
-
-#profilePicture {
-  position: relative;
-}
-
-#uploadOverlay {
-  display: none;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
+.profile-wrapper {
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  color: white;
-  align-items: center;
+  width: 100%;
   justify-content: center;
+
+
+  .link {
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .profile-container {
+    margin-top: 4vh;
+  }
+
+
+  #profilePicture {
+    position: relative;
+
+    &:hover #uploadOverlay {
+      display: flex;
+    }
+  }
+
+  #uploadOverlay {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    align-items: center;
+    justify-content: center;
+  }
+
+
+  .artist-name {
+    cursor: pointer;
+  }
+
+  .artist-name:hover {
+    text-decoration: underline;
+  }
+
+
+  .album-art {
+    transition: transform 0.8s ease-in-out;
+
+    &:hover {
+      transform: scale(1.02);
+      cursor: grab;
+    }
+  }
+  
+
 }
 
-#profilePicture:hover #uploadOverlay {
-  display: flex;
-}
-
-.artist-name {
-  cursor: pointer;
-}
-
-.artist-name:hover {
-  text-decoration: underline;
-}
-
-.official-review-card {
-  transition: all 0.4s ease-in-out;
-}
-
-.official-review-card:hover {
-  transform: scale(1.02);;
-}
