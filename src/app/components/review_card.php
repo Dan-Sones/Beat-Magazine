@@ -1,14 +1,13 @@
 <?php if (isset($userReview)): ?>
 
     <div class="col-12">
-        <div class="card shadow-sm" id="userReview-<?= htmlspecialchars($userReview->getId()) ?>">
+        <div class="card shadow-sm user-review-card" id="userReview-<?= htmlspecialchars($userReview->getId()) ?>">
             <div class="container p-3 ps-4">
                 <div class="row">
                     <!-- Mobile layout -->
                     <div class="col-12 d-flex align-items-center d-md-none order-1 pb-3">
                         <img src="<?= htmlspecialchars($userReview->getUser()->getProfilePictureUri()) ?>"
-                             class="img-fluid rounded-circle"
-                             style="width: 60px; height: 60px; object-fit: cover"
+                             class="img-fluid rounded-circle mobile-pfp"
                              alt="profilePicture for <?= htmlspecialchars($userReview->getUser()->getUsername()) ?>">
                         <div class="ms-2">
                             <a href="/user/<?= htmlspecialchars($userReview->getUser()->getUsername()) ?>"
@@ -21,8 +20,7 @@
                     <!-- Desktop layout -->
                     <div class="col-12 col-md-3 d-none d-md-flex flex-column align-items-center order-md-1 d-flex justify-content-center">
                         <img src="<?= htmlspecialchars($userReview->getUser()->getProfilePictureUri()) ?>"
-                             class="img-fluid rounded-circle"
-                             style="width: 120px; height: 120px; object-fit: cover"
+                             class="img-fluid rounded-circle desktop-pfp"
                              alt="profilePicture for <?= htmlspecialchars($userReview->getUser()->getUsername()) ?>">
                         <a href="/user/<?= htmlspecialchars($userReview->getUser()->getUsername()) ?>"
                            class="text-center pt-3"><?= htmlspecialchars($userReview->getUser()->getUsername()) ?></a>
@@ -107,10 +105,10 @@
                                 <?php if (isset($likedReviewsForUser)): ?>
                                     <?php if (in_array($userReview->getId(), $likedReviewsForUser)): ?>
                                         <i onclick="handleUnlikeReview('<?= htmlspecialchars($userReview->getId()) ?>')"
-                                           class="bi bi-hand-thumbs-up-fill text-primary" style="cursor: pointer;"></i>
+                                           class="bi bi-hand-thumbs-up-fill text-primary like-cursor"></i>
                                     <?php else: ?>
                                         <i onclick="handleLikeReview('<?= htmlspecialchars($userReview->getId()) ?>')"
-                                           class="bi bi-hand-thumbs-up" style="cursor: pointer;"></i>
+                                           class="bi bi-hand-thumbs-up like-cursor"></i>
                                     <?php endif; ?>
                                 <?php endif; ?>
                             <?php else: ?>

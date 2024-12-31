@@ -1,0 +1,19 @@
+.user-review-card {
+  .desktop-pfp {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+  }
+
+  .mobile-pfp {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+  }
+
+
+  .like-cursor {
+    cursor: pointer;
+  }
+
+}
