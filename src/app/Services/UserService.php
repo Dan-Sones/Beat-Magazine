@@ -6,6 +6,8 @@ use PDO;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 use Ramsey\Uuid\Uuid;
+use RobThree\Auth\Providers\Qr\BaconQrCodeProvider;
+use RobThree\Auth\TwoFactorAuth;
 
 
 class UserService
@@ -55,6 +57,13 @@ class UserService
         return $statement->fetchColumn() > 0;
     }
 
+    public function validateOTP(int $userID, string $otp): bool
+    {
+        $google2fa_secret = $this->getGoogle2fa_secretForUser($userID);
+        $tfa = new TwoFactorAuth(new BaconQrCodeProvider());
+        return $tfa->verifyCode($google2fa_secret, $otp);
+    }
+
     public function getGoogle2fa_secretForUser(int $userID): ?string
     {
         $query = 'SELECT google2fa_secret FROM users WHERE id = :id';
@@ -77,19 +86,30 @@ class UserService
         $stmt->bindValue(':email', $email, PDO::PARAM_STR);
         $stmt->execute();
 
+        $stmt = $this->db->prepare('SELECT id FROM users WHERE email = :email');
+        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+        $stmt->execute();
+        $userId = $stmt->fetchColumn();
+
+        if (!$userId) {
+            return false;
+        }
+
 
         $token = bin2hex(random_bytes(16));
         $expires = date('Y-m-d H:i:s', time() + 1800); // 30 minutes from now
 
-        $stmt = $this->db->prepare('INSERT INTO password_resets (email, token, expires_at) VALUES (:email, :token, :expires)');
+        $stmt = $this->db->prepare('INSERT INTO password_resets (user_id, email, token, expires_at) VALUES (:user_id, :email, :token, :expires)');
+        $stmt->bindValue(':user_id', $userId, PDO::PARAM_INT);
         $stmt->bindValue(':email', $email, PDO::PARAM_STR);
         $stmt->bindValue(':token', hash('sha256', $token), PDO::PARAM_STR);
         $stmt->bindValue(':expires', $expires, PDO::PARAM_STR);
 
+
         if (!$stmt->execute()) {
             return false;
         }
-        
+
         return $this->sendPasswordResetEmail($email, $token);
     }
 
@@ -145,6 +165,16 @@ class UserService
         $stmt->bindValue(':token', $hashedToken, PDO::PARAM_STR);
         $stmt->execute();
         return $stmt->fetchColumn() !== false;
+    }
+
+    public function getUserIDFromResetToken(string $token): ?int
+    {
+        $hashedToken = hash('sha256', $token);
+
+        $stmt = $this->db->prepare('SELECT user_id FROM password_resets WHERE token = :token AND expires_at > NOW()');
+        $stmt->bindValue(':token', $hashedToken, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetchColumn();
     }
 
     public function getUserID(): ?int

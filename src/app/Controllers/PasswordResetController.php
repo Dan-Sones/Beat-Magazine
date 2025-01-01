@@ -78,8 +78,14 @@ class PasswordResetController
             return $response->withStatus(400);
         }
 
-        if (!isset($data['new_password']) || !isset($data['token'])) {
+        if (!isset($data['new_password']) || !isset($data['token']) || !isset($data['otp'])) {
             return $response->withStatus(400);
+        }
+
+        $userID = $this->userService->getUserIDFromResetToken($data['token']);
+
+        if (!$this->userService->validateOTP($userID, $data['otp'])) {
+            return $response->withStatus(401);
         }
 
         $success = null;
@@ -87,7 +93,6 @@ class PasswordResetController
         try {
             $success = $this->userService->resetPassword($data['token'], $data['new_password']);
         } catch (\Exception $e) {
-            error_log($e->getMessage());
             return $response->withStatus(500);
         }
 

@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 const passwordInput = document.getElementById('newPassword');
 const confirmPasswordInput = document.getElementById('confirmNewPassword');
+const OTPInput = document.getElementById('otp');
 
 
 const checkPassword = () => {
@@ -39,8 +40,10 @@ passwordInput.addEventListener('blur', () => {
 const submitResetPassword = async (event) => {
     event.preventDefault();
 
-    const newPassword = document.getElementById('new_password').value;
-    const confirmPassword = document.getElementById('confirm_password').value;
+    const newPassword = passwordInput.value;
+    const confirmPassword = confirmPasswordInput.value;
+    const otpValue = OTPInput.value;
+
 
     if (newPassword !== confirmPassword) {
         passwordInput.classList.add('is-invalid');
@@ -89,6 +92,7 @@ const submitResetPassword = async (event) => {
             },
             body: JSON.stringify({
                 new_password: newPassword,
+                otp: otpValue,
                 token: new URLSearchParams(window.location.search).get('token')
             })
         });

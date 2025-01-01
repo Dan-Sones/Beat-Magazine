@@ -53,6 +53,10 @@
                                        id="confirmNewPassword"
                                        placeholder="Confirm new password" required>
                             </div>
+                            <div class="mb-3">
+                                <label for="otp" class="form-label">Enter OTP</label>
+                                <input type="text" class="form-control" name="otp" id="otp" placeholder="Enter OTP">
+                            </div>
                             <div class="d-flex justify-content-center">
                                 <button class="btn btn-success w-100" id="submit" type="submit">Reset Password</button>
                             </div>
