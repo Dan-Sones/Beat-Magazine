@@ -26,11 +26,9 @@ const checkPassword = () => {
     document.getElementById('confirmLengthStatus').innerHTML = confirmLength ? '<i class="bi bi-check-circle-fill text-success"></i>' : '<i class="bi bi-x-circle-fill text-danger"></i>';
     document.getElementById('passwordsMatchStatus').innerHTML = confirmPasswordsMatch ? '<i class="bi bi-check-circle-fill text-success"></i>' : '<i class="bi bi-x-circle-fill text-danger"></i>';
 
-    // Disable form submission if the password does not meet the criteria
     document.getElementById('submit').disabled = !confirmNumbers || !confirmCapital || !confirmPunctuation || !confirmLength;
 }
 
-// When the user enters the textbox
 passwordInput.addEventListener('input', checkPassword);
 confirmPasswordInput.addEventListener('input', checkPassword);
 
