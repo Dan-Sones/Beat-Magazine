@@ -16,6 +16,11 @@
             <input type="password" class="form-control" id="password"
                    placeholder="Enter password" data-bs-toggle="tooltip" required>
         </div>
+        <div class="mb-3">
+            <label for="confirmPassword" class="form-label">Confirm Password</label>
+            <input type="password" class="form-control" id="confirmPassword"
+                   placeholder="Enter password" data-bs-toggle="tooltip" required>
+        </div>
 
         <div class="card p-4 shadow-sm mb-2">
             <h5 class="text-center pb-2">Password Requirements</h5>
@@ -41,6 +46,12 @@
                 <li class="d-flex justify-content-between align-items-center">
                     <span>Be greater than 8 characters:</span>
                     <div id="confirmLengthStatus">
+                        <div class="spinner-border" role="status"></div>
+                    </div>
+                </li>
+                <li class="d-flex justify-content-between align-items-center">
+                    <span>Passwords Match:</span>
+                    <div id="passwordsMatchStatus">
                         <div class="spinner-border" role="status"></div>
                     </div>
                 </li>

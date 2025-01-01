@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const usernameInput = document.getElementById('username');
     const emailInput = document.getElementById('email');
     const passwordInput = document.getElementById('password');
+    const confirmPasswordInput = document.getElementById('confirmPassword');
 
     const validateInput = (input, isValid, message) => {
         const tooltipInstance = bootstrap.Tooltip.getInstance(input);
@@ -76,13 +77,14 @@ document.addEventListener('DOMContentLoaded', function () {
         const confirmCapital = passwordInput.value.match(/[A-Z]/g) && passwordInput.value.match(/[A-Z]/g).length >= 1;
         const confirmPunctuation = passwordInput.value.match(/[!@#$%^&*()_+]/g) && passwordInput.value.match(/[!@#$%^&*()_+]/g).length >= 1;
         const confirmLength = passwordInput.value.length >= 8;
+        const confirmPasswordsMatch = passwordInput.value === confirmPasswordInput.value;
 
         document.getElementById('confirmNumbersStatus').innerHTML = confirmNumbers ? '<i class="bi bi-check-circle-fill text-success"></i>' : '<i class="bi bi-x-circle-fill text-danger"></i>';
         document.getElementById('confirmCapitalStatus').innerHTML = confirmCapital ? '<i class="bi bi-check-circle-fill text-success"></i>' : '<i class="bi bi-x-circle-fill text-danger"></i>';
         document.getElementById('confirmPunctuationStatus').innerHTML = confirmPunctuation ? '<i class="bi bi-check-circle-fill text-success"></i>' : '<i class="bi bi-x-circle-fill text-danger"></i>';
         document.getElementById('confirmLengthStatus').innerHTML = confirmLength ? '<i class="bi bi-check-circle-fill text-success"></i>' : '<i class="bi bi-x-circle-fill text-danger"></i>';
-
-        return confirmNumbers && confirmCapital && confirmPunctuation && confirmLength;
+        document.getElementById('passwordsMatchStatus').innerHTML = confirmPasswordsMatch ? '<i class="bi bi-check-circle-fill text-success"></i>' : '<i class="bi bi-x-circle-fill text-danger"></i>';
+        return confirmNumbers && confirmCapital && confirmPunctuation && confirmLength && confirmPasswordsMatch;
     };
 
     passwordInput.addEventListener('input', checkPassword);
@@ -90,11 +92,12 @@ document.addEventListener('DOMContentLoaded', function () {
         passwordInput.classList.remove('is-invalid');
     });
 
+    confirmPasswordInput.addEventListener('input', checkPassword);
+
     usernameInput.addEventListener('blur', validateUsername);
     emailInput.addEventListener('blur', validateEmail);
-    passwordInput.addEventListener('blur', checkPassword);
-
     step1Form.addEventListener('input', checkFormValidity);
+
 
     nextButton.disabled = true;
 });

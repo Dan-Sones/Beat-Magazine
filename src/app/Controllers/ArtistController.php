@@ -77,7 +77,6 @@ class ArtistController
             return $response->withStatus(500);
         }
 
-        // return an id JSON property
         $response->getBody()->write(json_encode(['id' => $id]));
 
         return $response->withStatus(201);
