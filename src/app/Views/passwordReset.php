@@ -41,7 +41,7 @@
                             </li>
                         </ul>
 
-                        <form onsubmit="submitResetPassword(event)">
+                        <form id="passwordResetForm" onsubmit="submitResetPassword(event)">
                             <div class="mb-3">
                                 <label for="newPassword" class="form-label">New Password</label>
                                 <input type="password" class="form-control" name="newPassword" id="newPassword"
@@ -55,7 +55,8 @@
                             </div>
                             <div class="mb-3">
                                 <label for="otp" class="form-label">Enter OTP</label>
-                                <input type="text" class="form-control" name="otp" id="otp" placeholder="Enter OTP">
+                                <input type="text" class="form-control" name="otp" id="otp" placeholder="Enter OTP"
+                                       required>
                             </div>
                             <div class="d-flex justify-content-center">
                                 <button class="btn btn-success w-100" id="submit" type="submit">Reset Password</button>

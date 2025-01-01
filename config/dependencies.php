@@ -13,6 +13,7 @@ use S246109\BeatMagazine\Services\HomeService;
 use S246109\BeatMagazine\Services\JournalistReviewService;
 use S246109\BeatMagazine\Services\JournalistService;
 use S246109\BeatMagazine\Services\LikeService;
+use S246109\BeatMagazine\Services\PasswordResetService;
 use S246109\BeatMagazine\Services\UserReviewService;
 use S246109\BeatMagazine\Services\UserService;
 
@@ -52,6 +53,9 @@ return function (ContainerBuilder $containerBuilder) {
         },
         UserService::class => function (ContainerInterface $c) {
             return new UserService($c->get(PDO::class));
+        },
+        PasswordResetService::class => function (ContainerInterface $c) {
+            return new PasswordResetService($c->get(PDO::class));
         },
         UserFactory::class => function (ContainerInterface $c) {
             return new UserFactory($c->get(PDO::class));

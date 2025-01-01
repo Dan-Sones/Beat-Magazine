@@ -4,6 +4,7 @@ namespace S246109\BeatMagazine\Controllers;
 
 use PDO;
 use S246109\BeatMagazine\Models\User;
+use S246109\BeatMagazine\Services\PasswordResetService;
 use S246109\BeatMagazine\Services\UserService;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
@@ -12,15 +13,17 @@ class PasswordResetController
 {
 
     private UserService $userService;
+    private PasswordResetService $passwordResetService;
 
     /**
      * @param UserService $userService
+     * @param PasswordResetService $passwordResetService
      */
-    public function __construct(UserService $userService)
+    public function __construct(UserService $userService, PasswordResetService $passwordResetService)
     {
         $this->userService = $userService;
+        $this->passwordResetService = $passwordResetService;
     }
-
 
     public function index(Request $request, Response $response, array $args): Response
     {
@@ -29,7 +32,7 @@ class PasswordResetController
             return $response->withHeader('Location', '/login')->withStatus(302);
         }
 
-        $validToken = $this->userService->checkIfValidResetToken($token);
+        $validToken = $this->passwordResetService->checkIfValidResetToken($token);
 
         if (!$validToken) {
             return $response->withHeader('Location', '/login')->withStatus(302);
@@ -61,7 +64,7 @@ class PasswordResetController
 
         $email = $data['email'];
 
-        $success = $this->userService->handlePasswordResetRequest($email);
+        $success = $this->passwordResetService->handlePasswordResetRequest($email);
 
         if (!$success) {
             return $response->withStatus(500);
@@ -82,7 +85,7 @@ class PasswordResetController
             return $response->withStatus(400);
         }
 
-        $userID = $this->userService->getUserIDFromResetToken($data['token']);
+        $userID = $this->passwordResetService->getUserIDFromResetToken($data['token']);
 
         if (!$this->userService->validateOTP($userID, $data['otp'])) {
             return $response->withStatus(401);
@@ -91,7 +94,7 @@ class PasswordResetController
         $success = null;
 
         try {
-            $success = $this->userService->resetPassword($data['token'], $data['new_password']);
+            $success = $this->passwordResetService->resetPassword($data['token'], $data['new_password']);
         } catch (\Exception $e) {
             return $response->withStatus(500);
         }
