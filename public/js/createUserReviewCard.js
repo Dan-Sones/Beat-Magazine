@@ -34,7 +34,7 @@ const handleReviewSubmission = async (event) => {
     }
 
     try {
-        const response = await fetch(`/api/albums/${albumId}/reviews`, {
+        const response = await fetch(`/api/albums/${albumIdGlobal}/reviews`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

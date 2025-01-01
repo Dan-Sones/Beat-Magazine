@@ -12,7 +12,7 @@ const handleEditJournalistReview = () => {
 
 const handleDeleteJournalistReview = async () => {
     try {
-        const response = await fetch(`/api/albums/${albumId}/journalist-reviews`, {
+        const response = await fetch(`/api/albums/${albumIdGlobal}/journalist-reviews`, {
             method: 'DELETE'
         });
 
@@ -39,7 +39,7 @@ const handleDeleteJournalistReview = async () => {
         }
     } catch (error) {
         Swal.fire({
-            title: 'Network error occurred while deleting your review',
+            title: `Network error occurred while deleting your review ${error}`,
             icon: 'error',
             customClass: {
                 confirmButton: 'btn btn-primary btn-lg',
@@ -74,13 +74,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    readMoreBtn.addEventListener('click', () => {
-        if (fullReviewContainer.style.height === '0px' || fullReviewContainer.style.height === '') {
-            animateHeight(fullReviewContainer, 'expand');
-            readMoreBtn.textContent = 'Read Less';
-        } else {
-            animateHeight(fullReviewContainer, 'collapse');
-            readMoreBtn.textContent = 'Read More';
-        }
-    });
+    if (readMoreBtn) {
+        readMoreBtn.addEventListener('click', () => {
+            if (fullReviewContainer.style.height === '0px' || fullReviewContainer.style.height === '') {
+                animateHeight(fullReviewContainer, 'expand');
+                readMoreBtn.textContent = 'Read Less';
+            } else {
+                animateHeight(fullReviewContainer, 'collapse');
+                readMoreBtn.textContent = 'Read More';
+            }
+        });
+    }
+
+
 });
