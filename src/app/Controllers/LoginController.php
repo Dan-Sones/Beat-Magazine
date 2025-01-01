@@ -84,11 +84,7 @@ class LoginController
 
         $otp = $data['otp'];
 
-        $secret = $this->userService->getGoogle2fa_secretForUser($_SESSION['user_id']);
-
-        $tfa = new TwoFactorAuth(new BaconQrCodeProvider());
-
-        if (!$tfa->verifyCode($secret, $otp)) {
+        if (!$this->userService->validateOTP($_SESSION['user_id'], $otp)) {
             return $response->withStatus(401);
         }
 

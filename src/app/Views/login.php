@@ -28,7 +28,7 @@
                     <form id="otpForm" class="d-none" onsubmit="submitOTPForm(event)">
                         <div class="mb-3">
                             <label for="otp" class="form-label">OTP</label>
-                            <input type="text" class="form-control" id="otp" name="otp"
+                            <input type="text" class="form-control" id="otp" name="otp" maxlength="6"
                                    placeholder="Enter OTP" required>
                         </div>
                         <div class="d-flex justify-content-center">

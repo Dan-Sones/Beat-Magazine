@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 const passwordInput = document.getElementById('newPassword');
 const confirmPasswordInput = document.getElementById('confirmNewPassword');
+const OTPInput = document.getElementById('otp');
+const passwordResetForm = document.getElementById('passwordResetForm');
 
 
 const checkPassword = () => {
@@ -26,8 +28,9 @@ const checkPassword = () => {
     document.getElementById('confirmLengthStatus').innerHTML = confirmLength ? '<i class="bi bi-check-circle-fill text-success"></i>' : '<i class="bi bi-x-circle-fill text-danger"></i>';
     document.getElementById('passwordsMatchStatus').innerHTML = confirmPasswordsMatch ? '<i class="bi bi-check-circle-fill text-success"></i>' : '<i class="bi bi-x-circle-fill text-danger"></i>';
 
-    document.getElementById('submit').disabled = !confirmNumbers || !confirmCapital || !confirmPunctuation || !confirmLength;
+    return confirmNumbers && confirmCapital && confirmPunctuation && confirmLength;
 }
+
 
 passwordInput.addEventListener('input', checkPassword);
 confirmPasswordInput.addEventListener('input', checkPassword);
@@ -36,11 +39,25 @@ passwordInput.addEventListener('blur', () => {
     passwordInput.classList.remove('is-invalid');
 })
 
+
+const validateOTP = () => {
+    return OTPInput.value.length === 6;
+}
+
+const checkFormValidity = () => {
+    document.getElementById('submit').disabled = !(checkPassword() && validateOTP());
+}
+
+passwordResetForm.addEventListener('input', checkFormValidity)
+
+
 const submitResetPassword = async (event) => {
     event.preventDefault();
 
-    const newPassword = document.getElementById('new_password').value;
-    const confirmPassword = document.getElementById('confirm_password').value;
+    const newPassword = passwordInput.value;
+    const confirmPassword = confirmPasswordInput.value;
+    const otpValue = OTPInput.value;
+
 
     if (newPassword !== confirmPassword) {
         passwordInput.classList.add('is-invalid');
@@ -89,6 +106,7 @@ const submitResetPassword = async (event) => {
             },
             body: JSON.stringify({
                 new_password: newPassword,
+                otp: otpValue,
                 token: new URLSearchParams(window.location.search).get('token')
             })
         });
@@ -104,6 +122,16 @@ const submitResetPassword = async (event) => {
                 confirmButtonText: 'Got It'
             }).then(() => {
                 window.location.href = '/login';
+            });
+        } else if (response.status === 401) {
+            Swal.fire({
+                title: 'Invalid OTP',
+                customClass: {
+                    confirmButton: 'btn btn-primary btn-lg',
+                    loader: 'custom-loader'
+                },
+                icon: 'error',
+                confirmButtonText: 'Got It'
             });
         } else {
             Swal.fire({

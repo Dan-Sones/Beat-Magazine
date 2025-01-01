@@ -20,7 +20,7 @@
                     <div class="mb-3">
                         <label for="2faCode" class="form-label">Enter the code from your authenticator app</label>
                         <input type="text" class="form-control" id="2faCode" name="2faCode" placeholder="Enter code"
-                               required>
+                               maxlength="6" required>
                     </div>
                     <div class="d-flex justify-content-center">
                         <button class="btn btn-primary" type="submit">Confirm Code</button>
