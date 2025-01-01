@@ -16,6 +16,10 @@ const submitUpgradeForm = async (event) => {
             Swal.fire({
                 title: 'Account upgraded successfully',
                 icon: 'success',
+                customClass: {
+                    confirmButton: 'btn btn-primary btn-lg',
+                    loader: 'custom-loader'
+                },
                 confirmButtonText: 'Got It'
             }).then(() => {
                 window.location.href = '/albums';
@@ -24,6 +28,10 @@ const submitUpgradeForm = async (event) => {
             Swal.fire({
                 title: 'An error occurred while upgrading your account',
                 icon: 'error',
+                customClass: {
+                    confirmButton: 'btn btn-primary btn-lg',
+                    loader: 'custom-loader'
+                },
                 confirmButtonText: 'Got It'
             });
         }
@@ -31,6 +39,10 @@ const submitUpgradeForm = async (event) => {
         Swal.fire({
             title: 'An error occurred while upgrading your account',
             icon: 'error',
+            customClass: {
+                confirmButton: 'btn btn-primary btn-lg',
+                loader: 'custom-loader'
+            },
             confirmButtonText: 'Got It'
         });
     }

@@ -1,11 +1,14 @@
 <?php include 'includes/header.php'; ?>
+
+    <script>
+        const albumIdGlobal = <?= htmlspecialchars($album->getAlbumID(), ENT_QUOTES, 'UTF-8') ?>;
+    </script>
+
 <?php if (isset($isJournalist) && $isJournalist): ?>
     <?php include PRIVATE_PATH . '/src/app/components/delete_album_modal.php'; ?>
 
 
     <?php if ($isJournalist && !isset($journalistReview)) : ?>
-        <script> let albumId = <?= json_encode($album->getAlbumId()) ?></script>
-
         <?php include PRIVATE_PATH . '/src/app/components/review_editor_modal.php'; ?>
     <?php endif; ?>
 
@@ -76,10 +79,6 @@
         </div>
     </div>
 <?php endif; ?>
-
-    <script>
-        const albumIdGlobal = <?= htmlspecialchars($album->getAlbumID(), ENT_QUOTES, 'UTF-8') ?>;
-    </script>
 
 
     <script src="/js/album.js"></script>

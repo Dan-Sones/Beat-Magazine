@@ -18,7 +18,7 @@ const submitJournalistReview = async (event) => {
     const review = document.getElementById('journalistReviewText').value;
 
     try {
-        const response = await fetch(`/api/albums/${albumId}/journalist-reviews`, {
+        const response = await fetch(`/api/albums/${albumIdGlobal}/journalist-reviews`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -34,6 +34,10 @@ const submitJournalistReview = async (event) => {
             Swal.fire({
                 title: 'Review submitted successfully',
                 icon: 'success',
+                customClass: {
+                    confirmButton: 'btn btn-primary btn-lg',
+                    loader: 'custom-loader'
+                },
                 confirmButtonText: 'Ok!'
             }).then(() => {
                 location.reload();
@@ -42,6 +46,10 @@ const submitJournalistReview = async (event) => {
             Swal.fire({
                 title: 'An error occurred while submitting your review',
                 icon: 'error',
+                customClass: {
+                    confirmButton: 'btn btn-primary btn-lg',
+                    loader: 'custom-loader'
+                },
                 confirmButtonText: 'Got It'
             });
         }
@@ -49,6 +57,10 @@ const submitJournalistReview = async (event) => {
         Swal.fire({
             title: 'An error occurred while submitting your review',
             icon: 'error',
+            customClass: {
+                confirmButton: 'btn btn-primary btn-lg',
+                loader: 'custom-loader'
+            },
             confirmButtonText: 'Got It'
         });
     }
@@ -62,7 +74,7 @@ const editJournalistReview = async (event) => {
     const review = document.getElementById('journalistReviewText').value;
 
     try {
-        const response = await fetch(`/api/albums/${albumId}/journalist-reviews`, {
+        const response = await fetch(`/api/albums/${albumIdGlobal}/journalist-reviews`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -78,6 +90,10 @@ const editJournalistReview = async (event) => {
             Swal.fire({
                 title: 'Review updated successfully',
                 icon: 'success',
+                customClass: {
+                    confirmButton: 'btn btn-primary btn-lg',
+                    loader: 'custom-loader'
+                },
                 confirmButtonText: 'Got It'
             }).then(() => {
                 location.reload();
@@ -86,13 +102,21 @@ const editJournalistReview = async (event) => {
             Swal.fire({
                 title: 'An error occurred while updating your review',
                 icon: 'error',
+                customClass: {
+                    confirmButton: 'btn btn-primary btn-lg',
+                    loader: 'custom-loader'
+                },
                 confirmButtonText: 'Got It'
             });
         }
     } catch (error) {
         Swal.fire({
-            title: 'An error occurred while updating your review',
+            title: `An error occurred ${error}`,
             icon: 'error',
+            customClass: {
+                confirmButton: 'btn btn-primary btn-lg',
+                loader: 'custom-loader'
+            },
             confirmButtonText: 'Got It'
         });
     }

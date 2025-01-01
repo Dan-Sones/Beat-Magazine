@@ -108,6 +108,10 @@ const submitCreateArtist = async (event) => {
             Swal.fire({
                 title: 'Artist created successfully',
                 icon: 'success',
+                customClass: {
+                    confirmButton: 'btn btn-primary btn-lg',
+                    loader: 'custom-loader'
+                },
             });
             const artistInput = document.getElementById('artist');
             artistInput.value = artistName;
@@ -122,17 +126,29 @@ const submitCreateArtist = async (event) => {
         } else if (response.status === 409) {
             Swal.fire({
                 title: 'An artist with that name already exists',
+                customClass: {
+                    confirmButton: 'btn btn-primary btn-lg',
+                    loader: 'custom-loader'
+                },
                 icon: 'error',
             });
         } else {
             Swal.fire({
                 title: 'Failed to create artist',
+                customClass: {
+                    confirmButton: 'btn btn-primary btn-lg',
+                    loader: 'custom-loader'
+                },
                 icon: 'error',
             });
         }
     } catch (error) {
         Swal.fire({
             title: 'Network error occurred while creating artist',
+            customClass: {
+                confirmButton: 'btn btn-primary btn-lg',
+                loader: 'custom-loader'
+            },
             icon: 'error',
         });
     }
@@ -173,6 +189,10 @@ const submitCreateAlbumForm = async (event) => {
         if (response.ok) {
             Swal.fire({
                 title: 'Album created successfully',
+                customClass: {
+                    confirmButton: 'btn btn-primary btn-lg',
+                    loader: 'custom-loader'
+                },
                 icon: 'success',
                 showConfirmButton: 'Ok!'
             }).then(() => {
@@ -183,17 +203,29 @@ const submitCreateAlbumForm = async (event) => {
         } else if (response.status === 409) {
             Swal.fire({
                 title: 'An album with that name already exists',
+                customClass: {
+                    confirmButton: 'btn btn-primary btn-lg',
+                    loader: 'custom-loader'
+                },
                 icon: 'error',
             });
         } else {
             Swal.fire({
                 title: 'Failed to create album',
+                customClass: {
+                    confirmButton: 'btn btn-primary btn-lg',
+                    loader: 'custom-loader'
+                },
                 icon: 'error',
             });
         }
     } catch (error) {
         Swal.fire({
             title: 'Network error occurred while creating album',
+            customClass: {
+                confirmButton: 'btn btn-primary btn-lg',
+                loader: 'custom-loader'
+            },
             icon: 'error',
         });
     }

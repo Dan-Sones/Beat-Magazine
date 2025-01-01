@@ -53,6 +53,10 @@ const submitResetPassword = async (event) => {
         document.getElementById('confirm_password').classList.add('is-invalid');
         Swal.fire({
             title: 'Passwords do not match',
+            customClass: {
+                confirmButton: 'btn btn-primary btn-lg',
+                loader: 'custom-loader'
+            },
             icon: 'error',
             confirmButtonText: 'Got It'
         });
@@ -71,6 +75,10 @@ const submitResetPassword = async (event) => {
         document.getElementById('new_password').classList.add('is-invalid');
         Swal.fire({
             title: 'Password does not meet requirements',
+            customClass: {
+                confirmButton: 'btn btn-primary btn-lg',
+                loader: 'custom-loader'
+            },
             icon: 'error',
             confirmButtonText: 'Got It'
         });
@@ -94,6 +102,10 @@ const submitResetPassword = async (event) => {
         if (response.status === 200) {
             Swal.fire({
                 title: 'Password reset successfully',
+                customClass: {
+                    confirmButton: 'btn btn-primary btn-lg',
+                    loader: 'custom-loader'
+                },
                 icon: 'success',
                 confirmButtonText: 'Got It'
             }).then(() => {
@@ -101,6 +113,10 @@ const submitResetPassword = async (event) => {
             });
         } else {
             Swal.fire({
+                customClass: {
+                    confirmButton: 'btn btn-primary btn-lg',
+                    loader: 'custom-loader'
+                },
                 title: 'An error occurred while resetting your password',
                 icon: 'error',
                 confirmButtonText: 'Got It'
@@ -108,6 +124,10 @@ const submitResetPassword = async (event) => {
         }
     } catch (error) {
         Swal.fire({
+            customClass: {
+                confirmButton: 'btn btn-primary btn-lg',
+                loader: 'custom-loader'
+            },
             title: 'Network error occurred while resetting your password',
             icon: 'error',
             confirmButtonText: 'Got It'

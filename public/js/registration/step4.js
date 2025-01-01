@@ -16,6 +16,10 @@ const copySecret = () => {
         Swal.fire({
             title: 'Copied to clipboard',
             icon: 'success',
+            customClass: {
+                confirmButton: 'btn btn-primary btn-lg',
+                loader: 'custom-loader'
+            },
             confirmButtonText: 'Got It'
         });
     }).catch(err => {

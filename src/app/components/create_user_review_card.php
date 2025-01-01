@@ -38,7 +38,6 @@
     <script>
         const leftReview = <?= json_encode(isset($hasUserLeftReview) && $hasUserLeftReview) ?>;
         const activeSession = <?= json_encode(isset($_SESSION['authenticated']) && $_SESSION['authenticated'] === true) ?>;
-        const albumId = <?= json_encode($album->getAlbumID()) ?>;
     </script>
 
     <script src="/js/createUserReviewCard.js"></script>
