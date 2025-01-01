@@ -10,21 +10,17 @@ use S246109\BeatMagazine\Factories\UserReviewFactory;
 use S246109\BeatMagazine\Services\AlbumService;
 use S246109\BeatMagazine\Services\LikeService;
 use S246109\BeatMagazine\Services\UserReviewService;
+use S246109\BeatMagazine\Services\SessionService;
 
 class AlbumController
 {
-
     private AlbumFactory $albumFactory;
-
     private JournalistReviewFactory $journalistReviewFactory;
-
     private UserReviewFactory $userReviewFactory;
-
     private UserReviewService $userReviewService;
-
     private AlbumService $albumService;
-
     private LikeService $likeService;
+    private SessionService $sessionService;
 
     /**
      * @param AlbumFactory $albumFactory
@@ -33,8 +29,9 @@ class AlbumController
      * @param UserReviewService $userReviewService
      * @param AlbumService $albumService
      * @param LikeService $likeService
+     * @param SessionService $sessionService
      */
-    public function __construct(AlbumFactory $albumFactory, JournalistReviewFactory $journalistReviewFactory, UserReviewFactory $userReviewFactory, UserReviewService $userReviewService, AlbumService $albumService, LikeService $likeService)
+    public function __construct(AlbumFactory $albumFactory, JournalistReviewFactory $journalistReviewFactory, UserReviewFactory $userReviewFactory, UserReviewService $userReviewService, AlbumService $albumService, LikeService $likeService, SessionService $sessionService)
     {
         $this->albumFactory = $albumFactory;
         $this->journalistReviewFactory = $journalistReviewFactory;
@@ -42,24 +39,19 @@ class AlbumController
         $this->userReviewService = $userReviewService;
         $this->albumService = $albumService;
         $this->likeService = $likeService;
+        $this->sessionService = $sessionService;
     }
 
 
     public function delete(Request $request, Response $response, array $args): Response
     {
-
-        if (!isset($_SESSION['authenticated']) || !$_SESSION['authenticated']) {
+        if (!$this->sessionService->isAuthenticated()) {
             return $response->withStatus(401);
         }
 
-        if (!isset($_SESSION['user_id'])) {
-            return $response->withStatus(401);
-        }
-
-        if ($_SESSION['role'] !== 'journalist') {
+        if (!$this->sessionService->isJournalist()) {
             return $response->withStatus(403);
         }
-
 
         $albumID = $args['albumId'];
         $success = $this->albumService->deleteAlbum($albumID);
@@ -71,18 +63,10 @@ class AlbumController
         return $response->withStatus(204);
     }
 
-
     public function show(Request $request, Response $response, array $args): Response
     {
-        $userID = null;
-        if (isset($_SESSION['user_id'])) {
-            $userID = $_SESSION['user_id'];
-        }
-
-        $authenticated = false;
-        if (isset($_SESSION['authenticated']) && $_SESSION['authenticated']) {
-            $authenticated = $_SESSION['authenticated'];
-        }
+        $userID = $this->sessionService->getUserID();
+        $authenticated = $this->sessionService->isAuthenticated();
 
         $albumName = urldecode($args['albumName']);
         $artistName = urldecode($args['artistName']);
@@ -91,17 +75,14 @@ class AlbumController
         if ($album !== null) {
             $userReviews = $this->userReviewFactory->getAllUserReviewsForAlbum($album->getAlbumID());
             $journalistReview = $this->journalistReviewFactory->getJournalistReviewForAlbum($album->getAlbumID());
-            $hasUserLeftReview = $this->userReviewService->hasUserLeftReviewForAlbum($album->getAlbumID());
+            $hasUserLeftReview = $this->userReviewService->hasUserLeftReviewForAlbum($album->getAlbumID(), $userID);
             $averageUserRating = $this->userReviewService->getAverageUserRatingForAlbum($album->getAlbumID());
             if ($userID) {
                 $likedReviewsForUser = $this->likeService->getLikedReviewsPerAlbum($album->getAlbumID(), $userID);
             }
         }
 
-        $isJournalist = false;
-        if (isset($_SESSION['role']) && $_SESSION['role'] === 'journalist') {
-            $isJournalist = true;
-        }
+        $isJournalist = $this->sessionService->isJournalist();
 
         ob_start();
         include PRIVATE_PATH . '/src/app/Views/album.php';
@@ -110,6 +91,4 @@ class AlbumController
 
         return $response;
     }
-
-
 }
