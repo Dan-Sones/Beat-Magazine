@@ -26,7 +26,8 @@
                            class="text-center pt-3"><?= htmlspecialchars($userReview->getUser()->getUsername()) ?></a>
                     </div>
                     <div class="col-md-2 align-items-center justify-content-center d-none d-md-flex order-2 order-md-2">
-                        <h3><?= htmlspecialchars($userReview->getRating()) ?>/10</h3>
+                        <h3 id="userReviewRating-<?= htmlspecialchars($userReview->getId()) ?>">
+                            <?= htmlspecialchars($userReview->getRating()) ?>/10</h3>
                     </div>
                     <div class="col-12 col-md-6 order-3 order-md-3 d-flex justify-content-center align-items-center mb-2">
                         <p class="mb-0"

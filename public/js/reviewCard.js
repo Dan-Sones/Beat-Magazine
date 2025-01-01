@@ -6,6 +6,7 @@ const handleEditReview = (reviewID) => {
     editForm.style.display = 'block';
 };
 
+
 const handleCancelEditReview = (reviewID) => {
     const reviewText = document.getElementById('userReviewText-' + reviewID);
     reviewText.style.display = 'block';
@@ -38,8 +39,8 @@ const handleSubmitEditReview = async (event, reviewId) => {
                 },
                 confirmButtonText: 'Got It'
             }).then(() => {
-                location.reload();
-            });
+                updateReviewToHaveEditContents(reviewId, rating, review);
+            })
         } else {
             Swal.fire({
                 title: 'An error occurred while updating your review',
@@ -192,6 +193,20 @@ const updateCardToHaveShowLike = (reviewId, liked) => {
         likeCount.innerText = String(parseInt(likeCount.innerText) - 1);
         likeButton.innerHTML = `<i onclick="handleLikeReview(${reviewId})" class="bi bi-hand-thumbs-up like-cursor"></i>`;
     }
+}
+
+const updateReviewToHaveEditContents = (reviewID, rating, review) => {
+
+    const userReviewText = document.getElementById('userReviewText-' + reviewID);
+    const userReviewRating = document.getElementById('userReviewRating-' + reviewID);
+
+    userReviewText.innerHTML = review;
+    userReviewRating.innerHTML = `${rating}/10`;
 
 
+    const reviewText = document.getElementById('userReviewText-' + reviewID);
+    reviewText.style.display = 'block';
+
+    const editForm = document.getElementById('editUserReview-' + reviewID);
+    editForm.style.display = 'none';
 }
