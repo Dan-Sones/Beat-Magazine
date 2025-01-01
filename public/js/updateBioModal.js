@@ -26,6 +26,10 @@ const updateBio = async (event, userId) => {
             Swal.fire({
                 title: 'Bio updated successfully',
                 icon: 'success',
+                customClass: {
+                    confirmButton: 'btn btn-primary btn-lg',
+                    loader: 'custom-loader'
+                },
                 confirmButtonText: 'Got It'
             }).then(() => {
                 window.location.reload();

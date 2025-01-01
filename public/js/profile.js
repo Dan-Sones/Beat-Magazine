@@ -39,7 +39,7 @@ document.getElementById('profilePicture').addEventListener('click', function () 
 document.getElementById('profilePictureInput').addEventListener('change', function () {
     handleUpload();
 });
- 
+
 const handleUpload = async () => {
     const fileInput = document.getElementById('profilePictureInput');
     const file = fileInput.files[0];
@@ -56,7 +56,11 @@ const handleUpload = async () => {
             Swal.fire({
                 title: 'Profile picture uploaded successfully',
                 icon: 'success',
-                confirmButtonText: 'Got It'
+                confirmButtonText: 'Got It',
+                customClass: {
+                    confirmButton: 'btn btn-primary btn-lg',
+                    loader: 'custom-loader'
+                }
             }).then(() => {
                 window.location.reload();
             })
