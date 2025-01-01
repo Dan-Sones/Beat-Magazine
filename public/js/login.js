@@ -33,7 +33,7 @@ const submitOTPForm = async (event) => {
     event.preventDefault();
     const form = event.target;
     const formData = new FormData(form);
-    const otp = formData.get('otp');
+    const otp = formData.get('otp').replace(/\s+/g, '');
     const data = {otp};
 
     try {

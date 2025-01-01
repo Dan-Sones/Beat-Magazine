@@ -156,7 +156,7 @@ const validateOTP = async (event) => {
 
     const form = event.target;
     const formData = new FormData(form);
-    const code = formData.get('2faCode');
+    const code = formData.get('2faCode').replace(/\s+/g, '');
 
     try {
         const response = await fetch('/api/register/verify-otp', {
