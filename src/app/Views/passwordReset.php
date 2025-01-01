@@ -33,18 +33,24 @@
                                     <div class="spinner-border" role="status"></div>
                                 </div>
                             </li>
+                            <li class="d-flex justify-content-between align-items-center">
+                                <span>Passwords Match:</span>
+                                <div id="passwordsMatchStatus">
+                                    <div class="spinner-border" role="status"></div>
+                                </div>
+                            </li>
                         </ul>
 
                         <form onsubmit="submitResetPassword(event)">
                             <div class="mb-3">
-                                <label for="new_password" class="form-label">New Password</label>
-                                <input type="password" class="form-control" name="new_password" id="new_password"
+                                <label for="newPassword" class="form-label">New Password</label>
+                                <input type="password" class="form-control" name="newPassword" id="newPassword"
                                        placeholder="Enter new password" required>
                             </div>
                             <div class="mb-3">
                                 <label for="confirm_password" class="form-label">Confirm Password</label>
-                                <input type="password" class="form-control" name="confirm_password"
-                                       id="confirm_password"
+                                <input type="password" class="form-control" name="confirmNewPassword"
+                                       id="confirmNewPassword"
                                        placeholder="Confirm new password" required>
                             </div>
                             <div class="d-flex justify-content-center">
