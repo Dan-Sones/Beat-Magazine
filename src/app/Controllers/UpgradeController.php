@@ -36,6 +36,8 @@ class UpgradeController
             return $response->withHeader('Location', '/login')->withStatus(302);
         }
 
+        $username = $this->sessionService->getUsername();
+
         ob_start();
         include PRIVATE_PATH . '/src/app/Views/upgrade.php';
         $output = ob_get_clean();

@@ -48,6 +48,8 @@ class ProfileController
         $username = $args['username'];
         $idForUser = $this->userService->getUserIdFromUsername($username);
         $user = $this->userFactory->getPublicUserByUsername($username);
+        $sessionUserId = $this->sessionService->getUserID();
+        $authenticated = $this->sessionService->isAuthenticated();
 
         if ($user != null) {
             $isJournalist = $user->getRole() === 'journalist';
