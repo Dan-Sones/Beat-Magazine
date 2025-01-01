@@ -9,6 +9,7 @@ $currentDir = realpath(__DIR__);
 
 // if the directory two levels above currentDir is S246109-BeatMagazine then we are in a development environment
 // otherwise we are in a production environment
+// env variables have not been used for this as we need to know where the .env file is (Within the PRIVATE_PATH) before we can access it!
 if (basename(dirname($currentDir)) === 'S246109-BeatMagazine') {
     define('BASE_PATH', dirname(__DIR__));
     define('PUBLIC_PATH', BASE_PATH . '/public');
@@ -39,6 +40,7 @@ AppFactory::setContainer($container);
 $app = AppFactory::create();
 $app->addBodyParsingMiddleware();
 $app->addRoutingMiddleware();
+// display errors is set to false in production so we don't leak sensitive information regarding the structure of the backend
 $app->addErrorMiddleware(false, true, true);
 
 ini_set('session.gc_maxlifetime', 5400); // 1.5 hours (90 minutes)

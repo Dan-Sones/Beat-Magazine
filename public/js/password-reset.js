@@ -1,45 +1,39 @@
-// on page load disable the submit button
-document.getElementById('submit').disabled = true;
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('submit').disabled = true;
+});
+
+
+const passwordInput = document.getElementById('newPassword');
+const confirmPasswordInput = document.getElementById('confirmNewPassword');
+
 
 const checkPassword = () => {
-    const password = document.getElementById('new_password').value;
-
+    const passwordValue = passwordInput.value;
     // Check to see if the password:
     // 1. Contains at least 3 numbers
     // 2. Contains at least 1 capital letter
     // 3. Contains at least 1 piece of punctuation
     // 4. Is greater than 8 characters
-    const confirmNumbers = password.match(/[0-9]/g) && password.match(/[0-9]/g).length >= 3;
-    const confirmCapital = password.match(/[A-Z]/g) && password.match(/[A-Z]/g).length >= 1;
-    const confirmPunctuation = password.match(/[!@#$%^&*()_+]/g) && password.match(/[!@#$%^&*()_+]/g).length >= 1;
-    const confirmLength = password.length >= 8;
+    const confirmNumbers = passwordValue.match(/[0-9]/g) && passwordValue.match(/[0-9]/g).length >= 3;
+    const confirmCapital = passwordValue.match(/[A-Z]/g) && passwordValue.match(/[A-Z]/g).length >= 1;
+    const confirmPunctuation = passwordValue.match(/[!@#$%^&*()_+]/g) && passwordValue.match(/[!@#$%^&*()_+]/g).length >= 1;
+    const confirmLength = passwordValue.length >= 8;
+    const confirmPasswordsMatch = passwordValue === confirmPasswordInput.value;
 
     document.getElementById('confirmNumbersStatus').innerHTML = confirmNumbers ? '<i class="bi bi-check-circle-fill text-success"></i>' : '<i class="bi bi-x-circle-fill text-danger"></i>';
     document.getElementById('confirmCapitalStatus').innerHTML = confirmCapital ? '<i class="bi bi-check-circle-fill text-success"></i>' : '<i class="bi bi-x-circle-fill text-danger"></i>';
     document.getElementById('confirmPunctuationStatus').innerHTML = confirmPunctuation ? '<i class="bi bi-check-circle-fill text-success"></i>' : '<i class="bi bi-x-circle-fill text-danger"></i>';
     document.getElementById('confirmLengthStatus').innerHTML = confirmLength ? '<i class="bi bi-check-circle-fill text-success"></i>' : '<i class="bi bi-x-circle-fill text-danger"></i>';
+    document.getElementById('passwordsMatchStatus').innerHTML = confirmPasswordsMatch ? '<i class="bi bi-check-circle-fill text-success"></i>' : '<i class="bi bi-x-circle-fill text-danger"></i>';
 
-    // Disable form submission if the password does not meet the criteria
     document.getElementById('submit').disabled = !confirmNumbers || !confirmCapital || !confirmPunctuation || !confirmLength;
 }
 
-// When the user enters the textbox
-document.getElementById('new_password').addEventListener('input', () => {
-    document.getElementById('confirmNumbersStatus').innerHTML = '';
-    document.getElementById('confirmCapitalStatus').innerHTML = '';
-    document.getElementById('confirmPunctuationStatus').innerHTML = '';
-    document.getElementById('confirmLengthStatus').innerHTML = '';
+passwordInput.addEventListener('input', checkPassword);
+confirmPasswordInput.addEventListener('input', checkPassword);
 
-    document.getElementById('confirmNumbersStatus').innerHTML = '<div class="spinner-border" role="status"></div>';
-    document.getElementById('confirmCapitalStatus').innerHTML = '<div class="spinner-border" role="status"></div>';
-    document.getElementById('confirmPunctuationStatus').innerHTML = '<div class="spinner-border" role="status"></div>';
-    document.getElementById('confirmLengthStatus').innerHTML = '<div class="spinner-border" role="status"></div>';
-})
-
-document.getElementById('new_password').addEventListener('blur', checkPassword);
-
-document.getElementById('new_password').addEventListener('blur', () => {
-    document.getElementById('new_password').classList.remove('is-invalid');
+passwordInput.addEventListener('blur', () => {
+    passwordInput.classList.remove('is-invalid');
 })
 
 const submitResetPassword = async (event) => {
@@ -49,8 +43,8 @@ const submitResetPassword = async (event) => {
     const confirmPassword = document.getElementById('confirm_password').value;
 
     if (newPassword !== confirmPassword) {
-        document.getElementById('new_password').classList.add('is-invalid');
-        document.getElementById('confirm_password').classList.add('is-invalid');
+        passwordInput.classList.add('is-invalid');
+        confirmPassword.classList.add('is-invalid');
         Swal.fire({
             title: 'Passwords do not match',
             customClass: {
@@ -72,7 +66,7 @@ const submitResetPassword = async (event) => {
     // 4. Is greater than 8 characters
     if (!newPassword.match(/^(?=.*[A-Z])(?=.*[0-9]{3,})(?=.*[!@#$%^&*()_+])[a-zA-Z0-9!@#$%^&*()_+]{8,}$/)) {
         // set the error style
-        document.getElementById('new_password').classList.add('is-invalid');
+        passwordInput.classList.add('is-invalid');
         Swal.fire({
             title: 'Password does not meet requirements',
             customClass: {
@@ -85,7 +79,7 @@ const submitResetPassword = async (event) => {
         return;
     }
 
-    document.getElementById('new_password').classList.remove('is-invalid');
+    passwordInput.classList.remove('is-invalid');
 
     try {
         const response = await fetch('/api/password-reset', {
@@ -134,5 +128,3 @@ const submitResetPassword = async (event) => {
         });
     }
 }
-
-document.getElementById('resetPasswordForm').addEventListener('submit', submitResetPassword);

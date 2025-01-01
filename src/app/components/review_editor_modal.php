@@ -1,6 +1,6 @@
 <?php if (isset($album)) : ?>
     <div class="modal fade" id="reviewEditor" tabindex="-1" aria-labelledby="reviewEditorModal" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+        <div class="modal-dialog  modal-dialog-scrollable modal-xl">
             <form id="journalistReviewForm">
                 <div class="modal-content">
                     <div class="modal-header">

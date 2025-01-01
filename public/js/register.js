@@ -210,4 +210,3 @@ document.addEventListener('DOMContentLoaded', function () {
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 });
 
-document.getElementById('resetPasswordForm').addEventListener('submit', submitForm);
