@@ -6,29 +6,25 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use S246109\BeatMagazine\Factories\UserReviewFactory;
 use S246109\BeatMagazine\Services\LikeService;
+use S246109\BeatMagazine\Services\SessionService;
 use S246109\BeatMagazine\Services\UserReviewService;
 
 class UserReviewController
 {
-
     private UserReviewService $userReviewService;
-
     private LikeService $likeService;
+    private SessionService $sessionService;
 
-    /**
-     * @param UserReviewService $userReviewService
-     * @param LikeService $likeService
-     */
-    public function __construct(UserReviewService $userReviewService, LikeService $likeService)
+    public function __construct(UserReviewService $userReviewService, LikeService $likeService, SessionService $sessionService)
     {
         $this->userReviewService = $userReviewService;
         $this->likeService = $likeService;
+        $this->sessionService = $sessionService;
     }
 
     public function create(Request $request, Response $response, array $args): Response
     {
-
-        $userId = $_SESSION['user_id'];
+        $userId = $this->sessionService->getUserID();
 
         $data = json_decode($request->getBody()->getContents(), true);
 
@@ -36,16 +32,13 @@ class UserReviewController
             return $response->withStatus(400);
         }
 
-
         if (!isset($data['review']) || !isset($data['rating']) || !isset($args['albumId'])) {
             return $response->withStatus(400);
         }
 
-
-        if ($this->userReviewService->hasUserLeftReviewForAlbum($args['albumId'])) {
+        if ($this->userReviewService->hasUserLeftReviewForAlbum($args['albumId'], $userId)) {
             return $response->withStatus(403);
         }
-
 
         $success = $this->userReviewService->CreateReviewForAlbum($args['albumId'], $userId, $data['review'], $data['rating']);
 
@@ -54,12 +47,11 @@ class UserReviewController
         }
 
         return $response->withStatus(201);
-
     }
 
     public function update(Request $request, Response $response, array $args): Response
     {
-        $userId = $_SESSION['user_id'];
+        $userId = $this->sessionService->getUserID();
 
         if (!isset($userId)) {
             return $response->withStatus(401);
@@ -93,7 +85,7 @@ class UserReviewController
 
     public function delete(Request $request, Response $response, array $args): Response
     {
-        $userId = $_SESSION['user_id'];
+        $userId = $this->sessionService->getUserID();
 
         if (!isset($userId)) {
             return $response->withStatus(401);
@@ -121,9 +113,9 @@ class UserReviewController
 
     public function like(Request $request, Response $response, array $args): Response
     {
-        $userId = $_SESSION['user_id'];
-        $authenticated = $_SESSION['authenticated'];
-        if (!isset($userId) || !isset($authenticated) || !$authenticated) {
+        $userId = $this->sessionService->getUserID();
+        $authenticated = $this->sessionService->isAuthenticated();
+        if (!isset($userId) || !$authenticated) {
             return $response->withStatus(401);
         }
 
@@ -144,9 +136,9 @@ class UserReviewController
 
     public function unlike(Request $request, Response $response, array $args): Response
     {
-        $userId = $_SESSION['user_id'];
-        $authenticated = $_SESSION['authenticated'];
-        if (!isset($userId) || !isset($authenticated) || !$authenticated) {
+        $userId = $this->sessionService->getUserID();
+        $authenticated = $this->sessionService->isAuthenticated();
+        if (!isset($userId) || !$authenticated) {
             return $response->withStatus(401);
         }
 
@@ -163,8 +155,5 @@ class UserReviewController
         }
 
         return $response->withStatus(200);
-
     }
-
-
 }

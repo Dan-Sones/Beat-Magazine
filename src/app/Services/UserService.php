@@ -73,11 +73,6 @@ class UserService
         return $statement->fetchColumn();
     }
 
-    public function isUserAuthenticated(): bool
-    {
-        return isset($_SESSION['user_id']) && isset($_SESSION['authenticated']) && $_SESSION['authenticated'] === true;
-    }
-
     public function getUserIdFromUsername(mixed $username)
     {
         $query = 'SELECT id FROM users WHERE username = :username LIMIT 1';
@@ -87,12 +82,12 @@ class UserService
         return $statement->fetchColumn();
     }
 
-    public function uploadProfilePicture($uploadedFile): void
+    public function uploadProfilePicture($uploadedFile, $userID): void
     {
         $directory = $this->ensureDirectoryExists(PUBLIC_PATH . '/images/user-profile-pictures');
         $filename = $this->moveUploadedFile($uploadedFile, $directory);
-        $currentProfilePicture = $this->getCurrentProfilePicture();
-        $this->updateProfilePictureInDatabase($filename);
+        $currentProfilePicture = $this->getCurrentProfilePicture($userID);
+        $this->updateProfilePictureInDatabase($filename, $userID);
         $this->deleteOldProfilePicture($currentProfilePicture, $directory);
     }
 
@@ -111,21 +106,21 @@ class UserService
         return $filename;
     }
 
-    private function getCurrentProfilePicture(): ?string
+    private function getCurrentProfilePicture(int $userID): ?string
     {
         $query = 'SELECT profile_picture FROM users WHERE id = :id';
         $statement = $this->db->prepare($query);
-        $statement->bindValue(':id', $_SESSION['user_id'], PDO::PARAM_INT);
+        $statement->bindValue(':id', $userID, PDO::PARAM_INT);
         $statement->execute();
         return $statement->fetchColumn();
     }
 
-    private function updateProfilePictureInDatabase(string $filename): void
+    private function updateProfilePictureInDatabase(string $filename, $userID): void
     {
         $query = 'UPDATE users SET profile_picture = :profile_picture WHERE id = :id';
         $statement = $this->db->prepare($query);
         $statement->bindValue(':profile_picture', $filename, PDO::PARAM_STR);
-        $statement->bindValue(':id', $_SESSION['user_id'], PDO::PARAM_INT);
+        $statement->bindValue(':id', $userID, PDO::PARAM_INT);
         $statement->execute();
     }
 

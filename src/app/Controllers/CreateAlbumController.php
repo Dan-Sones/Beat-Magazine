@@ -2,34 +2,34 @@
 
 namespace S246109\BeatMagazine\Controllers;
 
-
 use S246109\BeatMagazine\Factories\AlbumFactory;
 use S246109\BeatMagazine\Services\AlbumService;
+use S246109\BeatMagazine\Services\SessionService;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
 
 class CreateAlbumController
 {
-
     private AlbumService $albumService;
+    private SessionService $sessionService;
 
     /**
      * @param AlbumService $albumService
+     * @param SessionService $sessionService
      */
-    public function __construct(AlbumService $albumService)
+    public function __construct(AlbumService $albumService, SessionService $sessionService)
     {
         $this->albumService = $albumService;
+        $this->sessionService = $sessionService;
     }
-
 
     public function index(Request $request, Response $response, array $args): Response
     {
-
-        if (!isset($_SESSION['authenticated']) || !$_SESSION['authenticated']) {
+        if (!$this->sessionService->isAuthenticated()) {
             return $response->withStatus(302)->withHeader('Location', '/login');
         }
 
-        if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'journalist') {
+        if (!$this->sessionService->isJournalist()) {
             return $response->withStatus(302)->withHeader('Location', '/albums');
         }
 
@@ -43,12 +43,11 @@ class CreateAlbumController
 
     public function create(Request $request, Response $response, array $args): Response
     {
-        if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'journalist') {
+        if (!$this->sessionService->isJournalist()) {
             return $response->withStatus(403);
         }
 
         $data = $request->getParsedBody();
-
         error_log(print_r($data, true));
 
         $uploadedFiles = $request->getUploadedFiles();
@@ -65,7 +64,7 @@ class CreateAlbumController
                 return $response->withStatus(400);
             }
         }
-        
+
         if (!isset($data['albumName']) || !isset($data['artistID']) || !isset($data['releaseDate']) || !isset($data['genre']) || !isset($data['label']) || !isset($data['songs'])) {
             return $response->withStatus(400);
         }
@@ -82,5 +81,4 @@ class CreateAlbumController
 
         return $response->withStatus(201);
     }
-
 }
