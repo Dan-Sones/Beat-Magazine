@@ -65,12 +65,20 @@ const handleUpload = async () => {
             Swal.fire({
                 title: 'An error occurred while uploading your profile picture',
                 icon: 'error',
+                customClass: {
+                    confirmButton: 'btn btn-primary btn-lg',
+                    loader: 'custom-loader'
+                },
             });
         }
     } catch (error) {
         Swal.fire({
             title: 'An error occurred while uploading your profile picture',
             icon: 'error',
+            customClass: {
+                confirmButton: 'btn btn-primary btn-lg',
+                loader: 'custom-loader'
+            },
         });
     }
 };

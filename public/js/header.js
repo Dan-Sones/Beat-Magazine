@@ -18,6 +18,10 @@ const logout = async () => {
         } else {
             Swal.fire({
                 title: 'An error occurred while logging out',
+                customClass: {
+                    confirmButton: 'btn btn-primary btn-lg',
+                    loader: 'custom-loader'
+                },
                 icon: 'error',
                 confirmButtonText: 'Got It'
             });
@@ -25,6 +29,10 @@ const logout = async () => {
     } catch (error) {
         Swal.fire({
             title: 'Network error occurred while logging out',
+            customClass: {
+                confirmButton: 'btn btn-primary btn-lg',
+                loader: 'custom-loader'
+            },
             icon: 'error',
             confirmButtonText: 'Got It'
         });

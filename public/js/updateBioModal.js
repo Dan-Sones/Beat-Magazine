@@ -34,6 +34,10 @@ const updateBio = async (event, userId) => {
             Swal.fire({
                 title: 'An error occurred while updating your bio',
                 icon: 'error',
+                customClass: {
+                    confirmButton: 'btn btn-primary btn-lg',
+                    loader: 'custom-loader'
+                },
                 confirmButtonText: 'Got It'
             });
         }
@@ -41,6 +45,10 @@ const updateBio = async (event, userId) => {
         Swal.fire({
             title: 'An error occurred while updating your bio',
             icon: 'error',
+            customClass: {
+                confirmButton: 'btn btn-primary btn-lg',
+                loader: 'custom-loader'
+            },
             confirmButtonText: 'Got It'
         });
     }

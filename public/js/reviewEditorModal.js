@@ -34,6 +34,10 @@ const submitJournalistReview = async (event) => {
             Swal.fire({
                 title: 'Review submitted successfully',
                 icon: 'success',
+                customClass: {
+                    confirmButton: 'btn btn-primary btn-lg',
+                    loader: 'custom-loader'
+                },
                 confirmButtonText: 'Ok!'
             }).then(() => {
                 location.reload();
@@ -42,6 +46,10 @@ const submitJournalistReview = async (event) => {
             Swal.fire({
                 title: 'An error occurred while submitting your review',
                 icon: 'error',
+                customClass: {
+                    confirmButton: 'btn btn-primary btn-lg',
+                    loader: 'custom-loader'
+                },
                 confirmButtonText: 'Got It'
             });
         }
@@ -49,6 +57,10 @@ const submitJournalistReview = async (event) => {
         Swal.fire({
             title: 'An error occurred while submitting your review',
             icon: 'error',
+            customClass: {
+                confirmButton: 'btn btn-primary btn-lg',
+                loader: 'custom-loader'
+            },
             confirmButtonText: 'Got It'
         });
     }
@@ -78,6 +90,10 @@ const editJournalistReview = async (event) => {
             Swal.fire({
                 title: 'Review updated successfully',
                 icon: 'success',
+                customClass: {
+                    confirmButton: 'btn btn-primary btn-lg',
+                    loader: 'custom-loader'
+                },
                 confirmButtonText: 'Got It'
             }).then(() => {
                 location.reload();
@@ -86,6 +102,10 @@ const editJournalistReview = async (event) => {
             Swal.fire({
                 title: 'An error occurred while updating your review',
                 icon: 'error',
+                customClass: {
+                    confirmButton: 'btn btn-primary btn-lg',
+                    loader: 'custom-loader'
+                },
                 confirmButtonText: 'Got It'
             });
         }
@@ -93,6 +113,10 @@ const editJournalistReview = async (event) => {
         Swal.fire({
             title: 'An error occurred while updating your review',
             icon: 'error',
+            customClass: {
+                confirmButton: 'btn btn-primary btn-lg',
+                loader: 'custom-loader'
+            },
             confirmButtonText: 'Got It'
         });
     }

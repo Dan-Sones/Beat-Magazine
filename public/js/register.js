@@ -118,13 +118,21 @@ const submitForm = async (event) => {
             Swal.fire({
                 title: 'Registration successful',
                 icon: 'success',
-                confirmButtonText: 'Got It'
+                confirmButtonText: 'Got It',
+                customClass: {
+                    confirmButton: 'btn btn-primary btn-lg',
+                    loader: 'custom-loader'
+                },
             }).then(() => {
                 window.location.href = '/login';
             });
         } else {
             Swal.fire({
                 title: 'Registration failed',
+                customClass: {
+                    confirmButton: 'btn btn-primary btn-lg',
+                    loader: 'custom-loader'
+                },
                 icon: 'error',
                 confirmButtonText: 'Got It'
             });
@@ -133,6 +141,10 @@ const submitForm = async (event) => {
         console.error('Error during registration:', error);
         Swal.fire({
             title: 'An error occurred during registration',
+            customClass: {
+                confirmButton: 'btn btn-primary btn-lg',
+                loader: 'custom-loader'
+            },
             icon: 'error',
             confirmButtonText: 'Got It'
         });
@@ -159,6 +171,10 @@ const validateOTP = async (event) => {
         if (data.valid) {
             Swal.fire({
                 title: 'OTP Verified',
+                customClass: {
+                    confirmButton: 'btn btn-primary btn-lg',
+                    loader: 'custom-loader'
+                },
                 icon: 'success',
                 confirmButtonText: 'Got It'
             });
@@ -166,6 +182,10 @@ const validateOTP = async (event) => {
         } else {
             Swal.fire({
                 title: 'Invalid OTP',
+                customClass: {
+                    confirmButton: 'btn btn-primary btn-lg',
+                    loader: 'custom-loader'
+                },
                 icon: 'error',
                 confirmButtonText: 'Got It'
             });
@@ -175,6 +195,10 @@ const validateOTP = async (event) => {
         console.error('Error during OTP verification:', error);
         Swal.fire({
             title: 'An error occurred during OTP verification',
+            customClass: {
+                confirmButton: 'btn btn-primary btn-lg',
+                loader: 'custom-loader'
+            },
             icon: 'error',
             confirmButtonText: 'Got It'
         });

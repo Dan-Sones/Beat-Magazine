@@ -32,6 +32,10 @@ const handleSubmitEditReview = async (event, reviewId) => {
             Swal.fire({
                 title: 'Review updated successfully',
                 icon: 'success',
+                customClass: {
+                    confirmButton: 'btn btn-primary btn-lg',
+                    loader: 'custom-loader'
+                },
                 confirmButtonText: 'Got It'
             }).then(() => {
                 location.reload();
@@ -40,6 +44,10 @@ const handleSubmitEditReview = async (event, reviewId) => {
             Swal.fire({
                 title: 'An error occurred while updating your review',
                 icon: 'error',
+                customClass: {
+                    confirmButton: 'btn btn-primary btn-lg',
+                    loader: 'custom-loader'
+                },
                 confirmButtonText: 'Got It'
             });
         }
@@ -47,6 +55,10 @@ const handleSubmitEditReview = async (event, reviewId) => {
         Swal.fire({
             title: 'An error occurred while updating your review',
             icon: 'error',
+            customClass: {
+                confirmButton: 'btn btn-primary btn-lg',
+                loader: 'custom-loader'
+            },
             confirmButtonText: 'Got It'
         });
     }
@@ -62,6 +74,10 @@ const handleDeleteReview = async (reviewId) => {
             Swal.fire({
                 title: 'Review deleted successfully',
                 icon: 'success',
+                customClass: {
+                    confirmButton: 'btn btn-primary btn-lg',
+                    loader: 'custom-loader'
+                },
                 confirmButtonText: 'Got It'
             }).then(() => {
                 location.reload();
@@ -70,6 +86,10 @@ const handleDeleteReview = async (reviewId) => {
             Swal.fire({
                 title: 'An error occurred while deleting your review',
                 icon: 'error',
+                customClass: {
+                    confirmButton: 'btn btn-primary btn-lg',
+                    loader: 'custom-loader'
+                },
                 confirmButtonText: 'Got It'
             });
         }
@@ -77,6 +97,10 @@ const handleDeleteReview = async (reviewId) => {
         Swal.fire({
             title: 'An error occurred while deleting your review',
             icon: 'error',
+            customClass: {
+                confirmButton: 'btn btn-primary btn-lg',
+                loader: 'custom-loader'
+            },
             confirmButtonText: 'Got It'
         });
     }
@@ -94,6 +118,10 @@ const handleLikeReview = async (reviewId) => {
             Swal.fire({
                 title: 'An error occurred whilst liking the review',
                 icon: 'error',
+                customClass: {
+                    confirmButton: 'btn btn-primary btn-lg',
+                    loader: 'custom-loader'
+                },
                 confirmButtonText: 'Ok'
             });
         }
@@ -101,6 +129,10 @@ const handleLikeReview = async (reviewId) => {
         Swal.fire({
             title: 'An error occurred whilst liking the review',
             icon: 'error',
+            customClass: {
+                confirmButton: 'btn btn-primary btn-lg',
+                loader: 'custom-loader'
+            },
             confirmButtonText: 'Ok'
         });
     }
@@ -118,6 +150,10 @@ const handleUnlikeReview = async (reviewId) => {
             Swal.fire({
                 title: 'An error occurred whilst unliking the review',
                 icon: 'error',
+                customClass: {
+                    confirmButton: 'btn btn-primary btn-lg',
+                    loader: 'custom-loader'
+                },
                 confirmButtonText: 'Ok'
             });
         }
@@ -125,6 +161,10 @@ const handleUnlikeReview = async (reviewId) => {
         Swal.fire({
             title: 'An error occurred whilst unliking the review',
             icon: 'error',
+            customClass: {
+                confirmButton: 'btn btn-primary btn-lg',
+                loader: 'custom-loader'
+            },
             confirmButtonText: 'Ok'
         });
     }

@@ -53,6 +53,10 @@ const submitOTPForm = async (event) => {
                 Swal.fire({
                     title: 'Something went wrong',
                     icon: 'error',
+                    customClass: {
+                        confirmButton: 'btn btn-primary btn-lg',
+                        loader: 'custom-loader'
+                    },
                     confirmButtonText: 'Got It'
                 });
                 document.getElementById('submitOTP').disabled = true;
@@ -61,6 +65,10 @@ const submitOTPForm = async (event) => {
             Swal.fire({
                 title: 'Invalid OTP',
                 icon: 'error',
+                customClass: {
+                    confirmButton: 'btn btn-primary btn-lg',
+                    loader: 'custom-loader'
+                },
                 confirmButtonText: 'Got It'
             });
         }
@@ -90,12 +98,30 @@ const handleRequestPasswordReset = async () => {
                     Swal.fire({
                         title: 'Password reset email sent',
                         icon: 'success',
+                        customClass: {
+                            confirmButton: 'btn btn-primary btn-lg',
+                            loader: 'custom-loader'
+                        },
+                        confirmButtonText: 'Got It'
+                    });
+                } else if (response.status === 404) {
+                    Swal.fire({
+                        title: 'We could not find an account with that email address.',
+                        icon: 'error',
+                        customClass: {
+                            confirmButton: 'btn btn-primary btn-lg',
+                            loader: 'custom-loader'
+                        },
                         confirmButtonText: 'Got It'
                     });
                 } else {
                     Swal.fire({
                         title: 'Failed to send password reset email, make sure you entered the correct email address.',
                         icon: 'error',
+                        customClass: {
+                            confirmButton: 'btn btn-primary btn-lg',
+                            loader: 'custom-loader'
+                        },
                         confirmButtonText: 'Got It'
                     });
                 }

@@ -24,6 +24,10 @@ const handleReviewSubmission = async (event) => {
         Swal.fire({
             title: 'Please select a rating',
             icon: 'error',
+            customClass: {
+                confirmButton: 'btn btn-primary btn-lg',
+                loader: 'custom-loader'
+            },
             confirmButtonText: 'Got It'
         });
         return;
@@ -45,6 +49,10 @@ const handleReviewSubmission = async (event) => {
             Swal.fire({
                 title: 'Review submitted successfully',
                 icon: 'success',
+                customClass: {
+                    confirmButton: 'btn btn-primary btn-lg',
+                    loader: 'custom-loader'
+                },
                 confirmButtonText: 'Ok!'
             }).then(() => {
                 location.reload();
@@ -53,6 +61,10 @@ const handleReviewSubmission = async (event) => {
             Swal.fire({
                 title: 'An error occurred while submitting your review',
                 icon: 'error',
+                customClass: {
+                    confirmButton: 'btn btn-primary btn-lg',
+                    loader: 'custom-loader'
+                },
                 confirmButtonText: 'Got It'
             });
         }
@@ -60,6 +72,10 @@ const handleReviewSubmission = async (event) => {
         Swal.fire({
             title: 'Network error occurred while submitting your review',
             icon: 'error',
+            customClass: {
+                confirmButton: 'btn btn-primary btn-lg',
+                loader: 'custom-loader'
+            },
             confirmButtonText: 'Got It'
         });
     }

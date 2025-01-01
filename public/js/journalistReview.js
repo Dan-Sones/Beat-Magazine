@@ -20,6 +20,10 @@ const handleDeleteJournalistReview = async () => {
             Swal.fire({
                 title: 'Review deleted successfully',
                 icon: 'success',
+                customClass: {
+                    confirmButton: 'btn btn-primary btn-lg',
+                    loader: 'custom-loader'
+                },
             }).then(() => {
                 window.location.reload();
             });
@@ -27,12 +31,20 @@ const handleDeleteJournalistReview = async () => {
             Swal.fire({
                 title: 'An error occurred while deleting your review',
                 icon: 'error',
+                customClass: {
+                    confirmButton: 'btn btn-primary btn-lg',
+                    loader: 'custom-loader'
+                },
             });
         }
     } catch (error) {
         Swal.fire({
             title: 'Network error occurred while deleting your review',
             icon: 'error',
+            customClass: {
+                confirmButton: 'btn btn-primary btn-lg',
+                loader: 'custom-loader'
+            },
         });
     }
 }
