@@ -113,7 +113,7 @@ const handleLikeReview = async (reviewId) => {
         });
 
         if (response.status === 200) {
-            location.reload();
+            updateCardToHaveShowLike(reviewId, true);
         } else {
             Swal.fire({
                 title: 'An error occurred whilst liking the review',
@@ -145,7 +145,7 @@ const handleUnlikeReview = async (reviewId) => {
         });
 
         if (response.status === 200) {
-            location.reload();
+            updateCardToHaveShowLike(reviewId, false);
         } else {
             Swal.fire({
                 title: 'An error occurred whilst unliking the review',
@@ -174,3 +174,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 });
+
+const updateCardToHaveShowLike = (reviewId, liked) => {
+
+    if (typeof liked !== "boolean") {
+        return;
+    }
+
+    const likeButton = document.getElementById(`likeReviewDiv-${reviewId}`);
+    const likeCount = document.getElementById(`likeCount-${reviewId}`);
+
+    if (liked) {
+        likeCount.innerText = String(parseInt(likeCount.innerText) + 1);
+        likeButton.innerHTML = `<i  onclick="handleUnlikeReview(${reviewId})" class="bi bi-hand-thumbs-up-fill text-primary like-cursor"></i>
+   `;
+    } else {
+        likeCount.innerText = String(parseInt(likeCount.innerText) - 1);
+        likeButton.innerHTML = `<i onclick="handleLikeReview(${reviewId})" class="bi bi-hand-thumbs-up like-cursor"></i>`;
+    }
+
+
+}

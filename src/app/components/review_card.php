@@ -100,17 +100,24 @@
                     <div class="col-lg-1 col-md-12 d-flex justify-content-center align-items-center order-4 order-md-4 ps-0 ">
 
                         <div class="d-flex align-items-center justify-content-center">
-                            <p class="mb-0 me-2 text-muted"><?= htmlspecialchars($userReview->getLikeCount()) ?></p>
+                            <p class="mb-0 me-2 text-muted"
+                               id="likeCount-<?= htmlspecialchars($userReview->getId()) ?>"><?= htmlspecialchars($userReview->getLikeCount()) ?></p>
                             <?php if (isset($userID) && isset($authenticated) && $authenticated): ?>
                                 <?php if (isset($likedReviewsForUser)): ?>
+                                    <div id="likeReviewDiv-<?= htmlspecialchars($userReview->getId()) ?>">
+
                                     <?php if (in_array($userReview->getId(), $likedReviewsForUser)): ?>
-                                        <i onclick="handleUnlikeReview('<?= htmlspecialchars($userReview->getId()) ?>')"
+                                        <i id="likeIcon"
+                                           onclick="handleUnlikeReview('<?= htmlspecialchars($userReview->getId()) ?>')"
                                            class="bi bi-hand-thumbs-up-fill text-primary like-cursor"></i>
                                     <?php else: ?>
-                                        <i onclick="handleLikeReview('<?= htmlspecialchars($userReview->getId()) ?>')"
+                                        <i id="likeIcon"
+                                           onclick="handleLikeReview('<?= htmlspecialchars($userReview->getId()) ?>')"
                                            class="bi bi-hand-thumbs-up like-cursor"></i>
                                     <?php endif; ?>
                                 <?php endif; ?>
+                                </div>
+
                             <?php else: ?>
                                 <i class="bi bi-hand-thumbs-up" data-bs-toggle="tooltip"
                                    data-bs-title="You must be logged in to like reviews"></i>
