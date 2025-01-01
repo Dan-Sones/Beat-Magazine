@@ -14,6 +14,7 @@ use S246109\BeatMagazine\Services\JournalistReviewService;
 use S246109\BeatMagazine\Services\JournalistService;
 use S246109\BeatMagazine\Services\LikeService;
 use S246109\BeatMagazine\Services\PasswordResetService;
+use S246109\BeatMagazine\Services\SessionService;
 use S246109\BeatMagazine\Services\UserReviewService;
 use S246109\BeatMagazine\Services\UserService;
 
@@ -35,6 +36,9 @@ return function (ContainerBuilder $containerBuilder) {
             ];
 
             return new PDO($dsn, $user, $pass, $options);
+        },
+        SessionService::class => function (ContainerInterface $c) {
+            return new SessionService();
         },
         AlbumFactory::class => function (ContainerInterface $c) {
             return new AlbumFactory($c->get(PDO::class));
@@ -61,7 +65,7 @@ return function (ContainerBuilder $containerBuilder) {
             return new UserFactory($c->get(PDO::class));
         },
         UserReviewService::class => function (ContainerInterface $c) {
-            return new UserReviewService($c->get(PDO::class), $c->get(UserService::class));
+            return new UserReviewService($c->get(PDO::class));
         },
         UserReviewFactory::class => function (ContainerInterface $c) {
             return new UserReviewFactory($c->get(PDO::class), $c->get(UserFactory::class));

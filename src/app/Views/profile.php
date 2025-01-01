@@ -1,6 +1,6 @@
 <?php include 'includes/loadHeader.php'; ?>
 
-<?php if (isset($user) && isset($_SESSION['user_id']) && (string)$_SESSION['user_id'] === (string)$user->getId() && isset($isJournalist) && $isJournalist): ?>
+<?php if (isset($user) && isset($sessionUserId) && (string)$sessionUserId === (string)$user->getId() && isset($isJournalist) && $isJournalist): ?>
     <?php include PRIVATE_PATH . '/src/app/components/update_bio_modal.php'; ?>
 <?php endif; ?>
 
@@ -13,7 +13,7 @@
                         <div class="content justify-content-center">
                             <div class="row">
                                 <div class="col-12 justify-content-center d-flex">
-                                    <?php if (isset($_SESSION['authenticated']) && $_SESSION['authenticated'] && isset($idForUser) && $_SESSION['user_id'] === $idForUser): ?>
+                                    <?php if (isset($authenticated) && $authenticated && isset($idForUser) && isset($sessionUserId) && $sessionUserId === $idForUser): ?>
                                         <form id="uploadForm"
                                               enctype="multipart/form-data" style="position: relative;">
                                             <input type="file" accept="image/*" name="profile_picture"
@@ -71,7 +71,7 @@
                                         <p>We can't find a bio for this user!</p>
                                     <?php endif; ?>
                                     <?php if (isset($isJournalist) && $isJournalist): ?>
-                                        <?php if (isset($_SESSION['user_id']) && (string)$_SESSION['user_id'] === (string)$user->getId()): ?>
+                                        <?php if (isset($user) && isset($sessionUserId) && (string)$sessionUserId === (string)$user->getId()): ?>
                                             <a class="link-opacity-100 link-underline" onclick="handleUpdateBio()">Update
                                                 Bio</a>
                                         <?php endif; ?>

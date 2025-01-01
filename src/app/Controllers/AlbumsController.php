@@ -5,21 +5,22 @@ namespace S246109\BeatMagazine\Controllers;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use S246109\BeatMagazine\Factories\AlbumFactory;
-
+use S246109\BeatMagazine\Services\SessionService;
 
 class AlbumsController
 {
-
     private AlbumFactory $albumFactory;
+    private SessionService $sessionService;
 
     /**
      * @param AlbumFactory $albumFactory
+     * @param SessionService $sessionService
      */
-    public function __construct(AlbumFactory $albumFactory)
+    public function __construct(AlbumFactory $albumFactory, SessionService $sessionService)
     {
         $this->albumFactory = $albumFactory;
+        $this->sessionService = $sessionService;
     }
-
 
     public function index(Request $request, Response $response): Response
     {
@@ -30,15 +31,9 @@ class AlbumsController
             $albums = $this->albumFactory->getAlbumsByGenre($genre);
         } else {
             $albums = $this->albumFactory->getAllAlbums();
-
         }
 
-
-        if (isset($_SESSION['role'])) {
-            $isJournalist = $_SESSION['role'] === 'journalist';
-        } else {
-            $isJournalist = false;
-        }
+        $isJournalist = $this->sessionService->isJournalist();
 
         ob_start();
         include PRIVATE_PATH . '/src/app/Views/albums.php';
@@ -56,12 +51,9 @@ class AlbumsController
             return $response;
         }
 
-        $search = $request->getQueryParams()['search'] ?? '';
         $albums = $this->albumFactory->searchAlbums($search);
 
         $response->getBody()->write(json_encode($albums));
         return $response;
     }
-
-
 }

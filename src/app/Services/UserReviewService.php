@@ -8,19 +8,14 @@ class UserReviewService
 {
     private PDO $db;
 
-    private UserService $userService;
-
     /**
      * @param PDO $db
-     * @param UserService $userService
      */
-    public function __construct(PDO $db, UserService $userService)
+    public function __construct(PDO $db)
     {
         $this->db = $db;
-        $this->userService = $userService;
     }
-
-
+    
     public function CreateReviewForAlbum(string $albumId, string $userId, string $review, string $rating): bool
     {
         $query = '
@@ -38,15 +33,8 @@ class UserReviewService
 
     }
 
-    public function HasUserLeftReviewForAlbum(string $albumId): bool
+    public function HasUserLeftReviewForAlbum(string $albumId, $userId): bool
     {
-
-        $userId = $this->userService->getUserId();
-
-        if (!$this->userService->isUserAuthenticated()) {
-            return false;
-        }
-
         $query = '
             SELECT COUNT(*) FROM user_reviews WHERE album_id = :album_id AND user_id = :user_id
         ';

@@ -7,23 +7,25 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use RobThree\Auth\Providers\Qr\BaconQrCodeProvider;
 use RobThree\Auth\TwoFactorAuth;
 use S246109\BeatMagazine\Factories\UserFactory;
+use S246109\BeatMagazine\Services\SessionService;
 use S246109\BeatMagazine\Services\UserService;
 
 class LoginController
 {
-
-    private userService $userService;
-
-    private userFactory $userFactory;
+    private UserService $userService;
+    private UserFactory $userFactory;
+    private SessionService $sessionService;
 
     /**
      * @param UserService $userService
      * @param UserFactory $userFactory
+     * @param SessionService $sessionService
      */
-    public function __construct(UserService $userService, UserFactory $userFactory)
+    public function __construct(UserService $userService, UserFactory $userFactory, SessionService $sessionService)
     {
         $this->userService = $userService;
         $this->userFactory = $userFactory;
+        $this->sessionService = $sessionService;
     }
 
     public function login(Request $request, Response $response, array $args): Response
@@ -50,52 +52,46 @@ class LoginController
             return $response->withHeader('Content-Type', 'application/json')->withStatus(401);
         }
 
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
-
-        $_SESSION['user_id'] = $user->getId();
-        $_SESSION['otp_pending'] = true;
+        $this->sessionService->startSession();
+        $this->sessionService->set('user_id', $user->getId());
+        $this->sessionService->set('otp_pending', true);
 
         return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
     }
 
     public function verifyOTP(Request $request, Response $response, array $args): Response
     {
-
         $data = json_decode($request->getBody()->getContents(), true);
 
         if (json_last_error() !== JSON_ERROR_NONE) {
             return $response->withStatus(400);
         }
 
-        if (!isset($_SESSION['otp_pending']) || $_SESSION['otp_pending'] !== true) {
+        if (!$this->sessionService->get('otp_pending')) {
             return $response->withStatus(401);
         }
-
 
         if (!isset($data['otp'])) {
             return $response->withStatus(400);
         }
 
-        if (!isset($_SESSION['user_id'])) {
+        $userId = $this->sessionService->getUserID();
+        if ($userId === null) {
             return $response->withStatus(500);
         }
 
         $otp = $data['otp'];
 
-        if (!$this->userService->validateOTP($_SESSION['user_id'], $otp)) {
+        if (!$this->userService->validateOTP($userId, $otp)) {
             return $response->withStatus(401);
         }
 
-        $user = $this->userFactory->getUserById($_SESSION['user_id']);
+        $user = $this->userFactory->getUserById($userId);
 
-
-        $_SESSION['otp_pending'] = false;
-        $_SESSION['authenticated'] = true;
-        $_SESSION['username'] = $user->getUsername();
-        $_SESSION['role'] = $user->getRole();
-
+        $this->sessionService->set('otp_pending', false);
+        $this->sessionService->set('authenticated', true);
+        $this->sessionService->set('username', $user->getUsername());
+        $this->sessionService->set('role', $user->getRole());
 
         $response->getBody()->write(json_encode(['valid' => true]));
         return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
@@ -103,8 +99,7 @@ class LoginController
 
     public function index(Request $request, Response $response, array $args): Response
     {
-        // If the user is already authenticated, redirect them to the albums page
-        if (isset($_SESSION['authenticated']) && $_SESSION['authenticated'] === true) {
+        if ($this->sessionService->isAuthenticated()) {
             return $response->withHeader('Location', '/albums')->withStatus(302);
         }
 
@@ -115,5 +110,4 @@ class LoginController
 
         return $response;
     }
-
 }

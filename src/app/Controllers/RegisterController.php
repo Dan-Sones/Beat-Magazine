@@ -6,33 +6,39 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use RobThree\Auth\TwoFactorAuth;
 use RobThree\Auth\Providers\Qr\BaconQrCodeProvider;
+use S246109\BeatMagazine\Services\SessionService;
 use S246109\BeatMagazine\Services\UserService;
 
 class RegisterController
 {
-
     private UserService $userService;
+    private SessionService $sessionService;
 
-    public function __construct(UserService $userService)
+    /**
+     * @param UserService $userService
+     * @param SessionService $sessionService
+     */
+    public function __construct(UserService $userService, SessionService $sessionService)
     {
         $this->userService = $userService;
+        $this->sessionService = $sessionService;
     }
+
 
     public function index(Request $request, Response $response, array $args): Response
     {
-
         // Redirect to albums if already authenticated
-        if (isset($_SESSION['authenticated']) && $_SESSION['authenticated'] === true) {
+        if ($this->sessionService->isAuthenticated()) {
             return $response->withHeader('Location', '/albums')->withStatus(302);
         }
 
         $tfa = new TwoFactorAuth(new BaconQrCodeProvider());
 
         $google2faSecret = $tfa->createSecret();
-        $_SESSION['google2faSecret'] = $google2faSecret;
+        $this->sessionService->set('google2faSecret', $google2faSecret);
         $qrCodeUrl = $tfa->getQRCodeImageAsDataUri('BeatMagazine', $google2faSecret);
 
-        $_SESSION['otp_pending'] = true;
+        $this->sessionService->set('otp_pending', true);
 
         ob_start();
         include PRIVATE_PATH . '/src/app/Views/register.php';
@@ -62,13 +68,13 @@ class RegisterController
         }
 
         $response->getBody()->write(json_encode(['valid' => true]));
-        $_SESSION['otp_pending'] = false;
+        $this->sessionService->set('otp_pending', false);
         return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
     }
 
     public function getGoogle2faSecret(): string
     {
-        return $_SESSION['google2faSecret'] ?? '';
+        return $this->sessionService->get('google2faSecret') ?? '';
     }
 
     public function submit(Request $request, Response $response, array $args): Response
@@ -81,15 +87,13 @@ class RegisterController
         $password = $data['password'] ?? '';
         $google2faSecret = $this->getGoogle2faSecret();
 
-
-        if ($_SESSION['otp_pending'] === true) {
+        if ($this->sessionService->get('otp_pending') === true) {
             return $response->withStatus(400);
         }
 
         if (empty($username) || empty($email) || empty($firstName) || empty($lastName) || empty($password) || empty($google2faSecret)) {
             return $response->withStatus(400);
         }
-
 
         if ($this->userService->isUsernameTaken($username)) {
             return $response->withStatus(409);
@@ -98,7 +102,6 @@ class RegisterController
         if ($this->userService->isEmailTaken($email)) {
             return $response->withStatus(409);
         }
-
 
         $confirmNumbers = preg_match_all('/[0-9]/', $password) >= 3;
         $confirmCapital = preg_match_all('/[A-Z]/', $password) >= 1;
@@ -116,7 +119,7 @@ class RegisterController
             return $response->withStatus(500);
         }
 
-        $_SESSION['google2faSecret'] = "";
+        $this->sessionService->set('google2faSecret', '');
 
         return $response->withStatus(201);
     }
