@@ -63,12 +63,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const validatePassword = () => {
         const isValid = checkPassword();
-        validateInput(passwordInput, isValid, 'Password does not meet requirements.');
+        const message = confirmPasswordInput.value ? 'Passwords do not match.' : 'Password does not meet requirements.';
+        validateInput(passwordInput, isValid, message);
         return isValid;
     };
 
+    const validateConfirmPassword = () => {
+        const isValid = checkPassword();
+        validateInput(confirmPasswordInput, isValid, 'Passwords do not match.');
+        return isValid;
+    }
+
     const checkFormValidity = () => {
-        const isFormValid = validateUsername() && validateEmail() && validatePassword();
+        const isFormValid = validateUsername() && validateEmail() && validatePassword() && validateConfirmPassword();
         nextButton.disabled = !isFormValid;
     };
 
