@@ -1,5 +1,5 @@
 <div class="carousel-item active">
-    <h3 class="mb-4 text-center">Step 1: Basic Information</h3>
+    <h3 class="mb-4 text-center pt-3">Step 1: Basic Information</h3>
     <form id="step1Form">
         <div class="mb-3">
             <label for="username" class="form-label">Username</label>
@@ -22,9 +22,9 @@
                    placeholder="Enter password" data-bs-toggle="tooltip" required>
         </div>
 
-        <div class="card p-4 shadow-sm mb-2">
+        <div class="card p-3 shadow-sm">
             <h5 class="text-center pb-2">Password Requirements</h5>
-            <ul class="list-unstyled mb-4" id="password-status">
+            <ul class="list-unstyled" id="password-status">
                 <li class="d-flex justify-content-between align-items-center">
                     <span>Contain at least 3 numbers:</span>
                     <div id="confirmNumbersStatus">
@@ -57,7 +57,7 @@
                 </li>
             </ul>
         </div>
-        <div class="d-flex justify-content-center">
+        <div class="pt-3 pb-3 d-flex justify-content-center">
             <button class=" btn btn-primary next-btn me-2
                                     " type="button"
                     data-bs-target="#registrationCarousel" data-bs-slide="next">
