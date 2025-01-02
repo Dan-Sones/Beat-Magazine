@@ -42,17 +42,18 @@
     cursor: pointer;
   }
 
-  .artist-name:hover {
-    text-decoration: underline;
+  .hover-state {
+    &:hover {
+      cursor: pointer;
+    }
   }
-
 
   .album-art {
     transition: transform 0.8s ease-in-out;
 
     &:hover {
       transform: scale(1.02);
-      cursor: grab;
+      cursor: pointer;
     }
   }
 
