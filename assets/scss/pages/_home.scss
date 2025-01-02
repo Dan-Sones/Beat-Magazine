@@ -1,5 +1,12 @@
 // Styles for latest reviews section
 .latest-reviews {
+
+  .cursor-pointer {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
   .small-card,
   .big-card {
     overflow: hidden;
