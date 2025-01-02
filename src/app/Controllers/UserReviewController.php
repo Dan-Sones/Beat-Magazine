@@ -36,6 +36,10 @@ class UserReviewController
             return $response->withStatus(400);
         }
 
+        if (strlen($data['review']) > 1000) {
+            return $response->withStatus(400);
+        }
+
         if ($this->userReviewService->hasUserLeftReviewForAlbum($args['albumId'], $userId)) {
             return $response->withStatus(403);
         }
@@ -60,6 +64,10 @@ class UserReviewController
         $data = json_decode($request->getBody()->getContents(), true);
 
         if (json_last_error() !== JSON_ERROR_NONE) {
+            return $response->withStatus(400);
+        }
+
+        if (strlen($data['review']) > 1000) {
             return $response->withStatus(400);
         }
 
