@@ -6,6 +6,7 @@ const handleEditReview = (reviewID) => {
     editForm.style.display = 'block';
 };
 
+
 const handleCancelEditReview = (reviewID) => {
     const reviewText = document.getElementById('userReviewText-' + reviewID);
     reviewText.style.display = 'block';
@@ -38,8 +39,8 @@ const handleSubmitEditReview = async (event, reviewId) => {
                 },
                 confirmButtonText: 'Got It'
             }).then(() => {
-                location.reload();
-            });
+                updateReviewToHaveEditContents(reviewId, rating, review);
+            })
         } else {
             Swal.fire({
                 title: 'An error occurred while updating your review',
@@ -113,7 +114,7 @@ const handleLikeReview = async (reviewId) => {
         });
 
         if (response.status === 200) {
-            location.reload();
+            updateCardToHaveShowLike(reviewId, true);
         } else {
             Swal.fire({
                 title: 'An error occurred whilst liking the review',
@@ -145,7 +146,7 @@ const handleUnlikeReview = async (reviewId) => {
         });
 
         if (response.status === 200) {
-            location.reload();
+            updateCardToHaveShowLike(reviewId, false);
         } else {
             Swal.fire({
                 title: 'An error occurred whilst unliking the review',
@@ -174,3 +175,38 @@ document.addEventListener('DOMContentLoaded', () => {
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 });
+
+const updateCardToHaveShowLike = (reviewId, liked) => {
+
+    if (typeof liked !== "boolean") {
+        return;
+    }
+
+    const likeButton = document.getElementById(`likeReviewDiv-${reviewId}`);
+    const likeCount = document.getElementById(`likeCount-${reviewId}`);
+
+    if (liked) {
+        likeCount.innerText = String(parseInt(likeCount.innerText) + 1);
+        likeButton.innerHTML = `<i  onclick="handleUnlikeReview(${reviewId})" class="bi bi-hand-thumbs-up-fill text-primary like-cursor"></i>
+   `;
+    } else {
+        likeCount.innerText = String(parseInt(likeCount.innerText) - 1);
+        likeButton.innerHTML = `<i onclick="handleLikeReview(${reviewId})" class="bi bi-hand-thumbs-up like-cursor"></i>`;
+    }
+}
+
+const updateReviewToHaveEditContents = (reviewID, rating, review) => {
+
+    const userReviewText = document.getElementById('userReviewText-' + reviewID);
+    const userReviewRating = document.getElementById('userReviewRating-' + reviewID);
+
+    userReviewText.innerHTML = review;
+    userReviewRating.innerHTML = `${rating}/10`;
+
+
+    const reviewText = document.getElementById('userReviewText-' + reviewID);
+    reviewText.style.display = 'block';
+
+    const editForm = document.getElementById('editUserReview-' + reviewID);
+    editForm.style.display = 'none';
+}

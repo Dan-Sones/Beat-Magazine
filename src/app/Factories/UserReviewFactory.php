@@ -36,9 +36,11 @@ class UserReviewFactory
             user_reviews.user_id,
             user_reviews.review_text,
             user_reviews.rating,
+            user_reviews.created_at,
             (SELECT COUNT(*) FROM likes WHERE likes.review_id = user_reviews.id) AS like_count
         FROM user_reviews
         WHERE user_reviews.album_id = :album_id
+        ORDER BY user_reviews.created_at DESC
     ';
 
         $statement = $this->db->prepare($query);

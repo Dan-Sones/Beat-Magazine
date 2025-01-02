@@ -125,6 +125,7 @@ class AlbumFactory
         FROM albums
         INNER JOIN artists ON albums.artist_id = artists.id
         LEFT JOIN genres ON albums.genre_id = genres.id
+        ORDER BY albums.name ASC
         ';
         $statement = $this->db->prepare($query);
         $statement->execute();
@@ -167,6 +168,7 @@ class AlbumFactory
         INNER JOIN artists ON albums.artist_id = artists.id
         LEFT JOIN genres ON albums.genre_id = genres.id
         WHERE artists.name = :artist_name
+        ORDER BY albums.release_date DESC
         ';
         $statement = $this->db->prepare($query);
         $statement->bindValue(':artist_name', $artistName, PDO::PARAM_STR);
@@ -210,6 +212,7 @@ class AlbumFactory
         INNER JOIN artists ON albums.artist_id = artists.id
         LEFT JOIN genres ON albums.genre_id = genres.id
         WHERE albums.name LIKE :searchOne OR artists.name LIKE :searchTwo OR genres.name LIKE :searchThree
+        ORDER BY albums.name ASC
         ';
         $statement = $this->db->prepare($query);
         $statement->bindValue(':searchOne', '%' . $search . '%', PDO::PARAM_STR);
@@ -302,6 +305,7 @@ class AlbumFactory
     INNER JOIN artists ON albums.artist_id = artists.id
     LEFT JOIN genres ON albums.genre_id = genres.id
     WHERE genres.name LIKE :genre
+    ORDER BY albums.name ASC
     ';
         $statement = $this->db->prepare($query);
         $statement->bindValue(':genre', '%' . $genre . '%', PDO::PARAM_STR);
