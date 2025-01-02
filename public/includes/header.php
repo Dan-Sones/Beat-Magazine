@@ -22,7 +22,7 @@
 <script src="/dist/popper.min.js"></script>
 <script src="/dist/bootstrap.bundle.min.js"></script>
 
-
+<body>
 <div class="wrapper">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="/">Beat Magazine</a>

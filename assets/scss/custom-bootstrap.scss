@@ -8,7 +8,6 @@ $secondary: $brand-secondary-light;
 $dark: $brand-dark;
 $light: $brand-light;
 
-$body-bg: $brand-light;
 $body-color: $brand-dark;
 
 $text-primary: $brand-dark;
@@ -26,3 +25,7 @@ $success: #28a745;
 @import "pages/_home.scss";
 @import "pages/_artist.scss";
 @import "components/_review_editor_modal.scss";
+
+.btn-success {
+  color: #fff;
+}
