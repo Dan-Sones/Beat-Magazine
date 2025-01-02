@@ -235,4 +235,18 @@ const updateReviewToHaveEditContents = (reviewID, rating, review) => {
 const dontShowDeletedReview = (reviewID) => {
     const review = document.getElementById('userReview-' + reviewID);
     review.style.display = 'none';
+
+    // re-enable the button to submit a review
+    const submitReviewWrapper = document.getElementById('submitReviewWrapper');
+    const submitReviewButton = document.getElementById('submitReview');
+    submitReviewButton.removeAttribute('disabled');
+
+    // remove the tooltip that says you have already left a review
+    let tooltipInstance = bootstrap.Tooltip.getInstance(submitReviewWrapper);
+
+    if (tooltipInstance) {
+        // Dispose of the tooltip instance
+        tooltipInstance.dispose();
+    }
+
 }
