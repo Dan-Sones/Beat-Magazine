@@ -1,7 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
-
     const submitReviewButton = document.getElementById('submitReview');
     const submitReviewWrapper = document.getElementById('submitReviewWrapper');
+
+    const reviewText = document.getElementById('reviewText');
+    const maxChars = 1000;
+    const charCountDisplay = document.createElement('div');
+    charCountDisplay.id = 'charCount';
+    reviewText.parentNode.insertBefore(charCountDisplay, reviewText.nextSibling);
+    charCountDisplay.setAttribute("class", "mt-3")
+    charCountDisplay.textContent = `0 / ${maxChars} characters`
+
 
     if (!activeSession) {
         submitReviewWrapper.setAttribute("data-bs-title", 'You must be logged in to submit a review');
@@ -12,8 +20,17 @@ document.addEventListener('DOMContentLoaded', () => {
             submitReviewButton.disabled = true;
         }
     }
-});
 
+    reviewText.addEventListener('input', () => {
+        const charCount = reviewText.value.length;
+        charCountDisplay.textContent = `${charCount} / ${maxChars} characters`;
+
+        if (charCount > maxChars) {
+            reviewText.value = reviewText.value.substring(0, maxChars);
+            charCountDisplay.textContent = `${maxChars} / ${maxChars} characters`;
+        }
+    });
+});
 
 const handleReviewSubmission = async (event) => {
     event.preventDefault();

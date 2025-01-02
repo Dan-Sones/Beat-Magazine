@@ -1,11 +1,32 @@
 const handleEditReview = (reviewID) => {
-    const reviewText = document.getElementById('userReviewText-' + reviewID);
-    reviewText.style.display = 'none';
-
     const editForm = document.getElementById('editUserReview-' + reviewID);
-    editForm.style.display = 'block';
-};
+    const reviewText = document.getElementById('userReviewText-' + reviewID);
 
+    reviewText.style.display = 'none';
+    editForm.style.display = 'block';
+
+
+    const updatedReviewText = document.getElementById('updatedReviewText-' + reviewID)
+    const maxChars = 1000;
+
+    const charCountDisplay = document.createElement('div');
+    charCountDisplay.id = `charCount-${reviewID}`;
+    charCountDisplay.setAttribute("class", "mt-3")
+    updatedReviewText.parentNode.insertBefore(charCountDisplay, updatedReviewText.nextSibling);
+    charCountDisplay.textContent = `${reviewText.textContent.length} / ${maxChars} characters`
+
+
+    updatedReviewText.addEventListener('input', () => {
+        const charCount = updatedReviewText.value.length;
+        charCountDisplay.textContent = `${charCount} / ${maxChars} characters`;
+
+        if (charCount > maxChars) {
+            updatedReviewText.value = updatedReviewText.value.substring(0, maxChars);
+            charCountDisplay.textContent = `${maxChars} / ${maxChars} characters`;
+        }
+    });
+
+};
 
 const handleCancelEditReview = (reviewID) => {
     const reviewText = document.getElementById('userReviewText-' + reviewID);
