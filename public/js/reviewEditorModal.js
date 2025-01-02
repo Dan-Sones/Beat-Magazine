@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const reviewText = document.getElementById('journalistReviewText');
+    const reviewText = document.getElementById('modal-journalistReviewText');
     const preview = document.getElementById('preview');
 
     reviewText.addEventListener('input', () => {
@@ -13,9 +13,9 @@ document.addEventListener('DOMContentLoaded', () => {
 const submitJournalistReview = async (event) => {
     event.preventDefault();
 
-    const rating = document.getElementById('journalistReviewRating').value;
-    const abstract = document.getElementById('journalistAbstractText').value;
-    const review = document.getElementById('journalistReviewText').value;
+    const rating = document.getElementById('modal-journalistReviewRating').value;
+    const abstract = document.getElementById('modal-journalistAbstractText').value;
+    const review = document.getElementById('modal-journalistReviewText').value;
 
     try {
         const response = await fetch(`/api/albums/${albumIdGlobal}/journalist-reviews`, {
@@ -69,9 +69,9 @@ const submitJournalistReview = async (event) => {
 const editJournalistReview = async (event) => {
     event.preventDefault();
 
-    const rating = document.getElementById('journalistReviewRating').value;
-    const abstract = document.getElementById('journalistAbstractText').value;
-    const review = document.getElementById('journalistReviewText').value;
+    const rating = document.getElementById('modal-journalistReviewRating').value;
+    const abstract = document.getElementById('modal-journalistAbstractText').value;
+    const review = document.getElementById('modal-journalistReviewText').value;
 
     try {
         const response = await fetch(`/api/albums/${albumIdGlobal}/journalist-reviews`, {
@@ -96,7 +96,8 @@ const editJournalistReview = async (event) => {
                 },
                 confirmButtonText: 'Got It'
             }).then(() => {
-                location.reload();
+                hideReviewModal()
+                updateJournalistReviewContents(rating, abstract, review);
             });
         } else {
             Swal.fire({
@@ -124,3 +125,14 @@ const editJournalistReview = async (event) => {
     // reset the default onSubmit
     document.querySelector('form').onsubmit = submitJournalistReview;
 };
+
+const hideReviewModal = () => {
+    const reviewEditorModal = bootstrap.Modal.getInstance(document.getElementById('reviewEditor'));
+    reviewEditorModal.hide();
+}
+
+const updateJournalistReviewContents = (reviewRating, reviewAbstract, reviewText) => {
+    document.getElementById('journalistReviewRating').innerHTML = `${reviewRating}/10`;
+    document.getElementById('journalistReviewAbstractText').innerHTML = reviewAbstract;
+    document.getElementById('journalistReviewText').innerHTML = reviewText;
+}

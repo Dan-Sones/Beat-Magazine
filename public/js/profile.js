@@ -3,16 +3,12 @@ const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstra
 
 const container = document.getElementById('reviews-container');
 
-container.addEventListener('click', (event) => {
-    const card = event.target.closest('.album-review');
-    if (card) {
-        const artist = card.querySelector('#album-artist').textContent;
-        const title = card.querySelector('#album-title').textContent;
-        const encodedArtist = encodeURIComponent(artist).replace(/%20/g, '+');
-        const encodedTitle = encodeURIComponent(title).replace(/%20/g, '+');
-        window.location.href = `/artist/${encodedArtist}/${encodedTitle}`;
-    }
-});
+
+const navigateToAlbum = (artist, title) => {
+    const encodedArtist = encodeURIComponent(artist).replace(/%20/g, '+');
+    const encodedTitle = encodeURIComponent(title).replace(/%20/g, '+');
+    window.location.href = `/artist/${encodedArtist}/${encodedTitle}`;
+}
 
 const UrlForAlbum = (artist, title) => {
     const encodedArtist = encodeURIComponent(artist).replace(/%20/g, '+');

@@ -13,25 +13,10 @@
     }
 
     .album-info {
-      .genre {
-        cursor: pointer;
-      }
-
-      .genre:hover {
-        text-decoration: underline;
-      }
-
       .title-artist-section {
         padding-top: 2rem;
         padding-bottom: 1rem;
-
-        .artist-name {
-          cursor: pointer;
-        }
-
-        .artist-name:hover {
-          text-decoration: underline;
-        }
+        
       }
 
 

@@ -27,7 +27,7 @@
                         </h2>
                     </div>
                     <div class="row">
-                        <h5 class="artist-name"
+                        <h5 class="artist-name link-underline"
                             onclick="UrlForArtist('<?= addslashes($album->getArtistName()) ?>')">
                             <?= htmlspecialchars($album->getArtistName()) ?>
                         </h5>
@@ -35,7 +35,8 @@
                 </div>
                 <div class="row info d-flex align-items-center">
                     <p><strong>Release Date:</strong> <?= htmlspecialchars($album->getReleaseDate()) ?></p>
-                    <p class="genre" onclick="UrlForGenre('<?= htmlspecialchars($album->getGenre()) ?>')">
+                    <p class="genre link-underline"
+                       onclick="UrlForGenre('<?= htmlspecialchars($album->getGenre()) ?>')">
                         <strong>Genre</strong>: <?= htmlspecialchars($album->getGenre()) ?></p>
                     <p><strong>Label:</strong> <?= htmlspecialchars($album->getLabel()) ?></p>
                     <?php if (isset($averageUserRating)): ?>

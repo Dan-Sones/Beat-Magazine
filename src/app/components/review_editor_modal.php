@@ -12,8 +12,8 @@
                             <div class="row">
                                 <div class="col-6 justify-content-center align-items-center d-flex ps-0 ">
                                     <div class="mb-3 w-100">
-                                        <label for="journalistReviewRating" class="form-label">Rating</label>
-                                        <select class="form-select" id="journalistReviewRating" required>
+                                        <label for="modal-journalistReviewRating" class="form-label">Rating</label>
+                                        <select class="form-select" id="modal-journalistReviewRating" required>
                                             <option value="">Select a rating</option>
                                             <option value="1">1</option>
                                             <option value="2">2</option>
@@ -31,8 +31,8 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="mb-3">
-                                        <label for="journalistAbstractText" class="form-label">Abstract</label>
-                                        <textarea class="form-control" id="journalistAbstractText" rows="5"
+                                        <label for="modal-journalistAbstractText" class="form-label">Abstract</label>
+                                        <textarea class="form-control" id="modal-journalistAbstractText" rows="5"
                                                   placeholder="Write your abstract here" required></textarea>
                                     </div>
                                 </div>
@@ -40,8 +40,9 @@
                                 <div class="row">
                                     <div class="col-6" id="editor">
                                         <div class="mb-3">
-                                            <label for="journalistReviewText" class="form-label">Review Text</label>
-                                            <textarea class="form-control" id="journalistReviewText" rows="15"
+                                            <label for="modal-journalistReviewText" class="form-label">Review
+                                                Text</label>
+                                            <textarea class="form-control" id="modal-journalistReviewText" rows="15"
                                                       placeholder="Write your review here using HTML5 and see a live preview to the right"
                                                       required></textarea>
                                         </div>

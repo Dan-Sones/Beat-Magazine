@@ -64,11 +64,11 @@
                             <div class="row justify-content-center">
                                 <div class="col-6 text-center">
                                     <?php if (isset($journalistBio)): ?>
-                                        <p>
+                                        <p id="bio">
                                             <?= htmlspecialchars($journalistBio) ?>
                                         </p>
                                     <?php elseif (isset($isJournalist) && $isJournalist): ?>
-                                        <p>We can't find a bio for this user!</p>
+                                        <p id="bio">We can't find a bio for this user!</p>
                                     <?php endif; ?>
                                     <?php if (isset($isJournalist) && $isJournalist): ?>
                                         <?php if (isset($user) && isset($sessionUserId) && (string)$sessionUserId === (string)$user->getId()): ?>
@@ -95,12 +95,15 @@
                                         <?php $album = $albumDetailsMap[$journalistReview->getAlbumId()]; ?>
                                         <div class="col-md-4 col-sm-6 mb-4 d-flex flex-column justify-content-center text-center">
                                             <div class="card shadow h-100 official-review-card">
-                                                <img src="<?= $album->getAlbumArt() ?>"
-                                                     class="card-img-top" alt="Album Art">
+                                                <img onclick="UrlForAlbum('<?= addslashes($album->getArtistName()) ?>', '<?= addslashes($album->getAlbumName()) ?>')"
+                                                     src="<?= $album->getAlbumArt() ?>"
+                                                     class="card-img-top hover-state"
+                                                     alt="Album Art for <?= htmlspecialchars($album->getAlbumName()) ?>">
                                                 <div class="card-body">
-                                                    <h5 class="card-title"><?= htmlspecialchars($album->getAlbumName()) ?></h5>
+                                                    <h5 class="card-title link-underline"
+                                                        onclick="UrlForAlbum('<?= addslashes($album->getArtistName()) ?>', '<?= addslashes($album->getAlbumName()) ?>')"><?= htmlspecialchars($album->getAlbumName()) ?></h5>
                                                     <p class="card-text">
-                                                        <em class="artist-name"
+                                                        <em class="artist-name link-underline"
                                                             onclick="UrlForArtist(event, '<?= addslashes($album->getArtistName()) ?>')"> <?= $album->getArtistName() ?></em>
                                                         |
                                                         <?= htmlspecialchars($album->getLabel()) ?>
@@ -161,12 +164,14 @@
                                             <?php $album = $albumDetailsMap[$userReview->getAlbumId()]; ?>
                                             <div class="row gx-5 d-flex align-items-center pb-5 album-review"
                                                  data-aos="fade-<?php echo $i % 2 == 0 ? 'right' : 'left'; ?>"
-                                                 data-aos-duration="1000" id="album-review">
+                                                 data-aos-duration="1000" id="album-review"
+                                            >
                                                 <div class="col-md-6 col-12 order-0 order-md-<?php echo $i % 2 == 0 ? '1' : '0'; ?> justify-content-center pb-sm-3">
                                                     <div class="album-art pb-3">
                                                         <img src="<?= htmlspecialchars($album->getAlbumArt()) ?>"
                                                              class="img-fluid shadow album-art"
                                                              id="album-art"
+                                                             onclick="navigateToAlbum('<?= addslashes($album->getArtistName()) ?>', '<?= addslashes($album->getAlbumName()) ?>')"
                                                              alt="Album Art for <?= htmlspecialchars($album->getAlbumName()) ?>"/>
                                                     </div>
                                                 </div>
@@ -174,9 +179,10 @@
                                                     <div class="review card mb-4 shadow">
                                                         <div class="card-header">
                                                             <h4 id="album-title"
-                                                                class="mb-0"><?= htmlspecialchars($album->getAlbumName()) ?></h4>
+                                                                onclick="UrlForAlbum('<?= addslashes($album->getArtistName()) ?>', '<?= addslashes($album->getAlbumName()) ?>')"
+                                                                class="mb-0 link-underline"><?= htmlspecialchars($album->getAlbumName()) ?></h4>
                                                             <h5 id="album-artist"
-                                                                class="fw-light artist-name"
+                                                                class="fw-light link-underline artist-name"
                                                                 onclick="UrlForArtist(event, '<?= addslashes($album->getArtistName()) ?>')"><?= htmlspecialchars($album->getArtistName()) ?></h5>
                                                         </div>
                                                         <div class="card-body d-flex flex-column flex-md-row align-items-center">

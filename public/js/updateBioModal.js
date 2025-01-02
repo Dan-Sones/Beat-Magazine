@@ -7,6 +7,7 @@ const getJournalistBio = () => {
     return journalistBio;
 };
 
+
 const updateBio = async (event, userId) => {
     event.preventDefault();
     const newBio = document.getElementById('newBioText').value;
@@ -32,7 +33,8 @@ const updateBio = async (event, userId) => {
                 },
                 confirmButtonText: 'Got It'
             }).then(() => {
-                window.location.reload();
+                updateBioInDOM(newBio);
+                closeModal();
             })
         } else {
             Swal.fire({
@@ -57,3 +59,14 @@ const updateBio = async (event, userId) => {
         });
     }
 };
+
+
+const closeModal = () => {
+    const bioEditorModal = bootstrap.Modal.getInstance(document.getElementById('bioEditorModal'));
+    bioEditorModal.hide();
+}
+
+const updateBioInDOM = (bio) => {
+    const bioElement = document.getElementById('bio');
+    bioElement.innerText = bio;
+}

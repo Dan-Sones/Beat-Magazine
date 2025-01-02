@@ -94,3 +94,11 @@ const isGenrePage = () => {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.has('genre');
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const searchForm = document.querySelector('#search-form form');
+    searchForm.addEventListener('submit', (event) => {
+        // This just prevents the application from refreshing on enter
+        event.preventDefault();
+    });
+});
