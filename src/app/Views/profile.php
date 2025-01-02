@@ -64,11 +64,11 @@
                             <div class="row justify-content-center">
                                 <div class="col-6 text-center">
                                     <?php if (isset($journalistBio)): ?>
-                                        <p>
+                                        <p id="bio">
                                             <?= htmlspecialchars($journalistBio) ?>
                                         </p>
                                     <?php elseif (isset($isJournalist) && $isJournalist): ?>
-                                        <p>We can't find a bio for this user!</p>
+                                        <p id="bio">We can't find a bio for this user!</p>
                                     <?php endif; ?>
                                     <?php if (isset($isJournalist) && $isJournalist): ?>
                                         <?php if (isset($user) && isset($sessionUserId) && (string)$sessionUserId === (string)$user->getId()): ?>
