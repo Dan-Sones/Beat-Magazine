@@ -40,7 +40,7 @@
             </div>
             <?php if (isset($isJournalist) && $isJournalist) : ?>
 
-                <div id="create-album-container" class="row p-5">
+                <div id="create-album-container" class="row p-3">
                     <div class="col-12 text-center">
                         <button class="btn btn-primary" onclick="window.location.href = '/create-album'">Create an
                             album
