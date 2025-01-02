@@ -102,7 +102,7 @@ const handleDeleteReview = async (reviewId) => {
                 },
                 confirmButtonText: 'Got It'
             }).then(() => {
-                location.reload();
+                dontShowDeletedReview(reviewId);
             });
         } else {
             Swal.fire({
@@ -230,4 +230,9 @@ const updateReviewToHaveEditContents = (reviewID, rating, review) => {
 
     const editForm = document.getElementById('editUserReview-' + reviewID);
     editForm.style.display = 'none';
+}
+
+const dontShowDeletedReview = (reviewID) => {
+    const review = document.getElementById('userReview-' + reviewID);
+    review.style.display = 'none';
 }

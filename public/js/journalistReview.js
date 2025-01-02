@@ -3,7 +3,6 @@ const handleEditJournalistReview = () => {
     document.getElementById('modal-journalistAbstractText').value = reviewAbstract;
     document.getElementById('modal-journalistReviewText').value = reviewText;
     document.getElementById('preview').innerHTML = reviewText;
-
     document.getElementById('journalistReviewForm').onsubmit = editJournalistReview;
 
     const reviewEditorModal = new bootstrap.Modal(document.getElementById('reviewEditor'));
