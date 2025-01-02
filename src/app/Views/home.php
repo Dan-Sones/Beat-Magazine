@@ -14,10 +14,14 @@
 
                     <div class="col-md-6 mb-4">
                         <div class="card h-100 shadow">
-                            <img src="<?= htmlspecialchars($album->getAlbumArt()) ?>" class="card-img-top"
+                            <img src="<?= htmlspecialchars($album->getAlbumArt()) ?>"
+                                 onclick="UrlForAlbum('<?= addslashes($album->getArtistName()) ?>', '<?= addslashes($album->getAlbumName()) ?>')"
+                                 class="card-img-top cursor-pointer"
                                  alt="Album art for <?= htmlspecialchars($album->getAlbumName()) ?>">
                             <div class="card-body p-4">
-                                <h5 class="card-title"><?= htmlspecialchars($album->getAlbumName()) ?> -
+                                <h5 class="card-title cursor-pointer"
+                                    onclick="UrlForAlbum('<?= addslashes($album->getArtistName()) ?>', '<?= addslashes($album->getAlbumName()) ?>')"><?= htmlspecialchars($album->getAlbumName()) ?>
+                                    -
                                     <em onclick="UrlForArtist('<?= addslashes($album->getArtistName()) ?>')"
                                         class="link-underline"><?= htmlspecialchars($album->getArtistName()) ?></em>
                                 </h5>
@@ -37,10 +41,14 @@
                             <?php else: ?>
                                 <div class="col-lg-6 mb-4">
                                     <div class="card h-100 shadow">
-                                        <img src="<?= htmlspecialchars($album->getAlbumArt()) ?>" class="card-img-top"
-                                             alt="Album art for <?= htmlspecialchars($album->getAlbumName()) ?>">
+                                        <img src="<?= htmlspecialchars($album->getAlbumArt()) ?>"
+                                             class="card-img-top cursor-pointer"
+                                             alt="Album art for <?= htmlspecialchars($album->getAlbumName()) ?>"
+                                             onclick="UrlForAlbum('<?= addslashes($album->getArtistName()) ?>', '<?= addslashes($album->getAlbumName()) ?>')">
                                         <div class="card-body">
-                                            <h5 class="card-title"><?= htmlspecialchars($album->getAlbumName()) ?> -
+                                            <h5 class="card-title cursor-pointer"
+                                                onclick="UrlForAlbum('<?= addslashes($album->getArtistName()) ?>', '<?= addslashes($album->getAlbumName()) ?>')"><?= htmlspecialchars($album->getAlbumName()) ?>
+                                                -
                                                 <em class="link-underline"
                                                     onclick="UrlForArtist('<?= addslashes($album->getArtistName()) ?>')"><?= htmlspecialchars($album->getArtistName()) ?></em>
                                             </h5>
