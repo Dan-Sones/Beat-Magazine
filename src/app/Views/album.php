@@ -37,7 +37,7 @@
                                     aria-label="Show Reviews">Reviews
                             </button>
                         </div>
-                        <div id="tracklist" class="mt-3" style="display: none;">
+                        <div id="tracklist" class="mt-3 shadow-sm" style="display: none;">
                             <ul class="list-group">
                                 <?php if (sizeof($album->getSongs()) < 1): ?>
                                     <p>No tracks found.</p>
