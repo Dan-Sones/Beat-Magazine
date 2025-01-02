@@ -45,11 +45,11 @@ const isEmailTaken = async (email) => {
 const handleTaken = (taken, targetElementID) => {
     if (taken === true) {
         const tooltipContents = `This ${targetElementID === 'emailStatus' ? 'email' : 'username'} is already taken`;
-        document.getElementById(targetElementID).innerHTML = `<i data-bs-toggle="tooltip" class="bi bi-slash-circle icon-error"></i>`;
+        document.getElementById(targetElementID).innerHTML = `<i data-bs-toggle="tooltip" class="bi bi-slash-circle icon-error text-danger"></i>`;
         document.getElementById(targetElementID).setAttribute("data-bs-title", tooltipContents);
         new bootstrap.Tooltip(document.getElementById(targetElementID).querySelector('[data-bs-toggle="tooltip"]'));
     } else {
-        document.getElementById(targetElementID).innerHTML = '<i class="bi bi-check-circle-fill icon-success"></i>';
+        document.getElementById(targetElementID).innerHTML = '<i class="bi bi-check-circle-fill icon-success text-success"></i>';
     }
 };
 
