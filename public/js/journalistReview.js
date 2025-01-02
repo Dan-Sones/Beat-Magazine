@@ -1,7 +1,7 @@
 const handleEditJournalistReview = () => {
-    document.getElementById('journalistReviewRating').value = reviewRating;
-    document.getElementById('journalistAbstractText').value = reviewAbstract;
-    document.getElementById('journalistReviewText').value = reviewText;
+    document.getElementById('modal-journalistReviewRating').value = reviewRating;
+    document.getElementById('modal-journalistAbstractText').value = reviewAbstract;
+    document.getElementById('modal-journalistReviewText').value = reviewText;
     document.getElementById('preview').innerHTML = reviewText;
 
     document.getElementById('journalistReviewForm').onsubmit = editJournalistReview;

@@ -22,11 +22,11 @@
 
                 <div class="col-md-3 text-center p-3">
                     <h2>Rating:</h2>
-                    <h2><?= $journalistReview->getRating() ?>/10</h2>
+                    <h2 id="journalistReviewRating"><?= $journalistReview->getRating() ?>/10</h2>
                 </div>
 
                 <div class="col-md-6">
-                    <p class="review-abstract mb-0">
+                    <p id="journalistReviewAbstractText" class="review-abstract mb-0">
                         <?= $journalistReview->getAbstract() ?>
                         <a class="link-opacity-100 read-more-btn p-0" type="link">Read More
                         </a>
@@ -59,7 +59,7 @@
                     <hr/>
                     <div class="review-full container d-flex justify-content-center"
                     ">
-                    <div class="col-xl-8 col-lg-11 col-md-12 col-sm-12">
+                    <div id="journalistReviewText" class="col-xl-8 col-lg-11 col-md-12 col-sm-12">
                         <?= $journalistReview->getReview() ?>
                     </div>
                 </div>
