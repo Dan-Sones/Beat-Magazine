@@ -125,6 +125,7 @@ class AlbumFactory
         FROM albums
         INNER JOIN artists ON albums.artist_id = artists.id
         LEFT JOIN genres ON albums.genre_id = genres.id
+        ORDER BY albums.name ASC
         ';
         $statement = $this->db->prepare($query);
         $statement->execute();
