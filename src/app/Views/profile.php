@@ -161,12 +161,14 @@
                                             <?php $album = $albumDetailsMap[$userReview->getAlbumId()]; ?>
                                             <div class="row gx-5 d-flex align-items-center pb-5 album-review"
                                                  data-aos="fade-<?php echo $i % 2 == 0 ? 'right' : 'left'; ?>"
-                                                 data-aos-duration="1000" id="album-review">
+                                                 data-aos-duration="1000" id="album-review"
+                                            >
                                                 <div class="col-md-6 col-12 order-0 order-md-<?php echo $i % 2 == 0 ? '1' : '0'; ?> justify-content-center pb-sm-3">
                                                     <div class="album-art pb-3">
                                                         <img src="<?= htmlspecialchars($album->getAlbumArt()) ?>"
                                                              class="img-fluid shadow album-art"
                                                              id="album-art"
+                                                             onclick="navigateToAlbum('<?= addslashes($album->getArtistName()) ?>', '<?= addslashes($album->getAlbumName()) ?>')"
                                                              alt="Album Art for <?= htmlspecialchars($album->getAlbumName()) ?>"/>
                                                     </div>
                                                 </div>
