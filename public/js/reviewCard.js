@@ -9,14 +9,22 @@ const handleEditReview = (reviewID) => {
     const updatedReviewText = document.getElementById('updatedReviewText-' + reviewID)
     const maxChars = 1000;
 
-    const charCountDisplay = document.createElement('div');
-    charCountDisplay.id = `charCount-${reviewID}`;
-    charCountDisplay.setAttribute("class", "mt-3")
-    updatedReviewText.parentNode.insertBefore(charCountDisplay, updatedReviewText.nextSibling);
-    charCountDisplay.textContent = `${reviewText.textContent.length} / ${maxChars} characters`
+
+    if (document.getElementById(`charCount-${reviewID}`)) {
+        const charCountDisplay = document.getElementById(`charCount-${reviewID}`);
+        charCountDisplay.textContent = `${reviewText.textContent.length} / ${maxChars} characters`;
+    } else {
+        const charCountDisplay = document.createElement('div');
+        charCountDisplay.id = `charCount-${reviewID}`;
+        charCountDisplay.setAttribute('id', `charCount-${reviewID}`);
+        charCountDisplay.setAttribute("class", "mt-3")
+        updatedReviewText.parentNode.insertBefore(charCountDisplay, updatedReviewText.nextSibling);
+        charCountDisplay.textContent = `${reviewText.textContent.length} / ${maxChars} characters`
+    }
 
 
     updatedReviewText.addEventListener('input', () => {
+        const charCountDisplay = document.getElementById(`charCount-${reviewID}`);
         const charCount = updatedReviewText.value.length;
         charCountDisplay.textContent = `${charCount} / ${maxChars} characters`;
 

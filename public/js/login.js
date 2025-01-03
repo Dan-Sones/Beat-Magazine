@@ -23,6 +23,15 @@ const submitLoginForm = async (event) => {
         } else {
             emailInput.classList.add('is-invalid');
             passwordInput.classList.add('is-invalid');
+            swal.fire({
+                title: 'Invalid email or password',
+                icon: 'error',
+                customClass: {
+                    confirmButton: 'btn btn-primary btn-lg',
+                    loader: 'custom-loader'
+                },
+                confirmButtonText: 'Got It'
+            });
         }
     } catch (error) {
         console.error('Error during login:', error);

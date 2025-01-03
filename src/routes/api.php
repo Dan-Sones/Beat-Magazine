@@ -68,8 +68,6 @@ return function (App $app) {
                     $reviewGroup->delete('/{reviewId}/unlike', [UserReviewController::class, 'unlike']);
                 })->add(new RestrictUserReviewsMiddleware());
             });
-
-
         });
 
     });
