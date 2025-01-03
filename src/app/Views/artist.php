@@ -6,10 +6,12 @@
                 <h1><?= htmlspecialchars($artist->getName()) ?></h1>
                 <div class="artist-details container">
                     <div class="row justify-content-center">
-                        <p class="artist-bio col-6 justify-content-center mt-3"><?= htmlspecialchars($artist->getBio()) ?></p>
+                        <p class="artist-bio col-6 justify-content-center mt-3">
+                            <em><?= htmlspecialchars($artist->getBio()) ?></em></p>
                     </div>
-                    <span class="d-block genre"
-                          onclick="navigateToGenre('<?= htmlspecialchars($artist->getGenre()) ?>')"><?= htmlspecialchars($artist->getGenre()) ?></span>
+                    <span class="d-block"
+                    >Genre: <span class="genre"
+                                  onclick="navigateToGenre('<?= htmlspecialchars($artist->getGenre()) ?>')"><?= htmlspecialchars($artist->getGenre()) ?></span>
                     <div class="container justify-content-center mt-3">
                         <div class="row justify-content-center">
                             <span class="d-block col-4">Average Journalist Rating: <?= htmlspecialchars($artist->getAverageJournalistRating()) ?>/10</span>
