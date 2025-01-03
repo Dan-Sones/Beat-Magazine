@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (!isValid) {
             input.classList.add('is-invalid');
-            input.setAttribute('title', message);
+            input.setAttribute('data-bs-title', message);
 
             if (!tooltipInstance) {
                 new bootstrap.Tooltip(input, {trigger: 'manual'}).show();
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 tooltipInstance.dispose();
             }
 
-            input.removeAttribute('title');
+            input.removeAttribute('data-bs-title');
         }
     };
 

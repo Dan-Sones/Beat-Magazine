@@ -179,11 +179,18 @@
                                                     <div class="review card mb-4 shadow">
                                                         <div class="card-header">
                                                             <h4 id="album-title"
-                                                                onclick="UrlForAlbum('<?= addslashes($album->getArtistName()) ?>', '<?= addslashes($album->getAlbumName()) ?>')"
-                                                                class="mb-0 link-underline"><?= htmlspecialchars($album->getAlbumName()) ?></h4>
+                                                                class="mb-0">
+                                                                <span class="link-underline"
+                                                                      onclick="UrlForAlbum('<?= addslashes($album->getArtistName()) ?>', '<?= addslashes($album->getAlbumName()) ?>')">
+                                                                <?= htmlspecialchars($album->getAlbumName()) ?>
+                                                                </span>
+                                                            </h4>
                                                             <h5 id="album-artist"
-                                                                class="fw-light link-underline artist-name"
-                                                                onclick="UrlForArtist(event, '<?= addslashes($album->getArtistName()) ?>')"><?= htmlspecialchars($album->getArtistName()) ?></h5>
+                                                                class="fw-light artist-name"
+                                                            >
+                                                                <span onclick="UrlForArtist(event, '<?= addslashes($album->getArtistName()) ?>')"
+                                                                      class="link-underline"><?= htmlspecialchars($album->getArtistName()) ?></span>
+                                                            </h5>
                                                         </div>
                                                         <div class="card-body d-flex flex-column flex-md-row align-items-center">
                                                             <div class="col-12 col-md-4 text-center text-md-start mb-3 mb-md-0">

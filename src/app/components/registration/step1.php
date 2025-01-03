@@ -19,7 +19,7 @@
         <div class="mb-3">
             <label for="confirmPassword" class="form-label">Confirm Password</label>
             <input type="password" class="form-control" id="confirmPassword"
-                   placeholder="confirm password" data-bs-toggle="tooltip" required>
+                   placeholder="Confirm password" data-bs-toggle="tooltip" required>
         </div>
 
         <div class="card p-3 shadow-sm">
