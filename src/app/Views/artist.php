@@ -1,8 +1,8 @@
 <?php include 'includes/loadHeader.php'; ?>
 <?php if (isset($artist) && $artist): ?>
     <main class="artist-page-wrapper">
-        <div class="container">
-            <div class="artist-header text-center bg-light py-4 mb-4 rounded shadow">
+        <div class="container mt-3">
+            <div class="artist-header text-center  py-4 mb-4 rounded shadow">
                 <h1><?= htmlspecialchars($artist->getName()) ?></h1>
                 <div class="artist-details container">
                     <div class="row justify-content-center">
