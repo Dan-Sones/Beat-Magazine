@@ -22,7 +22,5 @@ const copySecret = () => {
             },
             confirmButtonText: 'Got It'
         });
-    }).catch(err => {
-        console.error('Failed to copy QR Code URL: ', err);
-    });
+    })
 };
