@@ -14,6 +14,7 @@
                     <div class="col-4">
                         <p id="confirmUsername"></p></div>
                     <div id="usernameStatus"
+                         data-bs-toggle="tooltip"
                          class="col-4 d-flex justify-content-center align-items-center">
                         <div class="spinner-border" role="status">
                         </div>
@@ -26,6 +27,7 @@
                     <div class="col-4">
                         <p id="confirmEmail"></p></div>
                     <div id="emailStatus"
+                         data-bs-toggle="tooltip"
                          class="col-4 d-flex justify-content-center align-items-center">
                         <div class="spinner-border" role="status">
                         </div>

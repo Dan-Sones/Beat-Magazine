@@ -22,7 +22,7 @@ class JournalistReviewService
     }
 
 
-    public function getJournalistIdForReview(string $albumId): string
+    public function getJournalistUserIdForReview(string $albumId): string
     {
 
         $query = 'SELECT users.id FROM journalist_reviews INNER JOIN journalists ON journalist_reviews.journalist_id = journalists.id INNER JOIN users ON journalists.user_id = users.id WHERE album_id = :album_id ';

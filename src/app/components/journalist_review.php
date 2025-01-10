@@ -6,28 +6,28 @@
 
             <div class="row align-items-center">
                 <div class="col-md-3 d-flex flex-column align-items-center">
-                    <img alt="profilePicture for <?= $journalistReview->getJournalist()->getFullName() ?>"
-                         src="<?= $journalistReview->getJournalist()->getProfilePictureUri() ?>"
+                    <img alt="profilePicture for <?= htmlspecialchars($journalistReview->getJournalist()->getFullName()) ?>"
+                         src="<?= htmlspecialchars($journalistReview->getJournalist()->getProfilePictureUri()) ?>"
                          class="img-fluid rounded-circle p-2 journalist-profile-picture">
                     <h5 class="mt-2 journalist-name"
-                        onclick="URLForJournalist('<?= $journalistReview->getJournalist()->getUsername() ?>')"><?= $journalistReview->getJournalist()->getFullName() ?></h5>
+                        onclick="URLForJournalist('<?= htmlspecialchars($journalistReview->getJournalist()->getUsername()) ?>')"><?= htmlspecialchars($journalistReview->getJournalist()->getFullName()) ?></h5>
                     <p class="text-muted text-center">
                         <?php if (empty($journalistReview->getJournalist()->getBio())): ?>
-                            <?= $journalistReview->getJournalist()->getFullName() ?> has not set a bio yet.
+                            <?= htmlspecialchars($journalistReview->getJournalist()->getFullName()) ?> has not set a bio yet.
                         <?php else: ?>
-                            <?= $journalistReview->getJournalist()->getBio() ?>
+                            <?= htmlspecialchars($journalistReview->getJournalist()->getBio()) ?>
                         <?php endif; ?>
                     </p>
                 </div>
 
                 <div class="col-md-3 text-center p-3">
                     <h2>Rating:</h2>
-                    <h2 id="journalistReviewRating"><?= $journalistReview->getRating() ?>/10</h2>
+                    <h2 id="journalistReviewRating"><?= htmlspecialchars($journalistReview->getRating()) ?>/10</h2>
                 </div>
 
                 <div class="col-md-6">
                     <p id="journalistReviewAbstractText" class="review-abstract mb-0">
-                        <?= $journalistReview->getAbstract() ?>
+                        <?= htmlspecialchars($journalistReview->getAbstract()) ?>
                         <a class="link-opacity-100 read-more-btn p-0" type="link">Read More
                         </a>
                     </p>
@@ -60,7 +60,7 @@
                     <div class="review-full container d-flex justify-content-center"
                     ">
                     <div id="journalistReviewText" class="col-xl-8 col-lg-11 col-md-12 col-sm-12">
-                        <?= $journalistReview->getReview() ?>
+                        <?= htmlspecialchars($journalistReview->getReview()) ?>
                     </div>
                 </div>
 
@@ -70,8 +70,8 @@
         <?php else: ?>
             <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'journalist'): ?>
                 <p class="text-center d-flex justify-content-center align-items-center mb-0">
-                    Hi <?= $_SESSION['username'] ?> ready to publish your review
-                    of <?= $album->getAlbumName() ?>? </p>
+                    Hi <?= htmlspecialchars($_SESSION['username']) ?> ready to publish your review
+                    of <?= htmlspecialchars($album->getAlbumName()) ?>? </p>
                 <button class="btn btn-primary mt-2" data-bs-toggle="modal"
                         data-bs-target="#reviewEditor">Open review editor
                 </button>
@@ -79,7 +79,7 @@
                 <p class="text-center d-flex justify-content-center align-items-center mb-0">No review
                     has
                     been published for this album. Check back soon to see our take
-                    on <?= $album->getAlbumName() ?>, or leave your own review below! 🙃</p>
+                    on <?= htmlspecialchars($album->getAlbumName()) ?>, or leave your own review below! 🙃</p>
 
             <?php endif; ?>
         <?php endif; ?>

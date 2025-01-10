@@ -74,7 +74,7 @@ class ArtistController
             return $response->withStatus(409);
         }
 
-        $id = $this->artistFactory->createArtist($data['artistName'], $data['artistBio'], $data['artistGenre']);
+        $id = $this->artistService->createArtist($data['artistName'], $data['artistBio'], $data['artistGenre']);
 
         if (!isset($id)) {
             return $response->withStatus(500);
