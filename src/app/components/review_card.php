@@ -13,8 +13,7 @@
                             <a href="/user/<?= htmlspecialchars($userReview->getUser()->getUsername()) ?>"
                                class="text-center pt-1"><?= htmlspecialchars($userReview->getUser()->getUsername()) ?></a>
                             <p class="mb-0"
-                               style="font-size: 0.8rem;"><?= htmlspecialchars($userReview->getRating()) ?>
-                                /10</p>
+                               style="font-size: 0.8rem;"><?= htmlspecialchars($userReview->getRating()) ?>/10</p>
                         </div>
                     </div>
                     <!-- Desktop layout -->
