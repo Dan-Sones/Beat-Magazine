@@ -25,8 +25,6 @@ class AlbumFactory
             artists.name AS artist_name, 
             genres.name AS genre, 
             albums.record_label, 
-            albums.average_user_rating, 
-            albums.journalist_rating, 
             albums.release_date
         FROM albums
         INNER JOIN artists ON albums.artist_id = artists.id
@@ -65,8 +63,6 @@ class AlbumFactory
             artists.name AS artist_name, 
             genres.name AS genre, 
             albums.record_label, 
-            albums.average_user_rating, 
-            albums.journalist_rating, 
             albums.release_date
         FROM albums
         INNER JOIN artists ON albums.artist_id = artists.id
@@ -119,8 +115,6 @@ class AlbumFactory
             artists.name AS artist_name, 
             genres.name AS genre, 
             albums.record_label, 
-            albums.average_user_rating, 
-            albums.journalist_rating, 
             albums.release_date
         FROM albums
         INNER JOIN artists ON albums.artist_id = artists.id
@@ -161,8 +155,6 @@ class AlbumFactory
             artists.name AS artist_name, 
             genres.name AS genre, 
             albums.record_label, 
-            albums.average_user_rating, 
-            albums.journalist_rating, 
             albums.release_date
         FROM albums
         INNER JOIN artists ON albums.artist_id = artists.id
@@ -205,8 +197,6 @@ class AlbumFactory
             artists.name AS artist_name, 
             genres.name AS genre, 
             albums.record_label, 
-            albums.average_user_rating, 
-            albums.journalist_rating, 
             albums.release_date
         FROM albums
         INNER JOIN artists ON albums.artist_id = artists.id
@@ -251,8 +241,6 @@ class AlbumFactory
             artists.name AS artist_name, 
             genres.name AS genre, 
             albums.record_label, 
-            albums.average_user_rating, 
-            albums.journalist_rating, 
             albums.release_date
         FROM albums
         INNER JOIN artists ON albums.artist_id = artists.id
@@ -298,8 +286,6 @@ class AlbumFactory
         artists.name AS artist_name, 
         genres.name AS genre, 
         albums.record_label, 
-        albums.average_user_rating, 
-        albums.journalist_rating, 
         albums.release_date
     FROM albums
     INNER JOIN artists ON albums.artist_id = artists.id

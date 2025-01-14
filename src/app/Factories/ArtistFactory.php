@@ -57,7 +57,6 @@ class ArtistFactory
     GROUP BY artists.id
     ';
 
-
         $statement = $this->db->prepare($query);
         $statement->bindParam(':name', $name, PDO::PARAM_STR);
         $statement->execute();
@@ -77,6 +76,5 @@ class ArtistFactory
         );
 
     }
-
 
 }
