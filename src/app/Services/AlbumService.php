@@ -108,7 +108,6 @@ class AlbumService
         $filename = Uuid::uuid4() . '.' . pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
         $uploadedFile->moveTo($directory . DIRECTORY_SEPARATOR . $filename);
         return $filename;
-
     }
 
     public function deleteAlbum(string $albumID): bool

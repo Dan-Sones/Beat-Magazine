@@ -26,6 +26,14 @@ class UserReviewController
     {
         $userId = $this->sessionService->getUserID();
 
+        if (!$this->sessionService->isAuthenticated()) {
+            return $response->withStatus(401);
+        }
+
+        if (!isset($userId)) {
+            return $response->withStatus(403);
+        }
+
         $data = json_decode($request->getBody()->getContents(), true);
 
         if (json_last_error() !== JSON_ERROR_NONE) {
@@ -57,8 +65,13 @@ class UserReviewController
     {
         $userId = $this->sessionService->getUserID();
 
-        if (!isset($userId)) {
+        if (!$this->sessionService->isAuthenticated()) {
             return $response->withStatus(401);
+        }
+
+
+        if (!isset($userId)) {
+            return $response->withStatus(403);
         }
 
         $data = json_decode($request->getBody()->getContents(), true);
@@ -67,11 +80,11 @@ class UserReviewController
             return $response->withStatus(400);
         }
 
-        if (strlen($data['review']) > 1000) {
+        if (!isset($data['review']) || !isset($data['rating']) || !isset($args['albumId']) || !isset($args['reviewId'])) {
             return $response->withStatus(400);
         }
 
-        if (!isset($data['review']) || !isset($data['rating']) || !isset($args['albumId']) || !isset($args['reviewId'])) {
+        if (strlen($data['review']) > 1000) {
             return $response->withStatus(400);
         }
 
@@ -93,6 +106,11 @@ class UserReviewController
 
     public function delete(Request $request, Response $response, array $args): Response
     {
+
+        if (!$this->sessionService->isAuthenticated()) {
+            return $response->withStatus(401);
+        }
+
         $userId = $this->sessionService->getUserID();
 
         if (!isset($userId)) {
@@ -110,7 +128,7 @@ class UserReviewController
             return $response->withStatus(403);
         }
 
-        $success = $this->userReviewService->DeleteReviewForAlbum($args['reviewId']);
+        $success = $this->userReviewService->DeleteReviewForAlbum($reviewID);
 
         if (!$success) {
             return $response->withStatus(500);
@@ -122,8 +140,13 @@ class UserReviewController
     public function like(Request $request, Response $response, array $args): Response
     {
         $userId = $this->sessionService->getUserID();
+
+        if (!isset($userId)) {
+            return $response->withStatus(401);
+        }
+
         $authenticated = $this->sessionService->isAuthenticated();
-        if (!isset($userId) || !$authenticated) {
+        if (!$authenticated) {
             return $response->withStatus(401);
         }
 
@@ -132,6 +155,12 @@ class UserReviewController
         }
 
         $reviewID = $args['reviewId'];
+
+        $hasLiked = $this->likeService->hasUserLikedReview($reviewID, $userId);
+
+        if ($hasLiked) {
+            return $response->withStatus(403);
+        }
 
         $success = $this->likeService->likeReview($reviewID, $userId);
 

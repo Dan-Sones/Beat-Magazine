@@ -27,7 +27,7 @@
 
                 <div class="col-md-6">
                     <p id="journalistReviewAbstractText" class="review-abstract mb-0">
-                        <?= htmlspecialchars($journalistReview->getAbstract()) ?>
+                        <?= $journalistReview->getAbstract() ?>
                         <a class="link-opacity-100 read-more-btn p-0" type="link">Read More
                         </a>
                     </p>
@@ -60,7 +60,7 @@
                     <div class="review-full container d-flex justify-content-center"
                     ">
                     <div id="journalistReviewText" class="col-xl-8 col-lg-11 col-md-12 col-sm-12">
-                        <?= htmlspecialchars($journalistReview->getReview()) ?>
+                        <?= $journalistReview->getReview() ?>
                     </div>
                 </div>
 

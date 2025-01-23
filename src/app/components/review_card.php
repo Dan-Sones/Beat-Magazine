@@ -131,10 +131,10 @@
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li><a class="dropdown-item text-danger"
-                                       onclick="handleDeleteReview(<?= htmlspecialchars($userReview->getId()) ?>)">Delete
+                                       onclick="handleDeleteReview('<?= htmlspecialchars($userReview->getId()) ?>')">Delete
                                         Review</a></li>
                                 <li><a class="dropdown-item"
-                                       onclick="handleEditReview(<?= htmlspecialchars($userReview->getId()) ?>)">Edit
+                                       onclick="handleEditReview('<?= htmlspecialchars($userReview->getId()) ?>')">Edit
                                         Review</a>
                                 </li>
                             </ul>

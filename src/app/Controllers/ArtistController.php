@@ -42,6 +42,15 @@ class ArtistController
 
     public function search(Request $request, Response $response, array $args): Response
     {
+
+        if (!$this->sessionService->isAuthenticated()) {
+            return $response->withStatus(401);
+        }
+
+        if (!$this->sessionService->isJournalist()) {
+            return $response->withStatus(403);
+        }
+        
         $search = $request->getQueryParams()['search'] ?? '';
         if (!is_string($search)) {
             $response->getBody()->write(json_encode([]));
