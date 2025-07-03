@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const username = usernameInput.value;
         let isValid = true;
 
-        if (username.length < 3) {
+        if (username.length < 3 || username.length > 20) {
             isValid = false;
         }
 
@@ -47,8 +47,7 @@ document.addEventListener('DOMContentLoaded', function () {
         validateInput(
             usernameInput,
             isValid,
-            'Username must be at least 3 characters long. Only letters, numbers, underscores, and periods are allowed.'
-        );
+            'Username must be between 3 and 20 characters long, containing only letters, numbers, underscores, or periods.')
 
         return isValid;
     };

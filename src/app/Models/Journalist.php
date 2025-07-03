@@ -5,15 +5,15 @@ namespace S246109\BeatMagazine\Models;
 class Journalist extends PublicUserViewModel
 {
     private string|null $bio;
-
     private string $firstName;
     private string $lastName;
 
     /**
-     * @param string $name
-     * @param string $bio
+     * @param string $firstName
+     * @param string $lastName
+     * @param string|null $bio
      * @param string $username
-     * @param string $profilePictureUri
+     * @param string|null $profilePictureUri
      * @param int $id
      * @param string $created_at
      */

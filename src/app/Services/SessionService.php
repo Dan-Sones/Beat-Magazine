@@ -21,6 +21,11 @@ class SessionService
         return $_SESSION['user_id'] ?? null;
     }
 
+    public function getAuthUserID(): ?int
+    {
+        return $_SESSION['auth_user_id'] ?? null;
+    }
+
     public function isJournalist(): bool
     {
         return isset($_SESSION['role']) && $_SESSION['role'] === 'journalist';

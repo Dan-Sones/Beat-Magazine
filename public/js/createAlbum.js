@@ -25,44 +25,77 @@ const updateRemoveButtons = () => {
 
 document.addEventListener('DOMContentLoaded', updateRemoveButtons);
 
-let debounceTimeout;
-document.getElementById('artist').addEventListener('input', function (event) {
-    clearTimeout(debounceTimeout);
-    debounceTimeout = setTimeout(async () => {
-        const query = event.target.value;
+let debounceTimeout
+
+document.getElementById('artist').addEventListener('input', (event) => {
+    handleArtistInput(event)
+})
+
+const handleArtistInput = (event) => {
+    clearTimeout(debounceTimeout)
+    debounceTimeout = setTimeout(() => {
+        const query = event.target.value
         if (query.length > 2) {
-            try {
-                const response = await fetch(`/api/artists?search=${query}`);
-                const data = await response.json();
-                const suggestions = document.getElementById('artistSuggestions');
-                suggestions.innerHTML = '';
-                for (const [artistName, artistId] of Object.entries(data)) {
-                    const item = document.createElement('a');
-                    item.classList.add('list-group-item', 'list-group-item-action');
-                    item.textContent = artistName;
-                    item.addEventListener('click', () => {
-                        document.getElementById('artist').value = artistName;
-                        suggestions.innerHTML = '';
-                        artistID = artistId;
-                    });
-                    suggestions.appendChild(item);
-                }
-                const createNewItem = document.createElement('a');
-                createNewItem.classList.add('list-group-item', 'list-group-item-action', 'text-primary');
-                createNewItem.textContent = 'Create new artist';
-                createNewItem.addEventListener('click', () => {
-                    const artistNameInput = document.getElementById('newArtistName');
-                    artistNameInput.value = query;
-                    const createArtistModal = new bootstrap.Modal(document.getElementById('createArtistModal'));
-                    createArtistModal.show();
-                });
-                suggestions.appendChild(createNewItem);
-            } catch (error) {
-                console.error('Error fetching artists:', error);
-            }
+            fetchArtists(query)
         }
-    }, 300);
-});
+    }, 300)
+}
+
+const fetchArtists = async (query) => {
+    const response = await fetch(`/api/artists?search=${query}`)
+    if (response.status === 200) {
+        const data = await response.json()
+        populateSuggestions(query, data)
+    }
+}
+
+const populateSuggestions = (query, data) => {
+    const suggestions = document.getElementById('artistSuggestions')
+    suggestions.innerHTML = ''
+
+    for (const [artistName, artistId] of Object.entries(data)) {
+        const item = createArtistSuggestionItem(artistName, artistId)
+        suggestions.appendChild(item)
+    }
+
+    const createNewItem = createNewArtistOption(query)
+    suggestions.appendChild(createNewItem)
+}
+
+const createArtistSuggestionItem = (artistName, artistId) => {
+    const item = document.createElement('a')
+    item.classList.add('list-group-item', 'list-group-item-action')
+    item.textContent = artistName
+    item.addEventListener('click', () => {
+        document.getElementById('artist').value = artistName
+        document.getElementById('artistSuggestions').innerHTML = ''
+        artistID = artistId
+    })
+    return item
+}
+
+const createNewArtistOption = (query) => {
+    const createNewItem = document.createElement('a')
+    createNewItem.classList.add(
+        'list-group-item',
+        'list-group-item-action',
+        'text-primary'
+    )
+    createNewItem.textContent = 'Create new artist'
+    createNewItem.addEventListener('click', () => {
+        showCreateArtistModal(query)
+    })
+    return createNewItem
+}
+
+const showCreateArtistModal = (query) => {
+    const artistNameInput = document.getElementById('newArtistName')
+    artistNameInput.value = query
+    const createArtistModal = new bootstrap.Modal(
+        document.getElementById('createArtistModal')
+    )
+    createArtistModal.show()
+}
 
 const addSongRow = () => {
     const songsList = document.getElementById('songsList');

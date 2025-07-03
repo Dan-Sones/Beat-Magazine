@@ -57,7 +57,6 @@ class ArtistFactory
     GROUP BY artists.id
     ';
 
-
         $statement = $this->db->prepare($query);
         $statement->bindParam(':name', $name, PDO::PARAM_STR);
         $statement->execute();
@@ -78,21 +77,4 @@ class ArtistFactory
 
     }
 
-    public function createArtist(string $artistName, string $artistBio, string $artistGenre): string
-    {
-        // create an artist and return the id
-        $query = '
-        INSERT INTO artists (name, bio, genre) VALUES (:name, :bio, :genre)
-    ';
-
-        $statement = $this->db->prepare($query);
-        $statement->bindValue(':name', $artistName, PDO::PARAM_STR);
-        $statement->bindValue(':bio', $artistBio, PDO::PARAM_STR);
-        $statement->bindValue(':genre', $artistGenre, PDO::PARAM_STR);
-        $statement->execute();
-
-        return $this->db->lastInsertId();
-
-
-    }
 }

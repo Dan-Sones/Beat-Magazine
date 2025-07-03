@@ -59,7 +59,7 @@ class PasswordResetController
         }
 
         if (!$this->userService->isEmailTaken($data['email'])) {
-            return $response->withStatus(404);
+            return $response->withStatus(400);
         }
 
         $email = $data['email'];

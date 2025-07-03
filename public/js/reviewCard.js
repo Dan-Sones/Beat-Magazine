@@ -143,7 +143,7 @@ const handleLikeReview = async (reviewId) => {
         });
 
         if (response.status === 200) {
-            updateCardToHaveShowLike(reviewId, true);
+            updateCardToShowLike(reviewId, true);
         } else {
             Swal.fire({
                 title: 'An error occurred whilst liking the review',
@@ -175,7 +175,7 @@ const handleUnlikeReview = async (reviewId) => {
         });
 
         if (response.status === 200) {
-            updateCardToHaveShowLike(reviewId, false);
+            updateCardToShowLike(reviewId, false);
         } else {
             Swal.fire({
                 title: 'An error occurred whilst unliking the review',
@@ -205,8 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 });
 
-const updateCardToHaveShowLike = (reviewId, liked) => {
-
+const updateCardToShowLike = (reviewId, liked) => {
     if (typeof liked !== "boolean") {
         return;
     }

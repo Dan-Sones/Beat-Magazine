@@ -24,7 +24,6 @@ class JournalistReviewController
 
     public function create(Request $request, Response $response, array $args): Response
     {
-        $albumId = $args['albumId'];
 
         if (!$this->sessionService->isAuthenticated()) {
             return $response->withStatus(401);
@@ -34,14 +33,15 @@ class JournalistReviewController
             return $response->withStatus(403);
         }
 
-        if ($this->journalistReviewService->hasJournalistReviewForAlbum($args['albumId'])) {
-            return $response->withStatus(409);
-        }
-
         $data = json_decode($request->getBody()->getContents(), true);
 
         if (json_last_error() !== JSON_ERROR_NONE || !isset($data['review']) || !isset($data['rating']) || !isset($data['abstract']) || !isset($args['albumId'])) {
             return $response->withStatus(400);
+        }
+
+
+        if ($this->journalistReviewService->hasJournalistReviewForAlbum($args['albumId'])) {
+            return $response->withStatus(409);
         }
 
         $userId = $this->sessionService->getUserID();
@@ -56,9 +56,6 @@ class JournalistReviewController
 
     public function delete(Request $request, Response $response, array $args): Response
     {
-
-        $albumId = $args['albumId'];
-
         if (!$this->sessionService->isAuthenticated()) {
             return $response->withStatus(401);
         }
@@ -67,19 +64,24 @@ class JournalistReviewController
             return $response->withStatus(403);
         }
 
-        if ($albumId !== null) {
-            if (!$this->journalistReviewService->hasJournalistReviewForAlbum($albumId)) {
-                return $response->withStatus(404);
-            }
+        if (!isset($args['albumId'])) {
+            return $response->withStatus(400);
+        }
 
-            $userId = $this->sessionService->getUserID();
-            if ($userId != $this->journalistReviewService->getJournalistIdForReview($albumId)) {
-                return $response->withStatus(403);
-            }
+        $albumId = $args['albumId'];
+
+
+        if (!$this->journalistReviewService->hasJournalistReviewForAlbum($albumId)) {
+            return $response->withStatus(404);
+        }
+
+        $userId = $this->sessionService->getUserID();
+        if ($userId != $this->journalistReviewService->getJournalistUserIdForReview($albumId)) {
+            return $response->withStatus(403);
         }
 
 
-        $success = $this->journalistReviewService->deleteJournalistReviewForAlbum($args['albumId']);
+        $success = $this->journalistReviewService->deleteJournalistReviewForAlbum($albumId);
 
         if (!$success) {
             return $response->withStatus(500);
@@ -90,8 +92,6 @@ class JournalistReviewController
 
     public function update(Request $request, Response $response, array $args): Response
     {
-        $albumId = $args['albumId'];
-
         if (!$this->sessionService->isAuthenticated()) {
             return $response->withStatus(401);
         }
@@ -100,21 +100,21 @@ class JournalistReviewController
             return $response->withStatus(403);
         }
 
-        if ($albumId !== null) {
-            if (!$this->journalistReviewService->hasJournalistReviewForAlbum($albumId)) {
-                return $response->withStatus(404);
-            }
-
-            $userId = $this->sessionService->getUserID();
-            if ($userId != $this->journalistReviewService->getJournalistIdForReview($albumId)) {
-                return $response->withStatus(403);
-            }
-        }
-
         $data = json_decode($request->getBody()->getContents(), true);
 
-        if (json_last_error() !== JSON_ERROR_NONE || !isset($data['review']) || !isset($data['rating']) || !isset($data['abstract'])) {
+        if (json_last_error() !== JSON_ERROR_NONE || !isset($data['review']) || !isset($data['rating']) || !isset($data['abstract']) || !isset($args['albumId'])) {
             return $response->withStatus(400);
+        }
+
+        $albumId = $args['albumId'];
+
+        if (!$this->journalistReviewService->hasJournalistReviewForAlbum($albumId)) {
+            return $response->withStatus(404);
+        }
+
+        $userId = $this->sessionService->getUserID();
+        if ($userId != $this->journalistReviewService->getJournalistUserIdForReview($albumId)) {
+            return $response->withStatus(403);
         }
 
         $success = $this->journalistReviewService->updateJournalistReviewForAlbum($args['albumId'], $data['review'], $data['rating'], $data['abstract']);

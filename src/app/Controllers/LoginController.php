@@ -43,8 +43,8 @@ class LoginController
         $user = $this->userFactory->getUserByEmailAddress($email);
 
         if ($user === null) {
-            $response->getBody()->write(json_encode(['error' => 'User not found']));
-            return $response->withHeader('Content-Type', 'application/json')->withStatus(403);
+            $response->getBody()->write(json_encode(['error' => 'Invalid username or password']));
+            return $response->withHeader('Content-Type', 'application/json')->withStatus(401);
         }
 
         if (!password_verify($password, $user->getPassword())) {
@@ -53,7 +53,7 @@ class LoginController
         }
 
         $this->sessionService->startSession();
-        $this->sessionService->set('user_id', $user->getId());
+        $this->sessionService->set('auth_user_id', $user->getId());
         $this->sessionService->set('otp_pending', true);
 
         return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
@@ -75,7 +75,7 @@ class LoginController
             return $response->withStatus(400);
         }
 
-        $userId = $this->sessionService->getUserID();
+        $userId = $this->sessionService->getAuthUserID();
         if ($userId === null) {
             return $response->withStatus(500);
         }
@@ -92,6 +92,7 @@ class LoginController
         $this->sessionService->set('authenticated', true);
         $this->sessionService->set('username', $user->getUsername());
         $this->sessionService->set('role', $user->getRole());
+        $this->sessionService->set('user_id', $user->getId());
 
         $response->getBody()->write(json_encode(['valid' => true]));
         return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
