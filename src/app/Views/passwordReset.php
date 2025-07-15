@@ -1,6 +1,6 @@
 <?php include 'includes/header.php'; ?>
 
-    <main class="d-flex justify-content-center align-items-center min-vh-100">
+    <main class="d-flex justify-content-center align-items-center">
         <div class="container d-flex justify-content-center align-items-center">
             <div class="row justify-content-center">
                 <div class="col-12 col-md-12 col-lg-12">

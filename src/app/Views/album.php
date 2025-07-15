@@ -20,7 +20,7 @@
 <?php endif; ?>
 
 
-<?php if (isset($album) && $album): ?>
+<?php if (isset($album) && $album->getAlbumId()): ?>
     <main class="album-wrapper" role="main">
         <div class="container-fluid">
             <div class="row justify-content-center">

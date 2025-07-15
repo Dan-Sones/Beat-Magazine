@@ -54,6 +54,11 @@ class AlbumController
         }
 
         $albumID = $args['albumId'];
+
+        if ($albumID === null) {
+            return $response->withStatus(400);
+        }
+
         $success = $this->albumService->deleteAlbum($albumID);
 
         if (!$success) {

@@ -13,8 +13,7 @@
                             <a href="/user/<?= htmlspecialchars($userReview->getUser()->getUsername()) ?>"
                                class="text-center pt-1"><?= htmlspecialchars($userReview->getUser()->getUsername()) ?></a>
                             <p class="mb-0"
-                               style="font-size: 0.8rem;"><?= htmlspecialchars($userReview->getRating()) ?>
-                                /10</p>
+                               style="font-size: 0.8rem;"><?= htmlspecialchars($userReview->getRating()) ?>/10</p>
                         </div>
                     </div>
                     <!-- Desktop layout -->
@@ -132,10 +131,10 @@
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li><a class="dropdown-item text-danger"
-                                       onclick="handleDeleteReview(<?= htmlspecialchars($userReview->getId()) ?>)">Delete
+                                       onclick="handleDeleteReview('<?= htmlspecialchars($userReview->getId()) ?>')">Delete
                                         Review</a></li>
                                 <li><a class="dropdown-item"
-                                       onclick="handleEditReview(<?= htmlspecialchars($userReview->getId()) ?>)">Edit
+                                       onclick="handleEditReview('<?= htmlspecialchars($userReview->getId()) ?>')">Edit
                                         Review</a>
                                 </li>
                             </ul>

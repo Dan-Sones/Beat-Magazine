@@ -20,7 +20,6 @@ class PasswordResetService
 
     public function handlePasswordResetRequest(string $email): bool
     {
-
         // Delete any existing password reset tokens for this email
         $stmt = $this->db->prepare('DELETE FROM password_resets WHERE email = :email');
         $stmt->bindValue(':email', $email, PDO::PARAM_STR);

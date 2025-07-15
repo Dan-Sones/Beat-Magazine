@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (isGenrePage()) {
 
-
         document.getElementById("search-form").style.display = 'none';
         document.getElementById("create-album-container").style.display = 'none';
 
@@ -28,7 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // Auto capitalize the genre name
         document.getElementById('genre-title').innerHTML = genre.charAt(0).toUpperCase() + genre.slice(1);
         document.getElementById('genre-container').style.display = 'block';
-
 
     }
 
